@@ -2,6 +2,7 @@ class OrganisationsController < ApplicationController
 
 
   before_filter :authenticate
+  before_filter :load_orga_by_name
   before_filter :auth_org_member, :only => [:projects, :show, :assign, :components, :pullrequests]
   before_filter :auth_org_owner,  :only => [:update, :delete, :destroy,
                                             :apikey, :update_apikey,
@@ -309,26 +310,6 @@ class OrganisationsController < ApplicationController
     rescue => e
       logger.error e.message
       logger.error e.backtrace.join("\n")
-    end
-
-
-    def auth_org_member
-      @organisation = Organisation.where(:name => params[:name]).first
-      return true if OrganisationService.member?(@organisation, current_user) || current_user.admin == true
-
-      flash[:error] = "You are not a member of this organisation. You don't have the permission for this operation."
-      redirect_to organisations_path
-      return false
-    end
-
-
-    def auth_org_owner
-      @organisation = Organisation.where(:name => params[:name]).first
-      return true if OrganisationService.owner?(@organisation, current_user) || current_user.admin == true
-
-      flash[:error] = "You are not in the Owners team. You don't have the permission for this operation."
-      redirect_to organisations_path
-      return false
     end
 
 end

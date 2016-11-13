@@ -1,8 +1,12 @@
 module OrganisationHelper
 
 
+  def load_orga_by_name
+    @organisation = Organisation.where( :name => params[:name] ).first
+  end
+
   def load_orga
-    @organisation = Organisation.where(:name => params[:organisation_name]).first
+    @organisation = Organisation.where( :name => params[:organisation_name] ).first
   end
 
 
