@@ -151,7 +151,8 @@ class User::StashReposController < User::ScmReposController
         project_url = url_for(controller: 'projects', action: "show", id: project.id)
         status = 'done'
       elsif status && status.match(/\Aerror_/)
-        return status.gsub("error_", "")
+        render text: status.gsub("error_", ""), status: 500
+        return
       end
 
       {

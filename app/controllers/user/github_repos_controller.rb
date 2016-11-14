@@ -38,7 +38,7 @@ class User::GithubReposController < User::ScmReposController
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
-    render text: 'An error occured. We are not able to import GitHub repositories. Please contact the VersionEye team.', status: 503
+    render text: 'An error occured. We are not able to import GitHub repositories. Please contact the VersionEye team.', status: 500
   end
 
 
@@ -100,7 +100,7 @@ class User::GithubReposController < User::ScmReposController
     render json: result
   rescue => e
     Rails.logger.error "failed to remove: #{e.message}"
-    render text: e.message, status: 503
+    render text: e.message, status: 500
   end
 
 
@@ -152,7 +152,8 @@ class User::GithubReposController < User::ScmReposController
         project_url = url_for(controller: 'projects', action: "show", id: project.id)
         status = 'done'
       elsif status && status.match(/\Aerror_/)
-        return status.gsub("error_", "")
+        render text: status.gsub("error_", ""), status: 500
+        return
       end
 
       {
@@ -166,7 +167,7 @@ class User::GithubReposController < User::ScmReposController
     rescue => e
       Rails.logger.error e.message
       Rails.logger.error e.backtrace.join "\n"
-      "Something went wrong. Please contact the VersionEye Team."
+      render text: 'An error occured. Please contact the VersionEye team.', status: 500
     end
 
 
