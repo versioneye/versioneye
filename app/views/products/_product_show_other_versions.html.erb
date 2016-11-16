@@ -20,7 +20,8 @@
 
         <% if svs && !svs.empty? %>
           <% svs.each do |sv| %>
-            <% if sv.affected_versions.to_a.include?( version.to_s ) %>
+            <% if sv.affected_versions.to_a.include?( version.to_s ) ||
+                  sv.affected_versions.to_a.include?( version.to_s.gsub(".RELEASE", '') ) %>
               <span class="fa fa-shield" style="font-size: 14px; color: red;"></span>
               <% break %>
             <% end %>
