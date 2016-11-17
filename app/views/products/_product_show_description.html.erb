@@ -5,7 +5,7 @@
     Description <a class="octicon-link" href="#description"><i class="fa fa-link"></i></a>
   </h2>
 
-  <% if !Settings.instance.environment.to_s.eql?('enterprise') %>
+  <% if !Settings.instance.environment.to_s.eql?('enterprise') && request.original_url.to_s.match("@").nil? %>
     <p>
       <div id='div-gpt-ad-1407836245189-0'>
         <script type='text/javascript'>

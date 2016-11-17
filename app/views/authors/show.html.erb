@@ -23,7 +23,7 @@
         </div>
       <% end %>
 
-      <% if !Settings.instance.environment.to_s.eql?('enterprise') %>
+      <% if !Settings.instance.environment.to_s.eql?('enterprise') && request.original_url.to_s.match("@").nil? %>
         <div id='div-gpt-ad-1407836165464-0' style="margin-top: 20px;">
           <script type='text/javascript'>
             googletag.cmd.push(function() {
