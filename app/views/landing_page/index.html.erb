@@ -116,11 +116,13 @@
         <%= render "shared/feature_package_managers" %>
     </div>
 
-    <div class="content-section-b">
-        <div class="container" style="text-align: center;">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/z-rp2TT4aXQ" frameborder="0" allowfullscreen></iframe>
+    <% if Rails.env.enterprise? != true %>
+        <div class="content-section-b">
+            <div class="container" style="text-align: center;">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/z-rp2TT4aXQ" frameborder="0" allowfullscreen></iframe>
+            </div>
         </div>
-    </div>
+    <% end %>
 
 
     <div class="content-section-a">
