@@ -262,7 +262,7 @@ class OrganisationsController < ApplicationController
 
   def pullrequests
     @prs = []
-    count = Pullrequest.where(:organisation_ids => @organisation.ids)
+    count = Pullrequest.where(:organisation_ids => @organisation.ids).count
     if count.to_i > 100
       @prs = Pullrequest.where(:organisation_ids => @organisation.ids).skip( count - 100 ).to_a.reverse
     else
