@@ -261,7 +261,13 @@ class OrganisationsController < ApplicationController
 
 
   def pullrequests
-    @prs = Pullrequest.where(:organisation_ids => @organisation.ids).desc(:updated_at)
+    @prs = []
+    count = Pullrequest.where(:organisation_ids => @organisation.ids)
+    if count.to_i > 100
+      @prs = Pullrequest.where(:organisation_ids => @organisation.ids).skip( count - 100 ).to_a.reverse
+    else
+      @prs = Pullrequest.where(:organisation_ids => @organisation.ids).desc(:updated_at)
+    end
   end
 
 
