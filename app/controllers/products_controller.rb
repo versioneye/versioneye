@@ -22,7 +22,7 @@ class ProductsController < ApplicationController
       flash.now[:error] = 'the character % is not allowed'
     else
       languages = get_language_array(@lang)
-      @products = ProductService.search( @query, @groupid, languages, params[:page])
+      @products = ProductService.search( @query, @groupid, languages, params[:page].to_i)
     end
     @languages = Product::A_LANGS_FILTER
   end
@@ -133,14 +133,14 @@ class ProductsController < ApplicationController
       return
     end
 
-    products   = reference.products page
+    products   = reference.products page.to_i
     if products.nil? || products.empty?
       @products = paged_products 1, nil, reference.ref_count
       render :status => 200
       return
     end
 
-    paged_products page, products, reference.ref_count
+    paged_products page.to_i, products, reference.ref_count
   rescue => e
     flash[:error] = "An error occured. Please contact the VersionEye Team."
     Rails.logger.error e.message
