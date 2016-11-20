@@ -13,85 +13,10 @@
 
   <div class="content" >
 
-    <% status = 'warn' %>
-    <% status = 'success' if @pr.status.eql?('success') %>
-    <% status = 'error'   if @pr.status.eql?('error') %>
-    <div class="flash <%= status %>" style="margin-bottom: 20px;">
-      Pull <b><a href="https://github.com/<%= @pr.scm_fullname %>/pull/<%= @pr.pr_number %>" target="github" >#<%= @pr.pr_number %></a></b> on
-      <b><a href="https://github.com/<%= @pr.scm_fullname %>/" target="github" ><%= @pr.scm_fullname %></a></b> : <b><%= @pr.scm_branch %></b>
-      : <b><a href="https://github.com/<%= @pr.scm_fullname %>/pull/<%= @pr.pr_number %>/commits/<%= @pr.commit_sha %>" target="github" ><%= @pr.commit_sha %></a></b> <br/>
-      Dependencies with security vulnerabilities: <b><%= @pr.security_count %></b><br/>
-      Dependencies with unknown licenses: <b><%= @pr.unknown_license_count %></b><br/>
-      Dependencies which violate a license whitelist: <b><%= @pr.lwl_violation_count %></b><br/>
-      <span style='font-size: 10px;'><%= @pr.updated_at %></span><br/>
-    </div>
-
-    <% files = @pr.pr_issues.distinct(:file) %>
-    <% files.each do |file| %>
-      <h3><%= file %></h3>
-      <table class="dependency_table table table-striped" >
-        <thead style="height: 30px;">
-          <tr>
-            <th class="name_col_after_icon">Dependency</th>
-            <th >Resolved</th>
-            <th >Newest</th>
-            <th >License</th>
-            <th >Security</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @pr.pr_issues.where(:file => file).each do |issue| %>
-          <tr class="dep_row" >
-            <td style="padding-left: 5px;">
-              <span >
-                <% if !issue.prod_key.to_s.empty? %>
-                  <a href="/<%= issue.language %>/<%= Product.encode_prod_key(issue.prod_key) %>/<%= Version.encode_version(issue.version_requested) %>"><%= issue.name %></a>
-                <% else %>
-                  <%= issue.name %>
-                <% end %>
-              </span>
-            </td>
-            <td>
-              <span >
-                <% if issue.version_requested.to_s.match(/\A\:path/) %>
-                  <span title="<%= issue.version_requested %>">:path</span>
-                <% elsif issue.version_requested.to_s.match(/\A\:git/) %>
-                  <span title="<%= issue.version_requested %>">:git</span>
-                <% elsif issue.version_requested.to_s.match(/\Agit\+ssh/) %>
-                  <span title="<%= issue.version_requested %>">:git+ssh</span>
-                <% elsif issue.version_requested.to_s.match(/\A\:http/) || issue.version_requested.to_s.match(/\Ahttp/) %>
-                  <a href="<%= issue.version_requested %>"><span title="<%= issue.version_requested %>">:http</span></a>
-                <% else %>
-                  <%= issue.version_requested || "UNKNOWN" %>
-                <% end %>
-              </span>
-            </td>
-            <td>
-              <%= issue.version_current || "UNKNOWN" %>
-            </td>
-            <td style="padding-right: 5px;">
-              <% if issue.license.to_s.eql?('UNKNOWN') %>
-                <span style="color: red"><%= issue.license %></span>
-              <% else %>
-                <% if issue.lwl_violation == true %>
-                  <span style="color: red" title="Violating the license whitelist" ><%= issue.license %></span>
-                <% else %>
-                  <%= issue.license %>
-                <% end %>
-              <% end %>
-            </td>
-            <td style="padding-right: 5px;">
-              <% if issue.security_count.to_i > 0 %>
-                <span class="fa fa-shield" style="font-size: 14px; color: red;"></span>
-                <a href="/<%= issue.language %>/<%= issue.prod_key %>/<%= issue.version_requested %>"><%= issue.security_count %></a>
-              <% else %>
-                0
-              <% end %>
-            </td>
-          </tr>
-          <% end %>
-        </tbody>
-      </table>
+    <% if @pr %>
+      <%= render "pr_show_content" %>
+    <% else %>
+      <span style="font-weight: bold">The requested element does not exist!</span>
     <% end %>
 
   </div>
