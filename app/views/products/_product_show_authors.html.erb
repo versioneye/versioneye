@@ -1,6 +1,6 @@
 
-<% authors = @product.developers %>
-<% if authors && !authors.empty? %>
+<% devs = @product.developers %>
+<% if devs && !devs.empty? %>
   <div class="box header">
     <h3 class="side_header">
       Authors
@@ -8,19 +8,24 @@
   </div>
   <div class="box content" >
     <% names = [] %>
-    <% authors.each do |author| %>
-      <% next if author.nil? %>
-      <% next if author.to_param.to_s.empty? %>
-      <% next if names.include?(author.to_param.to_s) %>
-      <% next if author.to_param.to_s.match(/http\:\/\//) %>
-      <% next if author.to_param.to_s.match(/https\:\/\//) %>
-      <%= link_to gravatar_image_tag( author.email,
-                      :alt => author.name,
-                      :title => author.name,
+    <% devs.each do |dev| %>
+      <% next if dev.nil? %>
+      <% next if dev.to_param.to_s.empty? %>
+
+      <% if dev.author.nil? %>
+        <% AuthorService.dev_to_author dev %>
+      <% end %>
+
+      <% next if names.include?(dev.to_param.to_s) %>
+      <% next if dev.to_param.to_s.match(/http\:\/\//) %>
+      <% next if dev.to_param.to_s.match(/https\:\/\//) %>
+      <%= link_to gravatar_image_tag( dev.email,
+                      :alt => dev.to_param,
+                      :title => dev.to_param,
                       :style => 'width: 45px;',
                       :class => "round12",
-                      :gravatar => { :size => 45, :default => "#{Settings.instance.server_url}/profile_icon.png" } ), author_path(author) %>
-      <% names.push(author.to_param.to_s) %>
+                      :gravatar => { :size => 45, :default => "#{Settings.instance.server_url}/profile_icon.png" } ), author_path( dev ) %>
+      <% names.push( dev.to_param.to_s ) %>
     <% end %>
   </div>
 <% end %>
