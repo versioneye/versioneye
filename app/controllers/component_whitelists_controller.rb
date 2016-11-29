@@ -20,7 +20,7 @@ class ComponentWhitelistsController < ApplicationController
       flash[:success] = "Whitelist #{list_name} was created successfully."
       redirect_to :back
     else
-      flash[:error] = "An error occured. We couldn't save the new Whitelist."
+      flash[:error] = "An error occured. We couldn't save the new whitelist."
       redirect_to :back
     end
   rescue => e
@@ -32,29 +32,30 @@ class ComponentWhitelistsController < ApplicationController
   def destroy
     component_whitelist = ComponentWhitelist.fetch_by @organisation, params[:id]
     component_whitelist.destroy
-    flash[:success] = "Whitelist deleted successfully."
+    flash[:success] = "Component whitelist deleted successfully."
     redirect_to :back
   rescue => e
     logger.error e.message
-    flash[:error] = "An error occured. We couldn't delete the Whitelist."
+    flash[:error] = "An error occured. We couldn't delete the component whitelist."
     redirect_to :back
   end
 
   def add
-    p "add: #{params[:id]} with #{params[:cwl_key]}"
-    resp = ComponentWhitelistService.add @organisation, params[:id], params[:cwl_key]
+    cwl_name = params[:id]      # name of the component whitelist
+    cwl_key  = params[:cwl_key] # element key on the component whitelist
+    resp = ComponentWhitelistService.add @organisation, cwl_name, cwl_key
     if resp
-      cwl = ComponentWhitelistService.fetch_by @organisation, params[:id]
-      cwl.add params[:cwl_key]
-      Auditlog.add current_user, 'ComponentWhitelist', cwl.id.to_s, "Added \"#{params[:cwl_key]}\" to \"#{params[:id]}\""
-      flash[:success] = "License added successfully."
+      cwl = ComponentWhitelistService.fetch_by @organisation, cwl_name
+      cwl.add cwl_key
+      Auditlog.add current_user, 'ComponentWhitelist', cwl.ids, "Added \"#{cwl_key}\" to \"#{cwl_name}\""
+      flash[:success] = "Component added successfully."
     else
-      flash[:error] = "An error occured. Not able to add the license to the list."
+      flash[:error] = "An error occured. Not able to add the component to the list."
     end
     redirect_to :back
   rescue => e
     logger.error e.message
-    flash[:error] = "An error occured. We could not add the license."
+    flash[:error] = "An error occured. We could not add the component."
     redirect_to :back
   end
 
@@ -77,14 +78,14 @@ class ComponentWhitelistsController < ApplicationController
     if resp
       cwl = ComponentWhitelistService.fetch_by @organisation, params[:id]
       Auditlog.add current_user, 'ComponentWhitelist', cwl.id.to_s, "Removed \"#{params[:cwl_key]}\" from \"#{params[:id]}\""
-      flash[:success] = "License removed successfully."
+      flash[:success] = "Component removed successfully."
     else
-      flash[:error] = "An error occured. Not able to remove the license from the list."
+      flash[:error] = "An error occured. Not able to remove the component from the list."
     end
     redirect_to :back
   rescue => e
     logger.error e.message
-    flash[:error] = "An error occured. We could not remove the license from the list."
+    flash[:error] = "An error occured. We could not remove the component from the list."
     redirect_to :back
   end
 
