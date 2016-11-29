@@ -10,16 +10,12 @@ class Settings::PrivacyController < ApplicationController
   def update
     privacy_products = validates_privacy_value params[:following_products]
     privacy_comments = validates_privacy_value params[:comments]
-    password         = params[:password]
+    include_autocomp = validate_autocomplete   params[:include_in_autocomplete]
     user = current_user
-    user.privacy_products = privacy_products
-    user.privacy_comments = privacy_comments
-    user.include_in_autocomplete = validate_autocomplete params[:include_in_autocomplete]
-    if password.nil? || password.empty?
-      flash[:error] = 'Please type in the password!'
-    elsif User.authenticate( current_user.email, password ).nil?
-      flash[:error] = 'The password is wrong. Please try again.'
-    elsif user.save
+    user.privacy_products        = privacy_products
+    user.privacy_comments        = privacy_comments
+    user.include_in_autocomplete = include_autocomp
+    if user.save
       flash[:success] = 'Profile updated.'
     else
       flash[:error] = 'Something went wrong. Please try again later.'
