@@ -46,7 +46,6 @@ class ComponentWhitelistsController < ApplicationController
     resp = ComponentWhitelistService.add @organisation, cwl_name, cwl_key
     if resp
       cwl = ComponentWhitelistService.fetch_by @organisation, cwl_name
-      cwl.add cwl_key
       Auditlog.add current_user, 'ComponentWhitelist', cwl.ids, "Added \"#{cwl_key}\" to \"#{cwl_name}\""
       flash[:success] = "Component added successfully."
     else
@@ -55,7 +54,7 @@ class ComponentWhitelistsController < ApplicationController
     redirect_to :back
   rescue => e
     logger.error e.message
-    flash[:error] = "An error occured. We could not add the component."
+    flash[:error] = "An error occured. We could not add the component. (#{e.message})"
     redirect_to :back
   end
 
