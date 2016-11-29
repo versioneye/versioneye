@@ -18,9 +18,6 @@ class Settings::ApiController < ApplicationController
   def update
     @user_api = current_user.api
     @user_api.generate_api_key!
-    if current_user.plan
-      @user_api.rate_limit = current_user.plan.api_rate_limit
-    end
 
     unless @user_api.save
       flash[:notice] << @user_api.errors.full_messages.to_sentence
