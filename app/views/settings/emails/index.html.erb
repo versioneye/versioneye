@@ -1,5 +1,5 @@
 
-<div class="col-md-3" >
+<div class="col-md-3 navbar_container" >
   <%= render 'settings/navi' %>
 </div>
 
@@ -14,7 +14,7 @@
     <%= form_tag(settings_add_email_path, :method => "post", :class => "form-inline") do  %>
       <div class="form-group">
         <%= label_tag :new_email, "New E-Mail", :class => "control-label", :for => "new_email" %>
-        <%= text_field_tag :email, "", :id => "new_email", :class=>"form-control" %> 
+        <%= text_field_tag :email, "", :id => "new_email", :class=>"form-control" %>
         <button type="submit" class="btn btn-primary">Add</button>
       </div>
     <% end %>

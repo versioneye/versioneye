@@ -7,30 +7,26 @@
       <span class="icon-bar"></span>
     </button>
   </div>
-
   <div class="collapse navbar-collapse" id="settings_menu">
-
     <div class="navi nav-stacked" >
       <% if signed_in? %>
-      <ul class = "nav nav-pills nav-stacked">
-        <li><%= link_to 'Projects', user_projects_path, id: 'my_projects', :rel => "nofollow" %></li>
-        <% if github_enabled? %>
-          <li><%= link_to 'Create From GitHub', user_projects_github_repositories_path, :rel => "nofollow" %></li>
-        <% end %>
-        <% if bitbucket_enabled? %>
-          <li><%= link_to 'Create From Bitbucket', user_projects_bitbucket_repositories_path, :rel => "nofollow" %></li>
-        <% end %>
-        <% if stash_enabled? %>
-          <li><%= link_to 'Create From Stash', user_projects_stash_repositories_path, :rel => "nofollow" %></li>
-        <% end %>
-        <li><%= link_to 'Create From URL', new_user_project_path, :rel => "nofollow" %></li>
-        <li><%= link_to 'Create From Upload', user_projects_upload_path, :rel => "nofollow" %></li>
-      </ul>
+        <ul class = "nav nav-pills nav-stacked">
+          <li><%= link_to 'Projects', user_projects_path, id: 'my_projects', :rel => "nofollow" %></li>
+          <% if github_enabled? %>
+            <li><%= link_to 'Create From GitHub', user_projects_github_repositories_path, :rel => "nofollow" %></li>
+          <% end %>
+          <% if bitbucket_enabled? %>
+            <li><%= link_to 'Create From Bitbucket', user_projects_bitbucket_repositories_path, :rel => "nofollow" %></li>
+          <% end %>
+          <% if stash_enabled? %>
+            <li><%= link_to 'Create From Stash', user_projects_stash_repositories_path, :rel => "nofollow" %></li>
+          <% end %>
+          <li><%= link_to 'Create From URL', new_user_project_path, :rel => "nofollow" %></li>
+          <li><%= link_to 'Create From Upload', user_projects_upload_path, :rel => "nofollow" %></li>
+        </ul>
       <% else %>
         <%= render '/shared/signup_ad' %>
       <% end %>
     </div>
-
   </div>
-
 </div>

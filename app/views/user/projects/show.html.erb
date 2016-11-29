@@ -7,11 +7,10 @@
   <%= render "/shared/dialog_mute" %>
   <%= render "/shared/dialog_mute_security" %>
 
-  <div class="col-md-3" >
+  <div class="col-md-3 navbar_container" >
     <% if @organisation %>
       <%= render "/organisations/navi" %>
     <% else %>
-
       <% if !Settings.instance.environment.to_s.eql?('enterprise') && request.original_url.to_s.match("@").nil? %>
         <div id='div-gpt-ad-1407836165464-0'>
           <script type='text/javascript'>
@@ -21,7 +20,6 @@
           </script>
         </div>
       <% end %>
-
     <% end %>
   </div>
 
