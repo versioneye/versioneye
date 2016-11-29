@@ -187,7 +187,7 @@ class UsersController < ApplicationController
     user = User.by_verification(@verification).first
     if @verification.nil? or user.nil?
       render text: "Verification code is wrong, malformed or doesnt exist. If
-      it's mistake, please send feedback to our customer support.",
+      it's mistake, please send feedback to support@versioneye.com.",
              layout: "application"
       return false
     end
@@ -204,7 +204,7 @@ class UsersController < ApplicationController
     user = User.by_verification(verification_code).first
 
     if user.nil?
-      flash[:error] = "Wrong verification code. If it's mistake, please send feedback to our customer support."
+      flash[:error] = "Wrong verification code. If it's mistake, please send feedback to support@versioneye.com."
       has_failure = true
     elsif password.empty? or password != password2
       flash[:error] = "Passwords don't match."
