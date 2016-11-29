@@ -36,6 +36,16 @@
       </div>
 
       <div class="form-group">
+        <%= label_tag :fcomment, "My profile shows up in autocomplete fields?", :class => "control-label", :for => "include_in_autocomplete", :style => "width: 300px" %>
+        <div class="controls" style="margin-left: 305px;">
+          <select name="include_in_autocomplete" class="form-control" >
+            <option value="yes" <%= "selected" if @user.include_in_autocomplete == true %>  >Yes</option>
+            <option value="no"  <%= "selected" if @user.include_in_autocomplete == false %> >No</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
         <%= label_tag :password, "Password", :class => "control-label", :for => "password", :style => "width: 300px" %>
         <div class="controls" style="margin-left: 305px;">
           <%= password_field_tag :password, "", :id => "password", :class => "form-control" %>

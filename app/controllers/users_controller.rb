@@ -230,10 +230,10 @@ class UsersController < ApplicationController
 
   def autocomplete
     term = params[:term]
-    if term.nil?
+    if term.to_s.empty?
       render json: [] and return
     end
-    matched_users = UserService.search(term)
+    matched_users = UserService.search( term )
     render json: format_autocompletion( matched_users )
   end
 

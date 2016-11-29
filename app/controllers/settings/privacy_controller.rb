@@ -14,9 +14,10 @@ class Settings::PrivacyController < ApplicationController
     user = current_user
     user.privacy_products = privacy_products
     user.privacy_comments = privacy_comments
+    user.include_in_autocomplete = validate_autocomplete params[:include_in_autocomplete]
     if password.nil? || password.empty?
       flash[:error] = 'Please type in the password!'
-    elsif User.authenticate(current_user.email, password).nil?
+    elsif User.authenticate( current_user.email, password ).nil?
       flash[:error] = 'The password is wrong. Please try again.'
     elsif user.save
       flash[:success] = 'Profile updated.'
@@ -32,6 +33,12 @@ class Settings::PrivacyController < ApplicationController
       return 'everybody' if value.nil? || value.empty?
       return value if value.eql?('everybody') || value.eql?('nobody') || value.eql?('ru')
       'everybody'
+    end
+
+    def validate_autocomplete value
+      return true if value.to_s.empty?
+      return true if value.to_s.eql?('yes')
+      return false
     end
 
 end
