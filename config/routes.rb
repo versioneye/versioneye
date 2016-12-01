@@ -100,9 +100,9 @@ Versioneye::Application.routes.draw do
 
   resources :authors,  :constraints => { :id => /[^\/]+/}
 
-  resources :keywords, :constraints => { :id => /[^\/]+/ }
-
   resources :pullrequests, :constraints => { :id => /[^\/]+/ }
+
+  get '/keywords/:id', :to => 'keywords#show', :constraints => { :id => /[^\/]+/ }
 
   get  '/enterprise',          :to => 'enterprise#show'
   post '/enterprise',          :to => 'enterprise#create', :as => 'enterprise_create'
