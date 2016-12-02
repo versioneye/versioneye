@@ -500,20 +500,25 @@ class User::ProjectsController < ApplicationController
 
 
   def team
-    id        = params[:id]
-    team_name = params[:team_name]
+    project_id = params[:id]
+    team_names = params[:team_names]
     organisation = @project.organisation
     if OrganisationService.allowed_to_assign_teams?( organisation, current_user )
-      team = organisation.team_by team_name
-      @project.teams = [team]
+      @project.teams = []
+      team_names.each do |tname|
+        team = organisation.team_by tname
+        next if team.nil?
+
+        @project.teams.push( team )
+      end
       if @project.save
-        flash[:success] = "Project is assigned to #{team_name}."
-        Auditlog.add current_user, "Project", @project.ids, "Project was assigned to team `#{team_name}`."
+        flash[:success] = "Project is assigned to #{team_names}."
+        Auditlog.add current_user, "Project", @project.ids, "Project was assigned to teams `#{team_names}`."
       end
     else
       flash[:error] = "Something went wrong. Please try again later."
     end
-    redirect_to "/user/projects/#{id}#tab-settings"
+    redirect_to "/user/projects/#{project_id}#tab-settings"
   rescue => e
     flash[:error] = "An error occured (#{e.message}). Please contact the VersionEye Team."
     Rails.logger.error e.message

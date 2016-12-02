@@ -16,6 +16,16 @@ class TeamsController < ApplicationController
   end
 
 
+  def update
+    @team = Team.where(:name => params[:id], :organisation_id => @organisation.ids).first
+    @team.version_notifications  = params[:team][:version_notifications]
+    @team.license_notifications  = params[:team][:license_notifications]
+    @team.security_notifications = params[:team][:security_notifications]
+    @team.save
+    redirect_to :back
+  end
+
+
   def show
     @team = Team.where(:name => params[:id], :organisation_id => @organisation.ids).first
   end
@@ -49,7 +59,7 @@ class TeamsController < ApplicationController
     redirect_to organisation_team_path( @organisation, @team )
   end
 
-
+  # Delete the team
   def delete
     @team = Team.where(:name => params[:id], :organisation_id => @organisation.ids).first
     if @team.name.eql?( Team::A_OWNERS )
@@ -59,5 +69,6 @@ class TeamsController < ApplicationController
     end
     redirect_to organisation_teams_path(@organisation)
   end
+
 
 end

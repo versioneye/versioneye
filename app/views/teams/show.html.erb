@@ -12,6 +12,35 @@
   <div class="content" >
 
     <p>
+      Which kind of notifications should this team receive?
+    </p>
+    <%= form_for(@team, url: organisation_team_path(@organisation, @team)) do |f| %>
+      <input name="_method" type="hidden" value="patch" />
+      <div class="form-group">
+        <%= f.check_box :version_notifications, :style => "vertical-align: top;", :id => "version_notifications" %>
+        <label for="version_notifications" style="display: inline; font-size: 12px; margin-right: 15px;">
+          Outdated versions
+        </label>
+        <%= f.check_box :license_notifications, :style => "vertical-align: top;", :id => "license_notifications" %>
+        <label for="license_notifications" style="display: inline; font-size: 12px; margin-right: 15px;">
+          License violations
+        </label>
+        <%= f.check_box :security_notifications, :style => "vertical-align: top;", :id => "security_notifications" %>
+        <label for="security_notifications" style="display: inline; font-size: 12px; margin-right: 15px;">
+          Security vulnerabilities
+        </label>
+      </div>
+      <div class="form-group">
+        <div class="control-label"></div>
+        <div class="controls">
+          <%= f.submit "Save", :class => "btn btn-large btn-primary" %>
+        </div>
+      </div>
+    <% end %>
+
+    <hr/>
+
+    <p>
       Just start typing and add as many users to your Team as you want.
     </p>
 
