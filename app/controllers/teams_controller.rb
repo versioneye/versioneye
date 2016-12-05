@@ -21,7 +21,18 @@ class TeamsController < ApplicationController
     @team.version_notifications  = params[:team][:version_notifications]
     @team.license_notifications  = params[:team][:license_notifications]
     @team.security_notifications = params[:team][:security_notifications]
-    @team.save
+    @team.monday    = params[:team][:monday]
+    @team.tuesday   = params[:team][:tuesday]
+    @team.wednesday = params[:team][:wednesday]
+    @team.thursday  = params[:team][:thursday]
+    @team.friday    = params[:team][:friday]
+    @team.saturday  = params[:team][:saturday]
+    @team.sunday    = params[:team][:sunday]
+    if @team.save
+      flash[:success] = "Team settings saved successfully."
+    else
+      flash[:error] = "Something went wrong. Please contact the VersionEye team."
+    end
     redirect_to :back
   end
 
