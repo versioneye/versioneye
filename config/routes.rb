@@ -248,7 +248,6 @@ Versioneye::Application.routes.draw do
         get  'visual'
         post 'merge'
         get  'unmerge'
-        post 'save_period'
         post 'save_visibility'
         post 'save_whitelist'
         post 'save_cwl'

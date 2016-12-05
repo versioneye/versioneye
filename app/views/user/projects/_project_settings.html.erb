@@ -1,21 +1,5 @@
 
   <div style="margin-top: 20px;" id="settings_area">
-    <form action="<%= save_period_user_project_path(@project) %>" method="post" class="form-inline" >
-      <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
-      <div>
-        How often do you want us to check your project's dependencies? We will send you an email notification whenever we check your dependencies.
-      </div>
-      <div class="form-group">
-        <select name="period" class="form-control" >
-          <option value="<%= Project::A_PERIOD_DAILY %>"   <%= "selected" if @project.period == Project::A_PERIOD_DAILY   %> >Daily</option>
-          <option value="<%= Project::A_PERIOD_WEEKLY %>"  <%= "selected" if @project.period == Project::A_PERIOD_WEEKLY  %> >Weekly</option>
-          <option value="<%= Project::A_PERIOD_MONTHLY %>" <%= "selected" if @project.period == Project::A_PERIOD_MONTHLY %> >Monthly</option>
-          <option value="NEVER" <%= "selected" if @project.period == 'NEVER' %> >Never</option>
-        </select>
-      </div>
-      <button type="submit" class="btn btn-primary" >Save</button>
-    </form>
-    <br/>
 
     <form action="<%= save_visibility_user_project_path(@project) %>" method="post" class="form-inline" >
       <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
@@ -26,22 +10,6 @@
         <select name="visibility" class="form-control" >
           <option value="private"  <%= "selected" if !@project.public %> >Only visible to project collaborators</option>
           <option value="public"   <%= "selected" if  @project.public %> >Visible to everybody who knows the project URL</option>
-        </select>
-      </div>
-      <button type="submit" class="btn btn-primary" >Save</button>
-    </form>
-    <br/>
-
-    <form action="<%= save_notify_after_api_update_user_project_path(@project) %>" method="post" class="form-inline" >
-      <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
-      <div>
-        Do you want receive email notifications whenever the dependency file for this project changes?
-        This might happen through the VersionEye API, GitHub or Maven integration.
-      </div>
-      <div class="form-group" class="form-control" >
-        <select name="notify" class="form-control" >
-          <option value="notify"  <%= @project.notify_after_api_update.to_s.eql?('true')  ? 'selected' : '' %> >Notify after update via API</option>
-          <option value="silent"  <%= @project.notify_after_api_update.to_s.eql?('false') ? 'selected' : '' %> >Stay silent</option>
         </select>
       </div>
       <button type="submit" class="btn btn-primary" >Save</button>

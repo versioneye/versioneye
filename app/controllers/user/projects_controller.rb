@@ -1,7 +1,7 @@
 class User::ProjectsController < ApplicationController
 
   before_filter :authenticate,  :except => [:show, :badge, :transitive_dependencies, :status, :lwl_export, :lwl_csv_export]
-  before_filter :collaborator?, :only   => [:add_collaborator, :save_period, :save_visibility, :save_whitelist, :save_cwl, :update, :update_name, :destroy, :transfer, :team]
+  before_filter :collaborator?, :only   => [:add_collaborator, :save_visibility, :save_whitelist, :save_cwl, :update, :update_name, :destroy, :transfer, :team]
   before_filter :pdf_export_permission?, :only => [:lwl_export, :lwl_csv_export, :sec_export]
   before_filter :load_orga, :only => [:show, :new, :create, :upload, :destroy]
 
@@ -373,21 +373,6 @@ class User::ProjectsController < ApplicationController
     flash[:error] = "ERROR: (#{e.message})."
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join('\n')
-  end
-
-
-  def save_period
-    period = params[:period]
-    url = "/user/projects/#{@project.id.to_s}#tab-settings"
-    old_period = @project.period
-    @project.period = period
-    if @project.save
-      flash[:success] = "Status saved."
-      Auditlog.add current_user, "Project", @project.ids, "Changed period from `#{old_period}` to `#{period}`"
-    else
-      flash[:error] = "Something went wrong. Please try again later."
-    end
-    redirect_to url
   end
 
 
