@@ -254,7 +254,6 @@ Versioneye::Application.routes.draw do
         post 'transfer'
         post 'team'
         post 'transitive_dependencies'
-        post 'save_notify_after_api_update'
         post 'reparse'
         post 'followall'
         post 'update_name'

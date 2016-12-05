@@ -406,27 +406,6 @@ class User::ProjectsController < ApplicationController
   end
 
 
-  def save_notify_after_api_update
-    id     = params[:id]
-    notify = params[:notify]
-    @project = Project.find_by_id id
-    old_notify_after_api_update = @project.notify_after_api_update
-    url = "/user/projects/#{@project.id.to_s}#tab-settings"
-    if notify.eql?('notify')
-      @project.notify_after_api_update = true
-    else
-      @project.notify_after_api_update = false
-    end
-    if @project.save
-      flash[:success] = "We saved your changes."
-      Auditlog.add current_user, "Project", @project.ids, "Changed notify_after_api_update from `#{old_notify_after_api_update}` to `#{@project.notify_after_api_update}`"
-    else
-      flash[:error] = "Something went wrong. Please try again later."
-    end
-    redirect_to url
-  end
-
-
   def save_whitelist
     id        = params[:id]
     list_name = params[:whitelist]
