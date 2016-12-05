@@ -380,27 +380,19 @@ class User::ProjectsController < ApplicationController
     visibility = params[:visibility]
     url = "/user/projects/#{@project.id.to_s}#tab-settings"
     old_visibility = @project.public
-    if visibility.eql? "public"
-      @project.public = true
-    else
-      @project.public = false
-    end
-    user = current_user
-
-    free_plan = true
     orga = @project.organisation
-    if orga
-      free_plan = orga.plan.nil? || orga.plan.price.to_i == 0 || orga.plan.name_id.eql?(Plan::A_PLAN_FREE)
-    end
 
-    if @project.public == false && free_plan == true && Rails.env.enterprise? == false
+    if @project.change_visibility_allowed? == false
       flash[:warning] = "To keep your project visible only for collaborators you need a paid plan. Please upgrade your subscription."
       url = plan_organisation_path( orga ) if orga
-    elsif @project.save
-      flash[:success] = "We saved your changes."
-      Auditlog.add current_user, "Project", @project.ids, "Changed visibility.public from `#{old_visibility}` to `#{@project.public}`"
     else
-      flash[:error] = "Something went wrong. Please try again later."
+      @project.public = visibility.eql?("public")
+      if @project.save
+        flash[:success] = "Your changes are saved successfully."
+        Auditlog.add current_user, "Project", @project.ids, "Changed visibility.public from `#{old_visibility}` to `#{@project.public}`"
+      else
+        flash[:error] = "Something went wrong. Please try again later."
+      end
     end
     redirect_to url
   end
