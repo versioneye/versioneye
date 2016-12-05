@@ -382,10 +382,7 @@ class User::ProjectsController < ApplicationController
     old_visibility = @project.public
     orga = @project.organisation
 
-    if @project.change_visibility_allowed? == false
-      flash[:warning] = "To keep your project visible only for collaborators you need a paid plan. Please upgrade your subscription."
-      url = plan_organisation_path( orga ) if orga
-    else
+    if orga.change_visibility_allowed? == true
       @project.public = visibility.eql?("public")
       if @project.save
         flash[:success] = "Your changes are saved successfully."
@@ -393,6 +390,9 @@ class User::ProjectsController < ApplicationController
       else
         flash[:error] = "Something went wrong. Please try again later."
       end
+    else
+      flash[:warning] = "To keep your project visible only for collaborators you need a paid plan. Please upgrade your subscription."
+      url = plan_organisation_path( orga ) if orga
     end
     redirect_to url
   end
