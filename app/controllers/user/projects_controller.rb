@@ -569,13 +569,9 @@ class User::ProjectsController < ApplicationController
         return false
       end
 
-      plan = orga.plan
-      if plan.nil? || plan.price.to_i < 22
+      if orga.pdf_exports_allowed?
         flash[:warning] = "For the PDF/CSV export you need a higher plan. Please upgrade your subscription."
-        id      = params[:id]
-        project = ProjectService.find( id )
-        orga    = project.organisation
-        redirect_to plan_organisation_path(orga)
+        redirect_to plan_organisation_path( orga )
         return false
       end
       return true
