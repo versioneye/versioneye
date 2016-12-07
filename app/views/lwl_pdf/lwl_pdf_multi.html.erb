@@ -81,8 +81,8 @@
             </p>
 
             <table class="list">
-              <thead>
-                <tr>
+              <thead style="display: table-header-group">
+                <tr style="page-break-inside: avoid">
                   <td class="left">Status</td>
                   <td class="left">Component</td>
                   <td class="left">Version</td>
@@ -92,7 +92,7 @@
               <tbody>
                 <% [:whitelisted, :unknown, :violated].each do |key| %>
                   <% project.lwl_pdf_list[key].each do |dep| %>
-                    <tr>
+                    <tr style="page-break-inside: avoid">
                       <td class="left"> <%= key.to_s %> </td>
                       <td class="left">
                         (<%= dep[:language] %>) <%= dep[:component] %>
