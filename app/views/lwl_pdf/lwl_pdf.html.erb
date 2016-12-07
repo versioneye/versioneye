@@ -63,7 +63,6 @@
       .small{
         font-size: 10px;
       }
-      thead th { height: 2.1cm}
       thead { display: table-header-group }
       tfoot { display: table-row-group }
       tr { page-break-inside: avoid }
@@ -73,7 +72,7 @@
     <div class="container">
 
       <p>
-        <b>Date:</b> <%= DateTime.now.strftime("%d.%m.%Y") %> <br/>
+        <b>Date:</b> <%= DateTime.now.strftime("%b %d, %Y - %I:%m %p") %> <br/>
       </p>
 
       <div>
