@@ -29,7 +29,7 @@ gem 'redcarpet', '3.3.4'
 gem 'font-awesome-sass', '~> 4.6.2'
 
 group :development do
-  gem 'psych'             , '~> 2.1.0'
+  gem 'psych'             , '~> 2.2.2'
   gem 'terminal-notifier' , '~> 1.7.1'
   gem 'fakes3'            , '~> 0.2.1'
 end
@@ -48,11 +48,11 @@ group :test do
   gem 'rspec-rails'       , '~> 3.5.0'
   gem 'rspec-mocks'       , '~> 3.5.0'
   gem 'rspec_junit_formatter', '0.2.3'
-  gem 'capybara'          , '~> 2.10.1'
+  gem 'capybara'          , '~> 2.11.0'
   gem 'capybara-firebug'  , '~> 2.1.0'
   gem 'selenium-webdriver', '~> 2.53.3'
   gem 'vcr'               , '3.0.3',  :require => false
-  gem 'webmock'           , '~> 2.1.0', :require => false
+  gem 'webmock'           , '~> 2.3.1', :require => false
   gem "fakeweb"           , '~> 1.3'
   gem 'database_cleaner'  , '~> 1.5.1'
   gem 'factory_girl'      , '~> 4.7.0'
