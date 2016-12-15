@@ -34,11 +34,17 @@
     <% if defined?( @organisation ) && @organisation %>
       <div style="font-size: 12px;">
         <% if project.teams && !project.teams.empty? %>
-          <% team = project.teams.first %>
-          Team: <%= link_to team.name, organisation_team_path(@organisation, team) %> 
+          <% tcount = project.teams.count %>
+          <% z = 1 %>
+          Teams: [
+            <% project.teams.each do |team| %>
+              <%= link_to team.name, organisation_team_path(@organisation, team) %><% if z < tcount %><%= ", " %><% end %>
+              <% z += 1 %>
+            <% end %>
+          ]
         <% end %>
         <% if project.user %>
-          Created by: <%= link_to project.user.fullname, user_path(project.user) %> 
+          Created by: <%= link_to project.user.fullname, user_path(project.user) %>
         <% end %>
       </div>
     <% end %>

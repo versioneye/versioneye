@@ -100,8 +100,15 @@
                     : <%= val[:project_version] %>
                   <% end %>
                   <% if !val[:project_teams].to_s.empty? %>
+                    <% tcount = val[:project_teams].count %>
+                    <% z = 1 %>
                     <div style="font-size: 12px;">
-                      Team: <%= link_to val[:project_teams], organisation_team_path(:organisation_name => @organisation.name, :id => val[:project_teams]) %>
+                      Teams: [
+                        <% val[:project_teams].each do |team| %>
+                          <%= link_to team, organisation_team_path(:organisation_name => @organisation.name, :id => team) %><% if z < tcount %><%= ", " %><% end %>
+                          <% z += 1 %>
+                        <% end %>
+                      ]
                     </div>
                   <% end %>
                 </td>
