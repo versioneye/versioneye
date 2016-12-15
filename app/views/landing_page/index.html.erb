@@ -74,9 +74,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="intro-message">
-                       <h1>Version<span style="color: orange;">Eye</span></h1>
+                       <h1>VersionEye</h1>
                        <h3>
-                        notifies you about out-dated dependencies, security vulnerabilities and license violations
+                        notifies you about <span style="color: orange;">out-dated dependencies</span>, <span style="color: red;">security vulnerabilities</span> and <span style="color: red;">license violations</span>
                         in your Git repositories
                        </h3>
                     </div>
@@ -89,18 +89,18 @@
     </div>
     <!-- /.intro-header -->
 
+
     <div class="content-section-a">
         <%= render "shared/who_is_using_it" %>
     </div>
 
     <div class="content-section-b">
-        <%= render "shared/feature_screenshots" %>
+        <%= render "shared/feature_package_managers" %>
     </div>
 
     <div class="content-section-a">
         <%= render "shared/feature_security" %>
     </div>
-
 
     <div class="content-section-b">
         <%= render "shared/feature_license" %>
@@ -111,10 +111,6 @@
         <%= render "shared/feature_version" %>
     </div>
 
-
-    <div class="content-section-b">
-        <%= render "shared/feature_package_managers" %>
-    </div>
 
     <% if Rails.env.enterprise? != true %>
         <div class="content-section-b lp-video">

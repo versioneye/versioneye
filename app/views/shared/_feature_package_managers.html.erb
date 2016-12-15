@@ -1,29 +1,38 @@
 <div class="container">
 <div class="row">
     <div class="col-lg-12">
-        <h2>Package Managers</h2>
+        <h2>How does it work?</h2>
 
         <p class="lead">
-            VersionEye is based on package managers. The idea behind VersionEye is that it can monitor your package managers project file(s) on GitHub/Bitbucket/Stash. That way VersionEye knows which open source dependencies you are using and based on that it can send you notifications to new versions, license violations and security vulnerabilities.
+            VersionEye is based on package managers. The idea behind VersionEye is that it monitors your package managers project file(s) on GitHub/Bitbucket/Stash.
+            That way VersionEye knows which open source dependencies you are using and based on that it can send you notifications to <b>new versions</b>, <b>license violations</b> and <b>security vulnerabilities</b>.
         </p>
+
         <p class="lead">
             Currently these package managers are supported:
         </p>
+
         <ul style="font-weight: normal; font-size: 1.3em;">
-            <li><a href="https://getcomposer.org/">Composer</a> (PHP)</li>
-            <li><a href="https://bundler.io/">Bundler</a> (Ruby)</li>
+            <li><a href="https://getcomposer.org/">Composer</a> (PHP). Try <a href="http://digitalkaoz.net/versioneye-php/">VersionEye-PHP</a>.</li>
+            <li><a href="https://bundler.io/">Bundler</a> (Ruby). Try <a href="https://github.com/versioneye/veye">veye</a>.</li>
             <li><a href="https://pypi.python.org/pypi/pip/">PIP</a> (Python)</li>
-            <li><a href="https://www.npmjs.org/">NPM</a> (Node.JS)</li>
+            <li><a href="https://www.npmjs.org/">NPM</a> (Node.JS). Try the <a href="https://www.npmjs.com/package/versioneye-update">VersionEye NPM Module</a>.</li>
             <li><a href="http://bower.io/">Bower</a> (JavaScript)</li>
             <li><a href="http://cocoapods.org/">CocoaPods</a> (Objective-C)</li>
-            <li><a href="http://maven.apache.org/">Maven</a> (Java). Try the <a href="https://github.com/versioneye/versioneye_maven_plugin">plugin</a>.</li>
-            <li><a href="http://www.scala-sbt.org/">SBT</a> (Scala). Try the <a href="https://github.com/versioneye/versioneye_sbt_plugin">plugin</a>.</li>
-            <li><a href="http://www.gradleware.com/">Gradle</a> (Groovy). Try the <a href="https://github.com/stempler/gradle-versioneye-plugin">plugin</a>.</li>
+            <li><a href="http://maven.apache.org/">Maven</a> (Java). Try the <a href="https://github.com/versioneye/versioneye_maven_plugin">VersionEye Maven Plugin</a>.</li>
+            <li><a href="http://www.scala-sbt.org/">SBT</a> (Scala). Try the <a href="https://github.com/versioneye/versioneye_sbt_plugin">VersionEye SBT Plugin</a>.</li>
+            <li><a href="http://www.gradleware.com/">Gradle</a> (Groovy). Try the <a href="https://github.com/stempler/gradle-versioneye-plugin">VersionEye Gradle Plugin</a>.</li>
             <li><a href="http://leiningen.org/">Leiningen</a> (Clojure)</li>
             <li><a href="https://www.nuget.org/">Nuget</a> (Microsoft .NET platform)</li>
             <li><a href="https://www.biicode.com/">Biicode</a> (C/C++)</li>
             <li><a href="http://berkshelf.com/">Berkshelf</a> (Chef)</li>
         </ul>
+
+        <p class="lead" style="padding-top: 10px;">
+            The majority of our community is using VersionEye to monitor their project files (Gemfile, package.json, composer.json, pom.xml, Podfile ...) directly on GitHub or Bitbucket. If your code is not on GitHub or Bitbucket,
+            simply use the native VersionEye plugin for your build tool or use the <a href="/api">VersionEye API</a> directly.
+            For a one time scan you can simply upload your project file in the <a href="/signin">login area</a>.
+        </p>
 
     </div>
 </div>
