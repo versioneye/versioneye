@@ -218,3 +218,15 @@ div#slider figure {
   font-size: 0;
   animation: 40s slidy infinite;
 }
+
+
+.lp-video {
+  display: none;
+}
+
+@media(min-width:590px) {
+  .lp-video {
+    display: block;
+  }
+}
+
