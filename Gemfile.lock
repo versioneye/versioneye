@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 1ec92472538d4d2b68d56f69198dd48beec622ad
-  tag: v10.11.6
+  revision: c0c7ed4eb0672c50703660904c0fe3ccb3945e46
+  tag: v10.11.7
   specs:
-    versioneye-core (10.11.6)
+    versioneye-core (10.11.7)
       actionmailer (~> 5.0.0.1)
       aws-sdk (~> 2.6.19)
       bundler (~> 1.13.0)
@@ -80,13 +80,13 @@ GEM
     amq-protocol (2.0.1)
     ansi (1.5.0)
     arel (7.1.4)
-    aws-sdk (2.6.35)
-      aws-sdk-resources (= 2.6.35)
-    aws-sdk-core (2.6.35)
+    aws-sdk (2.6.36)
+      aws-sdk-resources (= 2.6.36)
+    aws-sdk-core (2.6.36)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.6.35)
-      aws-sdk-core (= 2.6.35)
+    aws-sdk-resources (2.6.36)
+      aws-sdk-core (= 2.6.36)
     aws-sigv4 (1.0.0)
     bourbon (4.2.7)
       sass (~> 3.4)
@@ -398,4 +398,4 @@ DEPENDENCIES
   will_paginate_mongoid (= 2.0.1)
 
 BUNDLED WITH
-   1.13.1
+   1.13.6
