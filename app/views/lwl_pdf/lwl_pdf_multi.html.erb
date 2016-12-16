@@ -126,6 +126,38 @@
         <% end %>
       <% end %>
 
+      <% if !license_libs.keys.empty? %>
+        <p>
+          Licenses used through all dependencies:
+        </p>
+        <table class="list">
+          <thead>
+            <tr>
+              <td class="left">License</td>
+              <td class="left">Status</td>
+              <td class="left">Components</td>
+            </tr>
+          </thead>
+          <tbody>
+            <% license_libs.keys.each do |key| %>
+              <tr>
+                <td class="left"> <%= key.to_s %> </td>
+                <td class="left">
+                  <% if lwl.include_license_substitute?( key ) %>
+                    whitelisted by license whitelist
+                  <% else %>
+                    whitelisted by component whitelist
+                  <% end %>
+                </td>
+                <td class="left">
+                  <%= license_libs[key].count %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+
       <p>
         <b>License Whitelist:</b> <%= lwl.name %> <span class="small">(<%= lwl.id %>)</span></br>
         <b>Bill of materials:</b>
@@ -148,35 +180,6 @@
             <div>- <%= component %> </div>
           <% end %>
         </p>
-      <% end %>
-
-      <% if !license_libs.keys.empty? %>
-        <table class="list">
-          <thead>
-            <tr>
-              <td class="left">License</td>
-              <td class="left">Status</td>
-              <td class="left">Components</td>
-            </tr>
-          </thead>
-          <tbody>
-            <% license_libs.keys.each do |key| %>
-              <tr>
-                <td class="left"> <%= key.to_s %> </td>
-                <td class="left">
-                  <% if lwl.include_license_substitute?( key ) %>
-                    whitelisted
-                  <% else %>
-                    not whitelisted
-                  <% end %>
-                </td>
-                <td class="left">
-                  <%= license_libs[key].count %>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
       <% end %>
 
     </div>
