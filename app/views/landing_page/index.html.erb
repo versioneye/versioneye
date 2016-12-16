@@ -106,19 +106,21 @@
         <%= render "shared/feature_license" %>
     </div>
 
-
     <div class="content-section-a">
         <%= render "shared/feature_version" %>
     </div>
 
+    <div class="content-section-b">
+        <%= render "shared/feature_pullrequests" %>
+    </div>
 
-    <% if Rails.env.enterprise? != true %>
-        <div class="content-section-b lp-video">
-            <div class="container" style="text-align: center;">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/z-rp2TT4aXQ" frameborder="0" allowfullscreen></iframe>
-            </div>
-        </div>
-    <% end %>
+    <div class="content-section-a">
+        <%= render "shared/feature_teams" %>
+    </div>
+
+    <div class="content-section-b">
+        <%= render "shared/feature_opensource" %>
+    </div>
 
 
     <div class="content-section-a">
