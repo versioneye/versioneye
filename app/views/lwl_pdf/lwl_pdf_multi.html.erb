@@ -75,6 +75,7 @@
         <b>Date:</b> <%= DateTime.now.strftime("%b %d, %Y - %I:%m %p") %> <br/>
       </p>
 
+      <% license_libs = {} %>
       <% if projects && !projects.empty? %>
         <% projects.each do |project| %>
           <div style="padding-top: 15px;">
@@ -114,6 +115,9 @@
                       </td>
                       <td class="left"> <%= dep[:license] %> </td>
                     </tr>
+                    <% license_libs[dep[:license]] = [] if license_libs[dep[:license]].nil? %>
+                    <% license_lib_val = "#{dep[:language]} / #{dep[:component]}" %>
+                    <% license_libs[dep[:license]].push( license_lib_val ) if !license_libs[dep[:license]].include?( license_lib_val ) %>
                   <% end %>
                 <% end %>
               </tbody>
@@ -144,6 +148,35 @@
             <div>- <%= component %> </div>
           <% end %>
         </p>
+      <% end %>
+
+      <% if !license_libs.keys.empty? %>
+        <table class="list">
+          <thead>
+            <tr>
+              <td class="left">License</td>
+              <td class="left">Status</td>
+              <td class="left">Components</td>
+            </tr>
+          </thead>
+          <tbody>
+            <% license_libs.keys.each do |key| %>
+              <tr>
+                <td class="left"> <%= key.to_s %> </td>
+                <td class="left">
+                  <% if lwl.include_license_substitute?( key ) %>
+                    whitelisted
+                  <% else %>
+                    not whitelisted
+                  <% end %>
+                </td>
+                <td class="left">
+                  <%= license_libs[key].count %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
       <% end %>
 
     </div>
