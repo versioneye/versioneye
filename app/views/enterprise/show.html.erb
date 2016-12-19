@@ -53,16 +53,18 @@
           <h2 >Which git repositories are supported?</h2>
           <div class="well-white" style="margin-bottom: 0px;" >
               <p class="lead">
-                VersionEye Enterprise can be connected with <a href="https://enterprise.github.com/">GitHub Enterprise</a>,
-                Atlassian <a href="https://www.atlassian.com/software/stash">Stash</a> and <a href="https://bitbucket.org/">Bitbucket</a>. That way it's possible to use the Git servers API as single sign on (OAuth)
-                for VersionEye Enterprise. <a href="https://about.gitlab.com/">GitLab</a> support is coming soon!
+                VersionEye can be connected with different git servers.
+                That way it's possible to use the Git servers API as single sign on (OAuth)
+                for VersionEye. Currently this git servers are supported:
               </p>
+              <ul style="font-weight: normal; font-size: 1.3em;">
+                <li><a href="https://enterprise.github.com/">GitHub Enterprise</a></li>
+                <li><a href="https://www.atlassian.com/software/stash">Atlassian Stash</a></li>
+                <li><a href="https://bitbucket.org/">Atlassian Bitbucket</a></li>
+              </ul>
               <p class="lead">
-                <%= image_tag "marketing/login_with_github_wb.png"%>
-                <%= image_tag "marketing/login_with_bitbucket_wb.png" %>
-                <%= image_tag "marketing/login_with_stash_wb.png", :style => "width: 262px;" %>
-              </p>
-              <p class="lead">
+                <a href="https://about.gitlab.com/">GitLab</a> support is coming soon!<br/>
+                <br/>
                 Simply turn on the switch for project files in git repositories
                 which should be monitored by VersionEye!
               </p>
@@ -82,7 +84,6 @@
 
     <div class="content-section-a">
       <div class="container">
-
         <h2 >How do I install VersionEye Enterprise?</h2>
         <div class="well-white" >
           <p class="lead">
@@ -103,11 +104,26 @@
             <%= image_tag "marketing/01-veye-global-settings.png", :class => "img-border img-rounded", :style => "width: 100%;" %>
           </p>
         </div>
-
       </div>
     </div>
 
     <div class="content-section-b">
+      <div class="container">
+        <h2 >How are software updates rolled out?</h2>
+        <div class="well-white" >
+          <p class="lead">
+            VersionEye is shipped as a set of Docker images. All Docker images are publicly
+            available at <a href="https://hub.docker.com/u/versioneye/">Docker Hub</a>.
+            Software Updates are provided as new Docker images. There is an update script in
+            the <a href="https://github.com/versioneye/ops_contrib">versioneye/ops_contrib</a> repository.
+            With that the newest VersionEye Docker images can be downloded any time, via a secure SSL
+            connection! <b>Updating software has never been easier!</b>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section-a">
       <div class="container">
         <h2>Which resources are needed for a VersionEye instance?</h2>
         <div class="well-white" >
@@ -133,7 +149,7 @@
     </div>
 
 
-    <div class="content-section-a">
+    <div class="content-section-b">
       <div class="container">
         <h2 >How to keep the database up-to-date?</h2>
         <div class="well-white" >
@@ -158,23 +174,6 @@
             the desired data into the local database. Depending on the number of the dependencies
             this can take a couple of minutes. Besides that there is a nightly sync, to keep the metadata
             for the local dependencies up-to-date.
-          </p>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="content-section-b">
-      <div class="container">
-        <h2 >How are software updates rolled out?</h2>
-        <div class="well-white" >
-          <p class="lead">
-            VersionEye is shipped as a set of Docker images. All Docker images are publicly
-            available at <a href="https://hub.docker.com/u/versioneye/">Docker Hub</a>.
-            Software Updates are provided as new Docker images. There is an update script in
-            the <a href="https://github.com/versioneye/ops_contrib">versioneye/ops_contrib</a> repository.
-            With that the newest VersionEye Docker images can be downloded any time, via a secure SSL
-            connection! <b>Updating software has never been easier!</b>
           </p>
         </div>
       </div>
