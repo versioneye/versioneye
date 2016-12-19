@@ -13,21 +13,13 @@
 
 </div>
 
-
     <div class="content-section-a">
-        <%= render "shared/feature_version" %>
-    </div>
-
-    <div class="content-section-b">
-        <%= render "shared/feature_license" %>
-    </div>
-
-    <div class="content-section-a">
-        <%= render "shared/feature_security" %>
-    </div>
-
-    <div class="content-section-b">
       <%= render "shared/who_is_using_it" %>
+    </div>
+
+
+    <div class="content-section-b">
+      <%= render "shared/feature_package_managers" %>
     </div>
 
 
@@ -50,8 +42,6 @@
         </div>
       </div>
     </div>
-
-
 
 
     <div class="content-section-b">
@@ -77,7 +67,7 @@
           </div>
         </div>
         <p class="lead">
-          <%= image_tag "marketing/git_repo_integration.png", :style => "margin-left: 1px;" %>
+          <%= image_tag "marketing/01-veye-git-integration.png", :style => "margin-left: 1px; width: 100%" %>
         </p>
         <p class="lead">
           Turn on the switch and receive daily email notifications
@@ -89,45 +79,41 @@
 
 
     <div class="content-section-a">
-      <%= render "shared/feature_package_managers" %>
-    </div>
-
-
-    <div class="content-section-b">
       <div class="container">
 
         <h2 >How do I install VersionEye Enterprise?</h2>
         <div class="well-white" >
           <p class="lead">
-            We provide VersionEye Enterprise as a virtual machine image. To be more exact,
-            we provide a <a href="http://www.vmware.com">VMWare</a> instance. All you need
-            is a <a href="http://www.vmware.com/products/player">VMWare Player</a> or
-            <a href="http://www.vmware.com/products/vsphere">VMWare vSphere</a> to start the instance.
+            VersionEye is completely open source! The source code repsoitories are on <a href="https://github.com/versioneye">GitHub</a> and every time we do a deployment to VersionEye.com,
+            new Docker images are build and published to <a href="https://hub.docker.com/u/versioneye/">Docker Hub</a>.
+            In this <a href="https://github.com/versioneye/ops_contrib">repository</a> you find a description
+            how to spin up your own VersionEye instance.
+<br/><br/>
             After the instance has booted successfully you can open a browser and navigate to the
-            IP address of the VM instance. On the default HTTP port 80 the VersionEye web
+            IP address of the instance. On the default HTTP port 80 the VersionEye web
             application will come up, where you can activate the instance with an valid API key.
           </p>
           <p class="lead">
             After activation you can login with admin/admin and connect VersionEye
-            Enterprise with your private SMTP, Repository and Git server.
+            instance with your private SMTP, LDAP, binary Repository and Git servers.
           </p>
           <p class="lead" style="text-align: center;">
-            <%= image_tag "marketing/versioneye_settings.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray; width: 700px;" %>
+            <%= image_tag "marketing/01-veye-global-settings.png", :class => "img-border img-rounded", :style => "width: 100%;" %>
           </p>
         </div>
 
       </div>
     </div>
 
-    <div class="content-section-a">
+    <div class="content-section-b">
       <div class="container">
-        <h2>Which resources are needed for the Enterprise VM?</h2>
+        <h2>Which resources are needed for a VersionEye instance?</h2>
         <div class="well-white" >
           <p class="lead">
             The minimum requirements are:
             <ul>
               <li>1 CPU 2.0 GHz</li>
-              <li>2 GB RAM</li>
+              <li>4 GB RAM</li>
               <li>20 GB HD</li>
             </ul>
           </p>
@@ -145,28 +131,28 @@
     </div>
 
 
-    <div class="content-section-b">
+    <div class="content-section-a">
       <div class="container">
         <h2 >How to keep the database up-to-date?</h2>
         <div class="well-white" >
           <p class="lead">
             <a href="https://www.versioneye.com">VersionEye.com</a> is monitoring
-            1.1M open source projects on a daily basis. The crawlers are running 24/7 to
-            keep our database in the cloud up-to-date. VersionEye Enterprise can crawl your
+            1.2 Million open source projects on a daily basis. The crawlers are running 24/7 to
+            keep our database in the cloud up-to-date. With your own VersionEye instance you can crawl your
             private repositories in-house, but then your are still missing all the open
             source libraries from the Internet. For sure you don't want to run &amp;
             maintain a huge crawling cluster in your company ;-) That's why there is a
-            sync mechanism between VersionEye Enterprise and VersionEye.com.
-            The Enterprise VM pulls data from the VersionEye.com API to keep your
+            sync mechanism between each VersionEye instance and VersionEye.com.
+            The self hosted VersionEye instance pulls data from the VersionEye.com API to keep the
             local database up-to-date.
           </p>
           <p style="text-align: center;">
-            <%= image_tag "marketing/VersionEyeEnterpriseArchitecture.png" %>
+            <%= image_tag "marketing/VersionEyeEnterpriseArchitecture.png", :style => "width: 100%;" %>
           </p>
-          <p class="lead">
-            When uploading a pom.xml (or any other project file) to the VersionEye Enterprise VM,
+          <p class="lead"><br/>
+            When uploading a pom.xml (or any other project file) to your VersionEye instance,
             all open source dependencies are displayed as unknown.
-            But in the background VersionEye Enterprise will resolve all dependencies via the VersionEye API and pull in
+            But in the background your instance will resolve all dependencies via the VersionEye API and pull in
             the desired data into the local database. Depending on the number of the dependencies
             this can take a couple of minutes. Besides that there is a nightly sync, to keep the metadata
             for the local dependencies up-to-date.
@@ -176,22 +162,16 @@
     </div>
 
 
-    <div class="content-section-a">
+    <div class="content-section-b">
       <div class="container">
         <h2 >How are software updates rolled out?</h2>
         <div class="well-white" >
           <p class="lead">
-            VersionEye is running on <a href="https://www.docker.com/">Docker</a>! Currently
-            the whole software for VersionEye and all the backend systems are distributed
-            over multiple Docker containers. On Port 9999 we provide a web interface to
-            manage the Docker containers.
-          </p>
-          <p style="text-align: center;">
-            <%= image_tag "marketing/versioneye-docker.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray; " %>
-          </p>
-          <p class="lead">
-            Updates are provided as new Docker containers. With a single click the current
-            Docker containers can be downloaded directly into the VM, via a secure SSL
+            VersionEye is shipped as a set of Docker images. All Docker images are publicly
+            available at <a href="https://hub.docker.com/u/versioneye/">Docker Hub</a>.
+            Software Updates are provided as new Docker images. There is an update script in
+            the <a href="https://github.com/versioneye/ops_contrib">versioneye/ops_contrib</a> repository.
+            With that the newest VersionEye Docker images can be downloded any time, via a secure SSL
             connection! <b>Updating software has never been easier!</b>
           </p>
         </div>
@@ -199,102 +179,23 @@
     </div>
 
 
-    <div class="content-section-b">
+    <div class="content-section-a">
       <div class="container">
         <h2 >Pricing</h2>
-  <div class="well-white" >
-    <p class="lead">
-      <div class="row">
-        <div class="col-md-5 col-xs-12 pull-left">
-          <table class="table table-striped">
-            <tr>
-              <th>Projects</th>
-              <th>Monthly</th>
-              <th>Yearly</th>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>200,00 €</td>
-              <td>2400,00 €</td>
-            </tr>
-            <tr>
-              <td>10</td>
-              <td>400,00 €</td>
-              <td>4.800,00 €</td>
-            </tr>
-            <tr>
-              <td>20</td>
-              <td>800,00 €</td>
-              <td>9.600,00 €</td>
-            </tr>
-            <tr>
-              <td>40</td>
-              <td>1.600,00 €</td>
-              <td>19.200,00 €</td>
-            </tr>
-            <tr>
-              <td>60</td>
-              <td>2.400,00 €</td>
-              <td>28.800,00 €</td>
-            </tr>
-            <tr>
-              <td>80</td>
-              <td>3.200,00 €</td>
-              <td>38.400,00 €</td>
-            </tr>
-            <tr>
-              <td>100</td>
-              <td>4.000,00 €</td>
-              <td>48.000,00 €</td>
-            </tr>
-            <tr>
-              <td>150</td>
-              <td>6.000,00 €</td>
-              <td>72.000,00 €</td>
-            </tr>
-            <tr>
-              <td>200</td>
-              <td>8.000,00 €</td>
-              <td>96.000,00 €</td>
-            </tr>
-            <tr>
-              <td><b>UNLIMITED</b></td>
-              <td>8.250,00 €</td>
-              <td>99.000,00 €</td>
-            </tr>
-          </table>
-        </div>
-        <div class="col-md-6 col-xs-12 pull-right">
-          <h4>30 Day Free Testing</h4>
+        <div class="well-white" >
           <p class="lead">
-            The VersionEye Enterprise VM can be tested for 30 days for free!
-          </p>
-          <h4>How do you define a project?</h4>
-          <p class="lead">
-            A project on VersionEye is currently the representation of a project file. For example a pom.xml or a Gemfile.
-            Maven multi module projects are counted as 1 project!
-          </p>
-          <h4>Updates</h4>
-          <p class="lead">
-            VersionEye provides all updates as Docker containers for free!
-          </p>
-          <h4>Server Limitations</h4>
-          <p class="lead">
-            This is the pricing for a one server installation. There are no limitations regarding CPUs and RAM.<br/><br/>
+            The pricing depends on the number of open source components you
+            want to sync every day to your private instance and the desired SLA.
+            If you are interested please fill out the form below and we will reach out to you.
           </p>
         </div>
-
-      </div>
-
-    </p>
-  </div>
       </div>
     </div>
 
 
 
 
-  <div class="content-section-a">
+  <div class="content-section-b">
       <div class="container">
 
         <div class="row">
