@@ -24,7 +24,7 @@
 
     <div class="content-section-a">
       <div class="container">
-        <h2 >Which repository servers are supported?</h2>
+        <h2 >Which binary repositories are supported?</h2>
         <div class="well-white" >
           <p class="lead">
             The whole point of VersionEye Enterprise is that it can crawl internal repositories,
@@ -32,12 +32,15 @@
             <a href="http://www.jfrog.com/open-source/#os-arti">Artifactory Enterprise</a>
             and other ones. That way VersionEye gets a complete list of <b>ALL</b> your dependencies!
             The open source dependencies AND your private components as well!
+            Currently we support:
           </p>
-          <p class="lead">
-            Currently we support <a href="http://www.sonatype.com/nexus">Nexus Pro</a> (Java),
-            <a href="http://www.jfrog.com/open-source/#os-arti">Artifactory Enterprise</a> (Java),
-            <a href="http://cocoapods.org/">CocoaPods</a> (Objective-C) and <a href="https://github.com/composer/satis">Satis</a> (PHP)!
-          </p>
+          <ul style="font-weight: normal; font-size: 1.3em;">
+            <li><a href="http://www.sonatype.com/nexus">Nexus Pro</a> (Java)</li>
+            <li><a href="http://www.jfrog.com/open-source/#os-arti">Artifactory Enterprise</a> (Java)</li>
+            <li><a href="https://archiva.apache.org">Apache Archiva</a> (Java)</li>
+            <li><a href="http://cocoapods.org/">CocoaPods</a> (Objective-C)</li>
+            <li><a href="https://github.com/composer/satis">Satis</a> (PHP)</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -47,7 +50,7 @@
       <div class="container">
 
         <div >
-          <h2 >Which Git servers are supported?</h2>
+          <h2 >Which git repositories are supported?</h2>
           <div class="well-white" style="margin-bottom: 0px;" >
               <p class="lead">
                 VersionEye Enterprise can be connected with <a href="https://enterprise.github.com/">GitHub Enterprise</a>,
@@ -60,7 +63,7 @@
                 <%= image_tag "marketing/login_with_stash_wb.png", :style => "width: 262px;" %>
               </p>
               <p class="lead">
-                Simply turn on the switch for project files in Git repositories
+                Simply turn on the switch for project files in git repositories
                 which should be monitored by VersionEye!
               </p>
           </div>
