@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: c0c7ed4eb0672c50703660904c0fe3ccb3945e46
-  tag: v10.11.7
+  revision: 4b44356c12262d2698cedcb8986b83d39f3f4315
+  tag: v10.12.0
   specs:
-    versioneye-core (10.11.7)
+    versioneye-core (10.12.0)
       actionmailer (~> 5.0.0.1)
       aws-sdk (~> 2.6.19)
       bundler (~> 1.13.0)
@@ -176,8 +176,8 @@ GEM
     mini_portile2 (2.1.0)
     minitest (5.10.1)
     mixlib-log (1.7.1)
-    mongo (2.4.0)
-      bson (~> 4.2.0)
+    mongo (2.4.1)
+      bson (>= 4.2.1, < 5.0.0)
     mongoid (6.0.3)
       activemodel (~> 5.0)
       mongo (~> 2.3)

@@ -16,7 +16,9 @@ class EnterpriseController < ApplicationController
     @ent_lead.name = params[:name]
     @ent_lead.email = params[:email]
     @ent_lead.note = params[:note]
-    if @ent_lead.save != true
+    if @ent_lead.save == true
+      LeadMailer.new_lead( @ent_lead ).deliver_now
+    else
       flash[:error] = "Something went wrong - #{@ent_lead.errors.full_messages.to_sentence}"
       redirect_to :back
     end
