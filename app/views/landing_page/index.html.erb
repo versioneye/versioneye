@@ -125,21 +125,10 @@
         <%= render "shared/feature_opensource" %>
     </div>
 
-
     <div class="content-section-a">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12" style="text-align: center;">
-            <%= form_tag(signup_path, :method => "GET", :style=>"margin: 0; padding: 0 0 0 10px;") do  %>
-              <div class="form-group">
-                <button type="submit" class="btn btn-lg btn-success" >Sign up for free</button>
-              </div>
-            <% end %>
-          </div>
-        </div>
-      </div>
-      <!-- /.container -->
+        <%= render "shared/feature_enterprise" %>
     </div>
+
 
     <div class="content-section-b">
       <div class="container">
@@ -149,8 +138,8 @@
           which are available through some kind of package manager. Meta information like security
           vulnerabilities, licenses, versions, descriptions, links and so on.
           Currently the VersionEye database contains meta information to more than 1.2 Million open source projects.
-          Each of this OS projects has a page at VersionEye where the collected meta information can be viewed.
-          Here are the most followed projects:
+          The VersionEye database is accessible through the <a href="/api">VersionEye API</a>.
+          Every open source project in our database has a page at VersionEye.com where the collected meta information can be viewed.
         </p>
         <h3 class="section-heading">Most followed libraries</h2>
         <% @most_followed.each_with_index do |prod, i| %>
