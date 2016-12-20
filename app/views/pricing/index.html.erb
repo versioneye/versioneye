@@ -51,6 +51,21 @@
   </div>
   <div class="col-md-4" >
     <ul class="pricing_ul">
+      <li class="pricing_head">Advanced</li>
+      <li class="pricing_price">€ 50 <span class="pricing_price_sm">/ Month</span></li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Collaborators:</span> Unlimited</li>
+      <li class="pricing_feature">Projects: 50</li>
+      <li class="pricing_feature"><span class="pricing_light_txt">API Calls / Hour: </span> 500</li>
+      <li class="pricing_feature">PDF Reports</li>
+      <li class="pricing_feature">CSV Reports</li>
+      <li class="pricing_feature"><%= render :partial => 'plan', :locals => { :plan_id => '04_large', :alignment => '' } %></li>
+    </ul>
+  </div>
+</div>
+
+<div class = "col2-left col2-right row">
+  <div class="col-md-4" >
+    <ul class="pricing_ul">
       <li class="pricing_head">Professional</li>
       <li class="pricing_price">€ 100 <span class="pricing_price_sm">/ Month</span></li>
       <li class="pricing_feature"><span class="pricing_light_txt">Collaborators:</span> Unlimited</li>
@@ -59,6 +74,30 @@
       <li class="pricing_feature">PDF Reports</li>
       <li class="pricing_feature">CSV Reports</li>
       <li class="pricing_feature"><%= render :partial => 'plan', :locals => { :plan_id => '04_xlarge', :alignment => '' } %></li>
+    </ul>
+  </div>
+  <div class="col-md-4" >
+    <ul class="pricing_ul">
+      <li class="pricing_head">Agency</li>
+      <li class="pricing_price">€ 250 <span class="pricing_price_sm">/ Month</span></li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Collaborators:</span> Unlimited</li>
+      <li class="pricing_feature">Projects: 250</li>
+      <li class="pricing_feature"><span class="pricing_light_txt">API Calls / Hour: </span> 2500</li>
+      <li class="pricing_feature">PDF Reports</li>
+      <li class="pricing_feature">CSV Reports</li>
+      <li class="pricing_feature"><%= render :partial => 'plan', :locals => { :plan_id => '04_xxlarge', :alignment => '' } %></li>
+    </ul>
+  </div>
+  <div class="col-md-4" >
+    <ul class="pricing_ul">
+      <li class="pricing_head">Enterprise</li>
+      <li class="pricing_price">€ 500 <span class="pricing_price_sm">/ Month</span></li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Collaborators:</span> Unlimited</li>
+      <li class="pricing_feature">Projects: 500</li>
+      <li class="pricing_feature"><span class="pricing_light_txt">API Calls / Hour: </span> 5000</li>
+      <li class="pricing_feature">PDF Reports</li>
+      <li class="pricing_feature">CSV Reports</li>
+      <li class="pricing_feature"><%= render :partial => 'plan', :locals => { :plan_id => '04_xxxlarge', :alignment => '' } %></li>
     </ul>
   </div>
 </div>
@@ -72,7 +111,7 @@
 <div class = "col2-left col2-right row" >
   <div class="col-md-12" >
     <ul class="pricing_ul">
-      <li class="pricing_head">Enterprise</li>
+      <li class="pricing_head">On-Premise Installation</li>
       <li class="pricing_feature"><span class="pricing_light_txt">100% privacy:</span> <i class="fa fa-check" style="color: #2ecc71;"></i></li>
       <li class="pricing_feature"><span class="pricing_light_txt">Self hosted behind your firewall:</span> <i class="fa fa-check" style="color: #2ecc71;"></i></li>
       <li class="pricing_feature"><span class="pricing_light_txt">LDAP &amp; Active Directory integration: </span> <i class="fa fa-check" style="color: #2ecc71;"></i></li>
@@ -84,13 +123,7 @@
       <li class="pricing_feature"><span class="pricing_light_txt">CI integration (Jenkins / Bamboo and more): </span> <i class="fa fa-check" style="color: #2ecc71;"></i></li>
       <li class="pricing_feature"><span class="pricing_light_txt">Sofware updates are provided as new Docker images: </span> <i class="fa fa-check" style="color: #2ecc71;"></i></li>
       <li class="pricing_feature"><span class="pricing_light_txt">Crawling private repositories (Maven / CocoaPods / Satis / NPM and more) : </span> <i class="fa fa-check" style="color: #2ecc71;"></i></li>
-      <li class="pricing_feature"><span class="pricing_light_txt"><a style="font-size: 20px;" href="mailto:support@versioneye.com">contact us</a></li>
+      <li class="pricing_feature"><span class="pricing_light_txt"><a style="font-size: 20px;" href="/enterprise">Learn more</a></li>
     </ul>
   </div>
-</div>
-
-<div class = "col2-left col2-right" style="padding-top: 15px;">
-  <p style="margin-bottom: 30px; font-size: 18px;">
-    VersionEye is completely <a href="https://github.com/versioneye/">open source</a>. Here is described how to spin up <a href="https://github.com/versioneye/ops_contrib">your own VersionEye instance</a>. Feel free to <a href="mailto:support@versioneye.com">contact us</a> for support.
-  </p>
 </div>
