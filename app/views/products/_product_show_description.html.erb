@@ -6,7 +6,7 @@
   </h2>
 
   <% if !Settings.instance.environment.to_s.eql?('enterprise') && request.original_url.to_s.match("@").nil? %>
-    <p>
+    <div class="ad_prod_desc">
       <div id='div-gpt-ad-1407836245189-0'>
         <script type='text/javascript'>
           googletag.cmd.push(function() {
@@ -14,7 +14,7 @@
           });
         </script>
       </div>
-    </p>
+    </div>
   <% end %>
 
   <div style="margin-bottom: 20px;" >

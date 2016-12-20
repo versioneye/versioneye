@@ -188,3 +188,13 @@ h3.side_header{
 .label_bold{
   font-weight: bold;
 }
+
+.ad_prod_desc {
+  display: none;
+}
+
+@media(min-width:990px) {
+  .ad_prod_desc {
+    display: block;
+  }
+}
