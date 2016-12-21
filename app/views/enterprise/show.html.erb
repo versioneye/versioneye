@@ -12,17 +12,13 @@
 
 </div>
 
+
     <div class="content-section-a">
       <%= render "shared/who_is_using_it" %>
     </div>
 
 
     <div class="content-section-b">
-      <%= render "shared/feature_package_managers" %>
-    </div>
-
-
-    <div class="content-section-a">
       <div class="container">
         <h2 >Which binary repositories are supported?</h2>
         <div class="well-white" >
@@ -46,7 +42,7 @@
     </div>
 
 
-    <div class="content-section-b">
+    <div class="content-section-a">
       <div class="container">
 
         <div >
@@ -71,13 +67,44 @@
           </div>
         </div>
         <p class="lead">
-          <%= image_tag "marketing/01-veye-git-integration.png", :style => "margin-left: 1px; width: 100%" %>
+          <%=  %>
+          <%= link_to image_tag("marketing/01-veye-git-integration.png", :style => "margin-left: 1px; width: 100%"), asset_path("marketing/01-veye-git-integration.png") %>
         </p>
         <p class="lead">
           Turn on the switch and receive daily email notifications
           about your dependencies. <br/><b>It was never easier to stay up-to-date!</b>
         </p>
 
+      </div>
+    </div>
+
+
+    <div class="content-section-b">
+      <div class="container">
+        <h2 >How is the integration with CI systems?</h2>
+        <div class="well-white" >
+          <p class="lead">
+            For all major build tools there is a native VersionEye plugin.
+            The native plugins are resolving the dependencies localy and only send the results
+            to the VersionEye API to create or update a VersionEye project.
+            Specially for JVM projects where the dependencies are distributed over multiple
+            files it is always recommended to use the native VersionEye plugin for the corresponding
+            build tool.
+          </p>
+          <p class="lead">
+            Pretty much all plugins have goals which check the response for security vulnerabilities
+            &amp; license violations and exit with an non 0 exit code if something is wrong.
+            The VersionEye Maven Plugin for example has a goal "securityAndLicenseCheck" which
+            checks all dependencies for security vulnerabilities and license violations.
+            If that goal is called on an continuous integration server it breaks the build if a dependency has an issue.
+            For Maven reactor builds this goal can be executed on the parent pom.
+            That works with all kind of CI systems like Jenkins, Bamboo, TravisCI, CodeShip, CircleCI and many more.
+          </p>
+          <pre class="prettyprint"><code>mvn versioneye:securityAndLicenseCheck</code></pre>
+          <p class="lead" style="text-align: center;">
+            <%= link_to image_tag("marketing/01-veye-ci-integration.png", :class => "img-border img-rounded", :style => "width: 100%;"), asset_path("marketing/01-veye-ci-integration.png") %>
+          </p>
+        </div>
       </div>
     </div>
 
@@ -91,14 +118,14 @@
             new Docker images are build and published to <a href="https://hub.docker.com/u/versioneye/">Docker Hub</a>.
             In this <a href="https://github.com/versioneye/ops_contrib">repository</a> you find a description
             how to spin up your own VersionEye instance.
-<br/><br/>
+            <br/><br/>
             After the instance has booted successfully you can open a browser and navigate to the
             IP address of the instance. On the default HTTP port 80 the VersionEye web
             application will come up, where you can activate the instance with an valid API key.
           </p>
           <p class="lead">
             After activation you can login with admin/admin and connect your VersionEye
-            instance with your private SMTP / MS Exchange, LDAP / Active Directory, binary Repository and Git servers.
+            instance with your private SMTP / MS Exchange, LDAP / Active Directory, binary repository and git servers.
             And if you run your VersionEye instance in your DMZ behind your Enterprise firewall,
             you can configure a Proxy server which will be used for connections to the internet.
           </p>
@@ -184,28 +211,14 @@
 
     <div class="content-section-a">
       <div class="container">
-        <h2 >Pricing</h2>
-        <div class="well-white" >
-          <p class="lead">
-            The pricing depends on the number of open source components you
-            want to sync every day to your private instance and the desired SLA.
-            If you are interested please fill out the form below and we will reach out to you.
-          </p>
-        </div>
-      </div>
-    </div>
-
-
-
-
-  <div class="content-section-b">
-      <div class="container">
 
         <div class="row">
           <div class="col-md-12">
         <h2 >Interested?</h2>
           <p class="lead">
-            Please fill out the form below if you are interested in VersionEye Enterprise. We will contact you soon.
+            The pricing depends on the number of open source components you
+            want to sync every day to your private instance and the desired SLA.
+            If you are interested please fill out the form below and we will reach out to you.
           </p>
 
           <p style="padding-top: 15px;">
