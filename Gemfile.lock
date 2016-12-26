@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 3a32e0de9aae3b99b0b22b471e7701e36c48ffe7
-  tag: v11.0.1
+  revision: 0868e04f76c1f1dbd75e1b947906690d7a404521
+  tag: v11.0.3
   specs:
-    versioneye-core (11.0.1)
+    versioneye-core (11.0.3)
       actionmailer (~> 5.0.1)
       aws-sdk (~> 2.6.19)
       bundler (~> 1.13.0)
@@ -80,13 +80,13 @@ GEM
     amq-protocol (2.0.1)
     ansi (1.5.0)
     arel (7.1.4)
-    aws-sdk (2.6.41)
-      aws-sdk-resources (= 2.6.41)
-    aws-sdk-core (2.6.41)
+    aws-sdk (2.6.42)
+      aws-sdk-resources (= 2.6.42)
+    aws-sdk-core (2.6.42)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.6.41)
-      aws-sdk-core (= 2.6.41)
+    aws-sdk-resources (2.6.42)
+      aws-sdk-core (= 2.6.42)
     aws-sigv4 (1.0.0)
     bourbon (4.2.7)
       sass (~> 3.4)
