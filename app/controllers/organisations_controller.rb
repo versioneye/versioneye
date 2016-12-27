@@ -172,7 +172,15 @@ class OrganisationsController < ApplicationController
     end
 
     plan_name_id = params[:plan]
+    if plan_name_id.to_s.empty? && @organisation.plan
+      plan_name_id = @organisation.plan.name_id
+    end
+
     stripe_token = params[:stripeToken]
+    if stripe_token.to_s.empty?
+      stripe_token = @organisation.stripe_token
+    end
+
     if stripe_token.to_s.empty? || plan_name_id.to_s.empty?
       flash[:error] = 'Stripe token is missing. Please contact the VersionEye Team.'
       redirect_to cc_organisation_path( @organisation )
