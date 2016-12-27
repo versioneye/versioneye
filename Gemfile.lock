@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 0868e04f76c1f1dbd75e1b947906690d7a404521
-  tag: v11.0.3
+  revision: 16cf0931d1205451887f9b4580e187b5db34e13e
+  tag: v11.0.6
   specs:
-    versioneye-core (11.0.3)
+    versioneye-core (11.0.6)
       actionmailer (~> 5.0.1)
       aws-sdk (~> 2.6.19)
       bundler (~> 1.13.0)
@@ -119,7 +119,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.0.3)
+    concurrent-ruby (1.0.4)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     dalli (2.7.6)
@@ -152,7 +152,7 @@ GEM
       thread_safe
     globalid (0.3.7)
       activesupport (>= 4.1.0)
-    hashdiff (0.3.1)
+    hashdiff (0.3.2)
     hashr (0.0.22)
     htmlentities (4.3.4)
     http-cookie (1.0.3)
@@ -224,9 +224,9 @@ GEM
     rails-assets-jquery (3.1.1)
     rails-assets-linkifyjs (2.1.3)
       rails-assets-jquery (>= 1.7.0)
-    rails-dom-testing (2.0.1)
+    rails-dom-testing (2.0.2)
       activesupport (>= 4.2.0, < 6.0)
-      nokogiri (~> 1.6.0)
+      nokogiri (~> 1.6)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
     railties (5.0.1)
