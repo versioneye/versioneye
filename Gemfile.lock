@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: f2666ac0ca346b62b2ad4b3b34506e5aec2ab8a1
-  tag: v11.0.11
+  revision: d941062e465ff04864fd6fffd11f110d137dc4c3
+  tag: v11.0.15
   specs:
-    versioneye-core (11.0.11)
+    versioneye-core (11.0.15)
       actionmailer (~> 5.0.1)
       aws-sdk (~> 2.6.19)
       bundler (~> 1.13.0)
@@ -21,9 +21,9 @@ GIT
       gemnasium-parser (~> 0.1.9)
       httparty (~> 0.14.0)
       mongoid (~> 6.0.0)
-      naturalsorter (~> 3.0.14)
+      naturalsorter (~> 3.0.15)
       net-ldap (~> 0.15.0)
-      nokogiri (~> 1.6.8)
+      nokogiri (~> 1.6.0)
       oauth (~> 0.5.0)
       octokit (~> 4.6.0)
       pdfkit (~> 0.8.2)
@@ -185,7 +185,7 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.0.0)
     nap (1.1.0)
-    naturalsorter (3.0.14)
+    naturalsorter (3.0.15)
     net-ldap (0.15.0)
     netrc (0.11.0)
     nio4r (1.2.1)
@@ -201,7 +201,7 @@ GEM
       httparty (~> 0.9)
       persistent_http (< 2)
     psych (2.2.2)
-    public_suffix (2.0.4)
+    public_suffix (2.0.5)
     puma (3.6.2)
     rack (2.0.1)
     rack-test (0.6.3)
@@ -328,7 +328,7 @@ GEM
       unf_ext
     unf_ext (0.0.7.2)
     vcr (3.0.3)
-    webmock (2.3.1)
+    webmock (2.3.2)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
