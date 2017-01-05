@@ -305,6 +305,10 @@ module ProductsHelper
     rel_bg
   end
 
+  def unread_notification_count
+    Notification.by_user( current_user ).where(:read => false).count
+  end
+
   private
 
     def find_product

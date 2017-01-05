@@ -77,6 +77,12 @@
           <li>
             <a href="<%= notifications_path %>">
               <i class="fa fa-globe" aria-hidden="true"></i>
+              <% if current_user %>
+                <% unread_count = unread_notification_count() %>
+                <% if unread_count.to_i > 0 %>
+                  <span class="round8" style="background-color: red; color: white; padding: 4px;"><%= unread_count %></span>
+                <% end %>
+              <% end %>
             </a>
           </li>
 
