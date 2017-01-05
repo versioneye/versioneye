@@ -46,6 +46,11 @@
 
         </div>
       <% end %>
+      <% if !@notifications.nil? && !@notifications.empty? %>
+        <div style="margin-top: 20px; text-align: right;">
+          <%= will_paginate @notifications %>
+        </div>
+      <% end %>
     <% else %>
       There are no notifications for you.
     <% end %>

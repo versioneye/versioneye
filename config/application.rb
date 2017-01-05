@@ -82,6 +82,7 @@ module Versioneye
     User.send           :include, WillPaginateMongoid::MongoidPaginator
     Versioncomment.send :include, WillPaginateMongoid::MongoidPaginator
     Author.send         :include, WillPaginateMongoid::MongoidPaginator
+    Notification.send   :include, WillPaginateMongoid::MongoidPaginator
 
     PDFKit.configure do |config|
       # config.default_options[:ignore_load_errors] = true

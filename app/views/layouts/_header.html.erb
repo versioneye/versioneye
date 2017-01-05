@@ -80,7 +80,7 @@
               <% if current_user %>
                 <% unread_count = unread_notification_count() %>
                 <% if unread_count.to_i > 0 %>
-                  <span class="round8" style="background-color: red; color: white; padding: 4px;"><%= unread_count %></span>
+                  <span class="round4" style="background-color: #fa3e3e; color: white; padding: 1px 3px;"><%= unread_count %></span>
                 <% end %>
               <% end %>
             </a>

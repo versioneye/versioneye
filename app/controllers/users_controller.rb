@@ -89,6 +89,7 @@ class UsersController < ApplicationController
   def favoritepackages
     @user = User.find_by_username(params[:id])
     return if @user.nil?
+
     @products = Array.new
     respond_to do |format|
       format.html {
