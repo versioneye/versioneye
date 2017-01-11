@@ -67,7 +67,9 @@ class Auth::StashController < ApplicationController
       if Settings.instance.orga_creation_admin_only == true && user.admin == false
         return notifications_path
       else
-        orga  = get_orga_for_login( user )
+        orga = get_orga_for_login( user )
+        return notifications_path if orga.nil?
+
         rpath = user_projects_stash_repositories_path
         rpath = projects_organisation_path( orga ) if orga.projects && !orga.projects.empty?
         return rpath

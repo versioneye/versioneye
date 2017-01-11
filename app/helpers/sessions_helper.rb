@@ -106,6 +106,8 @@ module SessionsHelper
             else
               orgas.first
             end
+    return nil if orga.nil?
+
     cookies.permanent.signed[:orga] = orga.ids
     orga
   end
