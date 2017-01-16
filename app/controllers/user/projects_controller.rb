@@ -103,6 +103,7 @@ class User::ProjectsController < ApplicationController
       return if !authenticate
       redirect_to(root_path) unless current_user?(@project.user)
     end
+    @is_collaborator = @project.is_collaborator?( current_user )
     if child_id.to_s.eql?('summary')
       @summary = ProjectService.summary id
     else

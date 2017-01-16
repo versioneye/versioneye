@@ -1,4 +1,4 @@
-<% if !signed_in? || dep.nil? || dep.unknown? || (signed_in? && !current_user.admin && !@project.is_collaborator?( current_user ) ) %>
+<% if !signed_in? || dep.nil? || dep.unknown? || (signed_in? && !current_user.admin && @is_collaborator == false ) %>
   <span>&nbsp;</span>
 <% elsif !dep.muted && dep.outdated %>
   <button id="<%= dep.id.to_s %>_button"
