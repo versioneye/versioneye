@@ -230,7 +230,9 @@ class Settings::GlobalsettingsController < ApplicationController
     end
     redirect_to settings_ldapsettings_path
   rescue => e
-    flash[:error] = "An error occured."
+    Rails.logger.error "Error in ldap_auth - #{e.message}"
+    Rails.logger.error e.backtrace.join("\n")
+    flash[:error] = "An error occured. (#{e.message})"
     redirect_to settings_ldapsettings_path
   end
 
