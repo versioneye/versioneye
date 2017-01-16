@@ -127,9 +127,9 @@
     <% if licenses && !licenses.empty? %>
       <% licenses.each do |license| %>
         <% if license.link && !license.link.empty? %>
-          <a href="<%= license.link %>" target="license_info"><%= license.name_substitute %></a><br/>
+          <a href="<%= license.link %>" target="license_info"><%= license.label %></a><br/>
         <% else %>
-          <%= license.name_substitute %><br/>
+          <%= license.label %><br/>
         <% end %>
       <% end %>
     <% else %>
