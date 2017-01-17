@@ -215,11 +215,13 @@ class Settings::GlobalsettingsController < ApplicationController
     GlobalSetting.set env, 'ldap_auth'      , params[:ldap_auth]
     GlobalSetting.set env, 'ldap_encryption', params[:ldap_encryption]
     GlobalSetting.set env, 'ldap_active'    , params[:ldap_active]
+    Settings.instance.reload_from_db GlobalSetting.new
     flash[:success] = "LDAP Settings changed successfully"
     redirect_to settings_ldapsettings_path
   end
 
   def ldap_auth
+    Settings.instance.reload_from_db GlobalSetting.new
     ldap_entity = LdapService.auth_by params[:ldap_login], params[:ldap_password]
     if ldap_entity && !ldap_entity.is_a?(String)
       username = ldap_entity.first[Settings.instance.ldap_username].first
