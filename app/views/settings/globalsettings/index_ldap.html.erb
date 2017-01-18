@@ -118,7 +118,7 @@
       <div class="form-group">
         <%= label_tag :ldap_password, "Password", :class => "control-label", :for => "ldap_password" %>
         <div class="controls">
-          <%= text_field_tag :ldap_password, @globalsetting['ldap_password'], :id => "ldap_password", :class => 'form-control' %>
+          <%= password_field_tag :ldap_password, @globalsetting['ldap_password'], :id => "ldap_password", :class => 'form-control' %>
         </div>
       </div>
 
