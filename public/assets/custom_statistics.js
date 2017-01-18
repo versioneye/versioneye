@@ -27,22 +27,6 @@ function init_plots(){
   });
 }
 
-
-jQuery(document).ready(function() {
-
-    jQuery('#q').tbHinter({
-        text: "json"
-    });
-
-    /*period filtering: "/statistics/langtrends.json?starts=2012-04&ends=2012-06"
-    jQuery.get(
-            "/statistics/langtrends.json", null,
-            function(data, status, jqXHR){ render_trends(data); },
-            "json"
-    );
-    */
-});
-
 var ChartConfig = {
     width : 777,
     height : 400,
