@@ -6,22 +6,20 @@ function renderReleaseGraph(ctx, dt, theLabel = "Releases per day"){
   console.debug('Rendering release graph - '+ theLabel);
   
  
-  var dateLabels = _.reduce(dt, function(acc, item){
-    acc.push([reformatDate(item['date'])]);
-    return acc;
-  }, []);
-
-  var dataValues = _.reduce(dt, function(acc, item){
-    acc.push(item['value']);
-    return acc;
-  }, []);
+  var dateLabels = [];
+  var dateValues = [];
+    
+  dt.forEach(function(item){
+    dateLabels.push( [reformatDate(item['date'])]);
+    dateValues.push(item['value']);
+  });
 
   var graphData = {
     labels: dateLabels,
     datasets: [{
       type: 'line',
       label: theLabel,
-      data: dataValues,
+      data: dateValues,
       fill: true,
       backgroundColor: '#fafafa', //color of filled area under the line
       pointBackgroundColor: '#fafafa',
