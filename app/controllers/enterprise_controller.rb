@@ -26,6 +26,18 @@ class EnterpriseController < ApplicationController
 
 
   def activate
+    proxy_addr = params[:proxy_addr]
+    proxy_port = params[:proxy_port]
+    proxy_user = params[:proxy_user]
+    proxy_pass = params[:proxy_pass]
+
+    env = Settings.instance.environment
+    GlobalSetting.set env, 'proxy_addr', proxy_addr
+    GlobalSetting.set env, 'proxy_port', proxy_port
+    GlobalSetting.set env, 'proxy_user', proxy_user
+    GlobalSetting.set env, 'proxy_pass', proxy_pass
+    Settings.instance.reload_from_db GlobalSetting.new
+
     api_key = params[:api_key]
     if !Set['1', 'on', 'true'].include?(params[:agreement])
       flash[:error] = "You have to accept the VersionEye Enterprise License Agreements"

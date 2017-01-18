@@ -90,17 +90,6 @@ class Settings::GlobalsettingsController < ApplicationController
 
   def update_activation
     api_key    = params[:api_key]
-    proxy_addr = params[:proxy_addr]
-    proxy_port = params[:proxy_port]
-    proxy_user = params[:proxy_user]
-    proxy_pass = params[:proxy_pass]
-
-    env = Settings.instance.environment
-    GlobalSetting.set env, 'proxy_addr', proxy_addr
-    GlobalSetting.set env, 'proxy_port', proxy_port
-    GlobalSetting.set env, 'proxy_user', proxy_user
-    GlobalSetting.set env, 'proxy_pass', proxy_pass
-
     resp = EnterpriseService.activate!(api_key)
     if resp == true
       flash[:success] = "API Key validated successfully!"
