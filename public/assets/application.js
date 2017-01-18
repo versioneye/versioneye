@@ -11,6 +11,7 @@
 //= require jasny-bootstrap
 //= require libs/bootstrap-maxlength.min
 //= require libs/underscore-min
+//= require chartjs
 
 //= require libs/hogan-2.0.0
 //= require libs/typeahead_0.9.3

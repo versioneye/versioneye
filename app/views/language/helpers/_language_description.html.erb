@@ -1,18 +1,25 @@
-<% if @language %>
+<#% if @language %>
   <div class="col-md-8">
+    <br/>
+    <p><%= @language.try(:description).to_s %></p>
+    <br/>
+    <br/>
 
-    <br/>
-    <p><%= @language[:description] %></p>
-    <br/>
-    <br/>
+    <h5>New versions per day</h5>
+    <div id="plot_container_latest">
+      <canvas id="plot_latest"></canvas>
+    </div>
 
-    <h5> New versions </h5>
-    <div id="plot_latest"></div>
-    <h5> New packages </h5>
-    <div id="plot_novel"></div>
+    <h5>New packages created per day</h5>
+    <div id="plot_container_novel">
+      <canvas id="plot_novel"></canvas>
+    </div>
 
   </div>
   <div class="col-md-4">
-    <%= render partial: "language/helpers/language_block", locals: {language: @language} %>
+    <% if @language %>
+      <%= render partial: "language/helpers/language_block",
+                 locals: {language: @language} %>
+    <% end %>
   </div>
-<% end %>
+

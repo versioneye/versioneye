@@ -64,4 +64,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-jquery'         , '3.1.1'
   gem 'rails-assets-handlebars'     , '4.0.5'
   gem 'rails-assets-linkifyjs'      , '2.1.3'
+  gem 'rails-assets-chartjs'        , '2.4.0'
+  gem 'rails-assets-underscore'     , '1.8.3'
+  gem 'rails-assets-moment'         , '2.17.1'
 end

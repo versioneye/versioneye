@@ -1,4 +1,5 @@
 function init_plots(){
+  /*
   require(["/assets/libs/d3.v3.min.js", "/assets/plots/timebar.js"],
           function(d3, Timebar){
     console.debug("Plot dependencies are now loaded.")
@@ -18,6 +19,8 @@ function init_plots(){
     });
     timebar1.loadAndRender("/package/novel/timeline30.json?lang=" + lang);
   });
+
+  */
 }
 
 function init_newsfeed(selector){
