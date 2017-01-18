@@ -134,6 +134,9 @@
       <% end %>
     <% else %>
       UNKNOWN
+      <% if signed_in? %>
+        </br><a href="/licenses/new?language=<%= @product.language %>&prod_key=<%= @product.prod_key %>&version=<%= @version.to_s %>">Suggest a license</a>
+      <% end %>
     <% end %>
   </div>
 

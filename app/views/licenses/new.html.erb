@@ -1,0 +1,75 @@
+
+<div class="col-md-3" >
+
+</div>
+<div class="col-md-9">
+
+  <div class="content_header_def" >
+    Suggest a new license
+  </div>
+
+  <div class="content" >
+    <p>
+      As more details you can provide as sooner we can approve it! </br>
+      Provide here some information to the software component.</br>
+    </p>
+    <%= form_for @license do |f| %>
+
+      <div class="form-group">
+        <%= f.label :language, :class => "control-label", :for => "language" %>
+        <div class="controls">
+          <%= f.text_field :language, :id => "language", :class => 'form-control' %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :prod_key, "Product key (uniq. identifier. In Java GroupID/ArtifactID)", :class => "control-label", :for => "prod_key" %>
+        <div class="controls">
+          <%= f.text_field :prod_key, :id => "prod_key", :class => 'form-control' %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :version, :class => "control-label", :for => "version" %>
+        <div class="controls">
+          <%= f.text_field :version, :id => "version", :class => 'form-control' %>
+        </div>
+      </div>
+
+      <hr/>
+      <p>
+        Provide below information to the license which belongs to the software component above.
+      </p>
+
+      <div class="form-group">
+        <%= f.label :name, "Name of the license, for example 'MIT', 'Apache-2.0', or 'GPL-3.0'", :class => "control-label", :for => "name" %>
+        <div class="controls">
+          <%= f.text_field :name, :id => "name", :class => 'form-control' %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :url, :class => "control-label", :for => "url" %>
+        <div class="controls">
+          <%= f.text_field :url, :id => "url", :class => 'form-control' %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :comments, :class => "control-label", :for => "comments" %>
+        <div class="controls">
+          <%= f.text_field :comments, :id => "comments", :class => 'form-control' %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="control-label"></div>
+        <div class="controls">
+          <%= f.submit "Suggest new license", :class => "btn btn-large btn-primary" %>
+        </div>
+      </div>
+
+    <% end %>
+  </div>
+
+</div>
