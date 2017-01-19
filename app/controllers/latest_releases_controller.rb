@@ -27,8 +27,6 @@ class LatestReleasesController < ApplicationController
     lang = 'php'
     lang = params[:lang] if params.has_key?(:lang)
     lang = Product.decode_language(lang)
-    #render json: LanguageDailyStats.versions_timeline30(lang)
-    res = HTTParty.get("https://www.versioneye.com/package/latest/timeline30.json?lang=#{lang}")
-    render json: res.body
+    render json: LanguageDailyStats.versions_timeline30(lang)
   end
 end

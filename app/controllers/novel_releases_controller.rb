@@ -27,11 +27,6 @@ class NovelReleasesController < ApplicationController
     lang = params[:lang] if params.has_key?(:lang)
 
     lang = Product.decode_language(lang)
-    #render json: LanguageDailyStats.novel_releases_timeline30(lang)
-    res = HTTParty.get("https://www.versioneye.com/package/novel/timeline30.json?lang=#{lang}")
-
-    render json: res.body
-
-
+    render json: LanguageDailyStats.novel_releases_timeline30(lang)
   end
 end
