@@ -55,6 +55,7 @@ var RepoFiles = React.createClass({displayName: "RepoFiles",
         )
       );
     });
+    
 
     return (
       React.createElement("div", {id: "branches"}, 

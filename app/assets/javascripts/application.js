@@ -4,18 +4,20 @@
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 // the compiled file.
 //
+//= require underscore
+//= require moment
+//= require chartjs
+
 //= require jquery
 //= require jquery_ujs
 //= require jquery_textbox_hinter
 //= require bootstrap
 //= require jasny-bootstrap
 //= require libs/bootstrap-maxlength.min
-//= require libs/underscore-min
-
+//
 //= require libs/hogan-2.0.0
 //= require libs/typeahead_0.9.3
 
-//= require libs/require
 
 //= require custom
 //= require custom_update_language

@@ -1,3 +1,5 @@
+require 'httparty'
+
 class LatestReleasesController < ApplicationController
 
   def index
@@ -12,6 +14,7 @@ class LatestReleasesController < ApplicationController
       :language => @lang,
       :created_at.gte => 30.days.ago.at_midnight
     ).desc(:created_at).paginate(page: page, per_page: 30)
+   
   end
 
   def stats
