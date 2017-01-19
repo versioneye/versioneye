@@ -20,8 +20,8 @@
     };
 
   //render graph only iff dataset all values are pos
-  is_all_positive = _.every(dataset['data'], function(a){return a > 0;});
-  if(is_all_positive){
+  var is_any_positive = _.some(dataset['data'], function(a){return a > 0;});
+  if(is_any_positive){
     var pie = new Chart($("#dep-pie-chart"), {
       type: 'doughnut',
       data: {

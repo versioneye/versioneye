@@ -95,27 +95,31 @@
 
 <% if display_charts == true && !license_whitelist_id.to_s.empty? %>
 <div id='pie1' style="text-align: center;">
+  <canvas id="pie1-chart" style="margin: auto; max-width: 350px; max-height: 350px;"></canvas>
+
 </div>
 <script type="text/javascript">
-  var pie = new d3pie("pie1", {
-    header: {
-      title: {
-        text: ""
-      },
-      location: "pie-center"
-    },
-    size: {
-      pieInnerRadius: "70%"
-    },
-    data: {
-      sortOrder: "label-asc",
-      content: [
-        { label: "Whitelisted", value: <%= whitelisted_count %>, color: "green" },
-        { label: "Unknown", value: <%= unknown_count %>, color: "orange" },
-        { label: "Violated", value: <%= violated_count %>, color: "red" },
-      ]
-    }
-  });
+$(function(){
+  console.log('going to render license graph...');
+
+  var dataset = {
+    data: [<%= whitelisted_count %>, <%= unknown_count %>, <%= violated_count %>],
+    backgroundColor: ["#8BC34A", "#FFC107", "#E64A19"]  
+  }
+
+  var is_any_positive = _.some(dataset['data'], function(a){return a > 0;}); 
+  if(is_any_positive){
+    var pie = new Chart($("#pie1-chart"), {
+      type: 'doughnut',
+      data: {
+        labels: ['Whitelisted', 'Unknown', 'Violated'],
+        datasets: [dataset]
+      }
+    });  
+  }
+ 
+});
+
 </script>
 <br/><br/>
 <% end %>
@@ -135,34 +139,54 @@
     <br/><br/>
   <% end %>
 
-  <% if display_charts == true && license_hash.count > 1 %>
+<% if display_charts == true && license_hash.count > 1 %>
   <div id='pie2' style="text-align: center;">
+  	<canvas id="pie2-chart" style="margin: auto; max-width: 350px; max-height: 350px;"></canvas>
+
   </div>
   <script type="text/javascript">
-    var pie = new d3pie("pie2", {
-      header: {
-        title: {
-          text: ""
-        },
-        location: "pie-center"
-      },
-      size: {
-        pieInnerRadius: "70%"
-      },
-      data: {
-        sortOrder: "label-asc",
-        content: [
-          <% license_hash.sort.map do |license_name, value| %>
-            <% if license_name.match(/\AGPL/) %>
-              { label: "<%= license_name %>", value: <%= license_hash[license_name].count %> , color: '#FF4000'},
-            <% else %>
-              { label: "<%= license_name %>", value: <%= license_hash[license_name].count %> },
-            <% end %>
+		$(function(){
+			console.log("going to render license pie nr.2...");
 
-          <% end %>
-        ]
-      }
-    });
+			var labels = [];
+			var dataset = {
+				data: [],
+				backgroundColor: []		
+			};
+
+
+			var licCounts = [
+				<% license_hash.sort.map do |license_name, value| %>
+					{
+						label: "<%= license_name %>",
+						value: <%= license_hash[license_name].count %>,
+						<% if license_name.match(/\AGPL/i) %>
+							color: '#E64A19'
+						<% elsif license_name.match(/\AUnknown/i) %>
+							color: '#FFC107'
+						<% else %>
+							color: '#8BC34A'
+						<% end %>
+					},
+				<% end %>
+			];
+
+			licCounts.forEach(function(item){
+				labels.push(item.label);
+				dataset.data.push(item.value);
+				dataset.backgroundColor.push(item['color']);
+			});
+
+			//-- render graph
+			var pie2 = new Chart($("#pie2-chart"), {
+				type: 'doughnut',
+				data: {
+					labels: labels,
+					datasets: [dataset]
+				}
+			});
+
+		});
   </script>
   <br/><br/>
   <% end %>
