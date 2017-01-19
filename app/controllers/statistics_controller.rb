@@ -10,11 +10,15 @@ class StatisticsController < ApplicationController
       results << {name: row[0], value: row[1]}
     end
 
-    render json: results
+    #render json: results
+    res = HTTParty.get("https://www.versioneye.com/statistics/proglangs")
+    render json: res.body
   end
 
   def langtrends
-    render json: StatisticService.language_project_trend
+    #render json: StatisticService.language_project_trend
+    res = HTTParty.get("https://www.versioneye.com/statistics/langtrends")
+    render json: res.body
   end
 
 end

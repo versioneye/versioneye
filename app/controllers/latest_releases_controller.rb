@@ -1,3 +1,5 @@
+require 'httparty'
+
 class LatestReleasesController < ApplicationController
 
   def index
@@ -12,6 +14,7 @@ class LatestReleasesController < ApplicationController
       :language => @lang,
       :created_at.gte => 30.days.ago.at_midnight
     ).desc(:created_at).paginate(page: page, per_page: 30)
+   
   end
 
   def stats
@@ -24,6 +27,8 @@ class LatestReleasesController < ApplicationController
     lang = 'php'
     lang = params[:lang] if params.has_key?(:lang)
     lang = Product.decode_language(lang)
-    render json: LanguageDailyStats.versions_timeline30(lang)
+    #render json: LanguageDailyStats.versions_timeline30(lang)
+    res = HTTParty.get("https://www.versioneye.com/package/latest/timeline30.json?lang=#{lang}")
+    render json: res.body
   end
 end

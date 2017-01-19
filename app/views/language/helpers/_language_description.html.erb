@@ -1,4 +1,4 @@
-<#% if @language %>
+<%# if @language %>
   <div class="col-md-8">
     <br/>
     <p><%= @language.try(:description).to_s %></p>
@@ -21,5 +21,7 @@
       <%= render partial: "language/helpers/language_block",
                  locals: {language: @language} %>
     <% end %>
-  </div>
+    </div>
+
+  <%# end %>
 
