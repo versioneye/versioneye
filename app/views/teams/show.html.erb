@@ -106,10 +106,10 @@
             <% next if member.user.nil? %>
             <%= form_tag( remove_organisation_team_path(@organisation, @team, :username => member.user.username), :method => "post") do  %>
             <tr >
-              <td >
+              <td style="padding-top: 5px;" >
                 <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
               </td>
-              <td>
+              <td style="padding-top: 5px;">
                 <b><%= link_to member.user.username, user_path(member.user) %></b> (<%= member.user.fullname %>)
               </td>
             </tr>

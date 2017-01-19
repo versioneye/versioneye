@@ -1,6 +1,5 @@
 Versioneye::Application.routes.draw do
 
-  # root :to => "products#index"
   root :to => "landing_page#index"
 
   get  'docker/update_image' , :to => 'docker#update_image'
@@ -23,7 +22,6 @@ Versioneye::Application.routes.draw do
     get  '/stash/callback', :to => 'stash#callback'
   end
 
-  # get   '/cloudcontrol/resources', :to => 'cloudcontrol#resources'
 
   # DEBUG
   # -----
@@ -48,6 +46,8 @@ Versioneye::Application.routes.draw do
     end
   end
 
+  resources :licenses, :only => [:new, :create, :approve]
+
   resources :organisations, :param => :name do
     resources :teams do
       member do
@@ -59,8 +59,7 @@ Versioneye::Application.routes.draw do
     get 'lwl/autocomplete' , :to => 'license_whitelists#autocomplete'
     resources :license_whitelists do
       member do
-        post   'destroy'          , :to => 'license_whitelists#destroy', :as => 'destroy'
-        # get  'license_whitelists/:name'        , :to => 'license_whitelists#show'   , :as => 'license_whitelists_show', :constraints => { :name => /[^\/]+/ }
+        post 'destroy'           , :to => 'license_whitelists#destroy', :as => 'destroy'
         post 'update_pessimistic', :to => 'license_whitelists#update_pessimistic'    , :as => 'update_pessimistic', :constraints => { :list => /[^\/]+/ }
         post 'add'               , :to => 'license_whitelists#add'    , :as => 'add'    , :constraints => { :list => /[^\/]+/ }
         post 'remove'            , :to => 'license_whitelists#remove' , :as => 'remove' , :constraints => { :list => /[^\/]+/ }
