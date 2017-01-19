@@ -66,21 +66,21 @@ function renderTrendPlot(ctx, trendData){
   trendData.forEach(function(x){
     dateLabels.push(reformatDate(x['date'], 'YYYY-MM-DD', 'YYYY.MM'))
     
-    for(var [key, val] of Object.entries(x)){
-      if(key !== "date"){
-        languageVals[key].push(val);
-      }
-    }
-  });
+    _.each(x, function(val, key){
+      //collect each language stats into own array
+			if(key !== "date"){ languageVals[key].push(val); }
+  	});
+	
+	});
 
   var datasets = [];
-  for(var [key, val] of Object.entries(languageVals)){
+  _.each(languageVals, function(val, key){
     datasets.push({
       label: key,
       data: val,
       borderColor: getLanguageColor(key)
     });
-  }
+  });
 
   var graphData = {
     labels: dateLabels,

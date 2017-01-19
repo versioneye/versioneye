@@ -1,63 +1,67 @@
-function init_plots(){
-  /*
-  require(["/assets/libs/d3.v3.min.js", "/assets/plots/timebar.js"],
-          function(d3, Timebar){
-    console.debug("Plot dependencies are now loaded.")
-    timebar1 = new Timebar({
-      selector: "#plot_latest",
-      width: 595,
-      height: 140
-    });
+function reformatDate(dtString, sourceFmt, targetFmt){
+  sourceFmt = (typeof b !== 'undefined') ?  sourceFmt : "YYYY-MM-DD";
+  targetFmt = (typeof b !== 'undefined') ?  targetFmt : "dddd, Do MMMM";
 
-    var lang = jQuery("#language").data("language");
-    timebar1.loadAndRender("/package/latest/timeline30.json?lang=" + lang);
+  return moment(dtString, sourceFmt).format(targetFmt);
+};
 
-    timebar1 = new Timebar({
-      selector: "#plot_novel",
-      width: 595,
-      height: 80
-    });
-    timebar1.loadAndRender("/package/novel/timeline30.json?lang=" + lang);
+function renderReleaseGraph(ctx, dt, theLabel){
+  console.debug('Rendering release graph - '+ theLabel);
+
+  theLabel = (typeof b !== 'undefined') ?  theLabel : "Releases per day";
+  var dateLabels = [];
+  var dateValues = [];
+    
+  dt.forEach(function(item){
+    dateLabels.push( [reformatDate(item['date'])]);
+    dateValues.push(item['value']);
   });
 
-  */
-}
-
-function init_newsfeed(selector){
-  var feeds_urls = $(selector).data('feeds').split(',');
-  var feeds_keys = _.range(1, feeds_urls.length + 1);
-  var feeds_map = _.object(feeds_keys, feeds_urls);
-
-  jQuery(selector).feeds({
-    max: 10,
-    feeds: feeds_map,
-    loadingTemplate: function(){
-      var msg = '<strong>Loading</strong> Currently importing latest news.';
-      return msg;
-    },
-    entryTemplate: function(entry){
-      var item_template = _.template(jQuery(selector + "-item-template").html());
-      return item_template({entry: entry});
-    }
+  var graphData = {
+    labels: dateLabels,
+    datasets: [{
+      type: 'line',
+      label: theLabel,
+      data: dateValues,
+      fill: true,
+      backgroundColor: '#fafafa', //color of filled area under the line
+      pointBackgroundColor: '#fafafa',
+      pointBorderColor: 'steelblue',
+      borderWidth: 1, //line thickness
+      borderColor: "steelblue" //line color
+    }]
+  };
+  
+  var myLineChart = new Chart(ctx, {
+      type: 'line',
+      data: graphData,
+      options: {
+        scales: {xAxes: [{display: false}]}
+      }
   });
-
-  return true;
 }
 
 jQuery(document).ready(function(){
 
-  _.templateSettings = {
-    interpolate: /\{\{\=(.+?)\}\}/g,
-    evaluate: /\{\{(.+?)\}\}/g
-  };
-
-  if(jQuery("#language-newsfeed").length){
-    console.debug("Initializing language newsfeed.");
-    init_newsfeed("#language-newsfeed");
-  }
+  var lang = jQuery("#language").data("language");
+  var baseURI = document.location.origin;
 
   if(jQuery("#plot_latest").length){
-    init_plots();
+    console.log("Fetching stats of latest versions");
+    jQuery.getJSON(
+      baseURI + "/package/latest/timeline30.json?lang=" + lang,
+      function(releaseData){
+        renderReleaseGraph(jQuery("#plot_latest"), releaseData, "New versions per day");
+      });
+  }
+
+  if(jQuery("#plot_novel").length){
+    console.log("Fetching stats of newest packages");
+    jQuery.getJSON(
+      baseURI + "/package/novel/timeline30.json?lang=" + lang,
+      function(novelData){
+        renderReleaseGraph(jQuery("#plot_novel"), novelData, "New packages created per day");
+      });
   }
 
 });

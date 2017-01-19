@@ -17,7 +17,7 @@
 //
 //= require libs/hogan-2.0.0
 //= require libs/typeahead_0.9.3
-//= require libs/require
+
 
 //= require custom
 //= require custom_update_language
