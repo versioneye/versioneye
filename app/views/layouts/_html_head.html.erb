@@ -26,11 +26,6 @@
 
   <%= csrf_meta_tag %>
 
-  <% if params[:controller] == 'user/projects' %>
-    <script src="/assets/libs/d3.v3.min.js"></script>
-    <script src="/assets/libs/d3pie.min.js"></script>
-  <% end %>
-
   <% if Settings.instance.environment.eql?('production') %>
     <script type="text/javascript">
       var _gaq = _gaq || [];
@@ -103,13 +98,6 @@
       </script>
       <%= javascript_include_tag "application_payment",  :defer => false, :async => false %>
 
-    <% elsif current_page?( package_latest_path ) %>
-      <link rel="stylesheet" href="/assets/release_plots.css">
-      <script src="/assets/latest_release_plots/main.js"></script>
-
-    <% elsif current_page?( package_novel_path ) %>
-      <link rel="stylesheet" href="/assets/release_plots.css">
-      <script src="/assets/novel_release_plots/main.js"></script>
     <% end %>
 
   <% end %>
