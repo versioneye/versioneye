@@ -9,26 +9,28 @@
 <% end %>
 
 <div id='dep_pie' style="text-align: center;">
+  <canvas id="dep-pie-chart" style="margin: auto; max-width: 350px; max-height: 350px;"></canvas>
 </div>
+
 <script type="text/javascript">
-  var pie = new d3pie("dep_pie", {
-    header: {
-      title: {
-        text: ""
-      },
-      location: "pie-center"
-    },
-    size: {
-      pieInnerRadius: "70%"
-    },
-    data: {
-      sortOrder: "label-asc",
-      content: [
-        { label: "out-of-date", value: <%= outofdate %>, color: "#FF4000" },
-        { label: "up-to-date" , value: <%= uptodate %> , color: "#5FB404" },
-        { label: "unknown"    , value: <%= unknown %>  , color: "#A4A4A4" },
-      ]
-    }
-  });
+ $(function(){
+    var dataset = {
+      data: [<%= outofdate %>, <%= uptodate %>, <%= unknown %>],
+      backgroundColor: ["#FF4000", "#5FB404", "#A4A4A4"]  
+    };
+
+  //render graph only iff dataset all values are pos
+  is_all_positive = _.every(dataset['data'], function(a){return a > 0;});
+  if(is_all_positive){
+    var pie = new Chart($("#dep-pie-chart"), {
+      type: 'doughnut',
+      data: {
+        labels: ['out-of-date', 'up-to-date', 'unknown'],
+        datasets: [dataset]
+      }
+    });
+  }
+
+ });
 </script>
 <br/><br/>
