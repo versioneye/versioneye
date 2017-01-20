@@ -15,7 +15,7 @@
           <%= prod.short_summary %> <br/>
         </div>
         <div>
-          <span>References: <%= link_to prod.used_by_count, product_references_path( :lang => prod.language_esc, :key => prod.to_param ) %> </span> | 
+          <span>References: <%= link_to prod.used_by_count, product_references_path( :lang => prod.language_esc, :key => prod.to_param ) %> </span> |
           License: <span class="bold"><%= prod.license_info %> </span>
         </div>
       </div>
