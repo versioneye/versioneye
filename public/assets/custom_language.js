@@ -1,9 +1,10 @@
 function reformatDate(dtString, sourceFmt, targetFmt){
-  sourceFmt = (typeof b !== 'undefined') ?  sourceFmt : "YYYY-MM-DD";
-  targetFmt = (typeof b !== 'undefined') ?  targetFmt : "dddd, Do MMMM";
+  sourceFmt = (typeof sourceFmt !== 'undefined') ?  sourceFmt : "YYYY-MM-DD";
+  targetFmt = (typeof targetFmt !== 'undefined') ?  targetFmt : "dddd, Do MMMM";
 
   return moment(dtString, sourceFmt).format(targetFmt);
 };
+
 
 function renderReleaseGraph(ctx, dt, theLabel){
   console.debug('Rendering release graph - '+ theLabel);
