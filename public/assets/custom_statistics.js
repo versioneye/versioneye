@@ -1,3 +1,11 @@
+function reformatDate(dtString, sourceFmt, targetFmt){
+  sourceFmt = (typeof sourceFmt !== 'undefined') ?  sourceFmt : "YYYY-MM-DD";
+  targetFmt = (typeof targetFmt !== 'undefined') ?  targetFmt : "dddd, Do MMMM";
+
+  return moment(dtString, sourceFmt).format(targetFmt);
+};
+
+
 function getLanguageColor(langName){
   var colorMap = {
     "default" : "#333333",
@@ -22,7 +30,9 @@ function getLanguageColor(langName){
 function renderSummaryPlot(ctx, summaryData){
 
   var colNames = [], colValues = [], colColors = [];
-  var _summaryData = summaryData.sort(function(a,b){ return a['value'] < b['value']; }); 
+  var _summaryData = summaryData.sort(function(a,b){
+    return (a['value'] <= b['value']) ? 1 : -1;
+  }); 
 
   //build value arrays from the summary doc
   _summaryData.forEach(function(x){

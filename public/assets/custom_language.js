@@ -1,15 +1,14 @@
 function reformatDate(dtString, sourceFmt, targetFmt){
-  sourceFmt = (typeof sourceFmt !== 'undefined') ?  sourceFmt : "YYYY-MM-DD";
-  targetFmt = (typeof targetFmt !== 'undefined') ?  targetFmt : "dddd, Do MMMM";
+  sourceFmt = (typeof b !== 'undefined') ?  sourceFmt : "YYYY-MM-DD";
+  targetFmt = (typeof b !== 'undefined') ?  targetFmt : "dddd, Do MMMM";
 
   return moment(dtString, sourceFmt).format(targetFmt);
 };
 
-
 function renderReleaseGraph(ctx, dt, theLabel){
   console.debug('Rendering release graph - '+ theLabel);
 
-  theLabel = (typeof theLabel !== 'undefined') ?  theLabel : "Releases per day";
+  theLabel = (typeof b !== 'undefined') ?  theLabel : "Releases per day";
   var dateLabels = [];
   var dateValues = [];
     
@@ -61,7 +60,7 @@ jQuery(document).ready(function(){
     jQuery.getJSON(
       baseURI + "/package/novel/timeline30.json?lang=" + lang,
       function(novelData){
-        renderReleaseGraph(jQuery("#plot_novel"), novelData, "New projects per day");
+        renderReleaseGraph(jQuery("#plot_novel"), novelData, "New packages created per day");
       });
   }
 
