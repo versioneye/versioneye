@@ -412,9 +412,9 @@ Versioneye::Application.routes.draw do
   end
 
   # legacy routes
-  get '/services', :to => "landing_page#index"
-  get '/lottery', :to => "landing_page#index"
-  get '/apijson', :to => "landing_page#index"
+  get '/services', :to => "page#routing_error"
+  get '/lottery',  :to => "page#routing_error"
+  get '/apijson',  :to => "page#routing_error"
 
   # get   '*path',        :to => 'page#routing_error'
 
