@@ -411,6 +411,11 @@ Versioneye::Application.routes.draw do
     get   '/:lang/:key/:version/:build'      , :to => 'products#show'                          , :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/, :version => /[^\/]+/, :build => /[^\/]+/ }
   end
 
+  # legacy routes
+  get '/services', :to => "landing_page#index"
+  get '/lottery', :to => "landing_page#index"
+  get '/apijson', :to => "landing_page#index"
+
   # get   '*path',        :to => 'page#routing_error'
 
 end
