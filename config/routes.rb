@@ -415,6 +415,9 @@ Versioneye::Application.routes.draw do
   get '/services', :to => "page#routing_error"
   get '/lottery',  :to => "page#routing_error"
   get '/apijson',  :to => "page#routing_error"
+  get '/products',  :to => "page#routing_error"
+  get '/newest/version',  :to => "page#routing_error"
+  get '/settings/plans',  :to => "page#routing_error"
 
   # get   '*path',        :to => 'page#routing_error'
 
