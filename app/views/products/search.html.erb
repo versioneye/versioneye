@@ -15,7 +15,7 @@
 
 <div class="col-md-9 col-mx-12" >
   <div class="content_header_def" >
-    <% if @products && !@products.empty? %>
+    <% if @products && !@products.empty? && defined?(@products.total_entries) %>
       <em> `<%= params[:q] %>`</em> has returned <%= @products.total_entries %> results
     <% end %>
   </div>
