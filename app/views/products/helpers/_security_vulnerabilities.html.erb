@@ -81,7 +81,7 @@
             <% end %>
           <% end %>
         </div>
-      <% elsif @product.language.eql?(Product::A_LANGUAGE_JAVA) || @product.language.eql?(Product::A_LANGUAGE_PYTHON) %>
+      <% elsif @product.language.eql?(Product::A_LANGUAGE_JAVA) || @product.language.eql?(Product::A_LANGUAGE_PYTHON) || @product.language.eql?(Product::A_LANGUAGE_CSHARP) %>
         <div class="flash error" style="margin-bottom: 2px;" >
           <h2><%= sv.summary %></h2>
           <% if !sv.description.to_s.empty? %>
@@ -98,14 +98,23 @@
             <% end %>
           <% end %>
           <br/>
-          <% if !sv.cve.to_s.empty? %>
-            <span class="label_bold">CVE</span>: <%= sv.cve %><br/>
-          <% end %>
           <% if !sv.source.to_s.empty? %>
             <span class="label_bold">Source</span>: <%= sv.source %><br/>
           <% end %>
+          <% if !sv.cve.to_s.empty? %>
+            <span class="label_bold">CVE</span>: <%= sv.cve %><br/>
+          <% end %>
           <% if !sv.cvss_v2.to_s.empty? %>
             <span class="label_bold">CVSSv2</span>: <%= sv.cvss_v2 %><br/>
+          <% end %>
+          <% if !sv.cvss_v3.to_s.empty? %>
+            <span class="label_bold">CVSSv3</span>: <%= sv.cvss_v3 %><br/>
+          <% end %>
+          <% if !sv.severity.to_s.empty? %>
+            <span class="label_bold">Severity</span>: <%= sv.severity %><br/>
+          <% end %>
+          <% if !sv.author.to_s.empty? %>
+            <span class="label_bold">Author</span>: <%= sv.author %><br/>
           <% end %>
           <span class="label_bold">Affected versions</span>:
             <% avs = sv.affected_versions_string.split(" && ") %>
