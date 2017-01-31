@@ -6,16 +6,16 @@
         <a class="#a dep_link" href="<%= dep.ext_link %>" >
           <span><%= dep.name %></span>
         </a>
-        <%= render :partial => "/component_whitelists/add_to_cwl", :locals => { :project => @project, :dep => dep } %>
+        <%= render :partial => "/component_whitelists/add_to_cwl", :locals => { :component_whitelist => @project.component_whitelist, :dep => dep } %>
       <% elsif dep.known? %>
         <% product = dep.find_or_init_product %>
         <a class="#a dep_link" href="<%= product_version_path( product, dep.version_requested ) %>" >
           <span><%= product.name %></span>
         </a>
-        <%= render :partial => "/component_whitelists/add_to_cwl", :locals => { :project => @project, :dep => dep } %>
+        <%= render :partial => "/component_whitelists/add_to_cwl", :locals => { :component_whitelist => @project.component_whitelist, :dep => dep } %>
       <% else %>
         <span><%= dep.name %></span>
-        <%= render :partial => "/component_whitelists/add_to_cwl", :locals => { :project => @project, :dep => dep } %>
+        <%= render :partial => "/component_whitelists/add_to_cwl", :locals => { :component_whitelist => @project.component_whitelist, :dep => dep } %>
       <% end %>
 
     </span>
