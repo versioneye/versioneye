@@ -7,13 +7,12 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 3b45ccfa557fe0d8eef8247e72db8222da324b41
-  tag: v11.3.14
+  revision: c9809577856834ba8c910c3b2ffa2e660d41cfb8
+  tag: v11.4.5
   specs:
-    versioneye-core (11.3.14)
+    versioneye-core (11.4.5)
       actionmailer (~> 5.0.1)
       aws-sdk (~> 2.7.2)
-      bundler (~> 1.13.7)
       bunny (~> 2.6.0)
       cocoapods-core (~> 0.39.0)
       dalli (~> 2.7.6)
@@ -77,7 +76,7 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.5.0)
       public_suffix (~> 2.0, >= 2.0.2)
-    amq-protocol (2.0.1)
+    amq-protocol (2.1.0)
     ansi (1.5.0)
     arel (7.1.4)
     aws-sdk (2.7.3)
