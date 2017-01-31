@@ -201,7 +201,7 @@ GEM
       persistent_http (< 2)
     psych (2.2.2)
     public_suffix (2.0.5)
-    puma (3.7.0)
+    puma (3.6.2)
     rack (2.0.1)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -371,7 +371,7 @@ DEPENDENCIES
   net-ldap (= 0.15.0)
   oauth (~> 0.5.0)
   psych (~> 2.2.2)
-  puma (~> 3.7.0)
+  puma (~> 3.6.0)
   rails (~> 5.0.1)
   rails-assets-bootstrap (= 3.3.7)!
   rails-assets-chartjs (= 2.4.0)!
