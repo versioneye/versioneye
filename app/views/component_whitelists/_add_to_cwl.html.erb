@@ -1,0 +1,9 @@
+
+<% if project.component_whitelist && (current_user.admin == true || OrganisationService.owner?(@organisation, current_user)) %>
+  <%= form_tag(add_organisation_component_whitelist_path(@organisation.name, :id => project.component_whitelist.name), :style => "padding: 0; margin:0; display:inline!important;") do %>
+    <input id="cwl_key" name="cwl_key" value="<%= dep.cwl_key(false) %>" type="hidden" />
+    <button type="submit" class="fabutton" style="border:0; background-color: transparent;" title="Add to cwl">
+      <i class="fa fa-plus" aria-hidden="true"></i>
+    </input>
+  <% end %>
+<% end %>
