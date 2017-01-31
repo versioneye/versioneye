@@ -6,7 +6,7 @@ gem 'execjs'               , '~> 2.7.0'
 gem 'therubyracer'         , '~> 0.12.0'
 gem 'oauth'                , '~> 0.5.0'
 gem 'twitter_oauth'        , '~> 0.4.94'
-gem 'puma'                 , '~> 3.6.0'
+gem 'puma'                 , '~> 3.7.0'
 gem 'htmlentities'         , '~> 4.3.1'
 gem 'whenever'             , '~> 0.9.6'
 gem 'bourbon'              , '~> 4.2.0'
@@ -42,13 +42,13 @@ group :assets do
 end
 
 group :test do
-  gem 'simplecov'         , '~> 0.12.0'
+  gem 'simplecov'         , '~> 0.13.0'
   gem 'turn'              , :require => false
   gem 'rspec'             , '~> 3.5.0'
   gem 'rspec-rails'       , '~> 3.5.0'
   gem 'rspec-mocks'       , '~> 3.5.0'
   gem 'rspec_junit_formatter', '0.2.3'
-  gem 'capybara'          , '~> 2.11.0'
+  gem 'capybara'          , '~> 2.12.0'
   gem 'capybara-firebug'  , '~> 2.1.0'
   gem 'selenium-webdriver', '~> 2.53.3'
   gem 'vcr'               , '3.0.3',  :require => false
@@ -63,7 +63,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap'      , '3.3.7'
   gem 'rails-assets-jquery'         , '3.1.1'
   gem 'rails-assets-handlebars'     , '4.0.5'
-  gem 'rails-assets-linkifyjs'      , '2.1.3'
+  gem 'rails-assets-linkifyjs'      , '2.1.4'
   gem 'rails-assets-chartjs'        , '2.4.0'
   gem 'rails-assets-underscore'     , '1.8.3'
   gem 'rails-assets-moment'         , '2.17.1'
