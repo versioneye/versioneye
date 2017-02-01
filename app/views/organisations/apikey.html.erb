@@ -21,10 +21,22 @@
         <div class= "controls">
           <%= label_tag :api_key, "API Key", :class => "control-label", :for => "api_key" %>
           <%= text_field_tag :api_key, @organisation.api.api_key, :readonly => true, :class => 'form-control' %>
-          <button type="submit" class="btn btn-primary">Generate new</button>
+          <button type="submit" name="submit" class="btn btn-primary">Generate new</button>
           <span class = "badge badge-info"> <%= @organisation.api.calls_count %> </span> calls up to now.
         </div>
         <p style="padding-top: 25px;">
+          With this API key you can do <b><%= @organisation.api.rate_limit %></b> calls per hour.<br/>
+          If you need more please upgrade your subscription or send a message to <a href="mailto:support@versioneye.com">support@versioneye.com</a>.
+        </p>
+        <hr/>
+        <div class= "controls">
+          <%= label_tag :api_key_ro, "Read Only API Key", :class => "control-label", :for => "api_key_ro" %>
+          <%= text_field_tag :api_key_ro, @organisation.api(true).api_key, :readonly => true, :class => 'form-control' %>
+          <button type="submit" name="submit_ro" class="btn btn-primary">Generate new</button>
+          <span class = "badge badge-info"> <%= @organisation.api(true).calls_count %> </span> calls up to now.
+        </div>
+        <p style="padding-top: 25px;">
+          This API key is for read operations only.
           With this API key you can do <b><%= @organisation.api.rate_limit %></b> calls per hour.<br/>
           If you need more please upgrade your subscription or send a message to <a href="mailto:support@versioneye.com">support@versioneye.com</a>.
         </p>

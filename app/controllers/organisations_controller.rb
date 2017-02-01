@@ -124,7 +124,9 @@ class OrganisationsController < ApplicationController
 
 
   def update_apikey
-    api = @organisation.api
+    read_only = false
+    read_only = true if params[:submit_ro]
+    api = @organisation.api(read_only)
     api.generate_api_key!
     if @organisation.plan
       api.rate_limit = @organisation.plan.api_rate_limit
