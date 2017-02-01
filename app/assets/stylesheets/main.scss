@@ -777,3 +777,46 @@ span.path {
 .navbar_container{
   padding: 0;
 }
+
+
+cite {
+    font-style: italic;
+    font-family: times;
+    font-size: 26px;
+    color: gray;
+    line-height: 1.2;
+}
+
+.cite_section {
+  padding-top: 10px;
+}
+
+span.http_method {
+  min-width: 65px;
+}
+
+
+.swagger-section {
+  div#header {
+    background: inherit;
+  }
+
+  .swagger-ui-wrap {
+    max-width: inherit;
+  }
+
+  form#api_selector {
+    float: none;
+  }
+
+  #resources_container {
+      padding-left: 0px;
+  }
+
+
+
+  span.http_method a {
+    padding: 10px !important;
+  }
+}
+
