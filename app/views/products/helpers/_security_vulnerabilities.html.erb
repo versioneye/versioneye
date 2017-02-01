@@ -17,6 +17,9 @@
           <% sv.links.keys.each do |key| %>
             <a href="<%= sv.links[key] %>"><%= sv.links[key] %></a><br/>
           <% end %>
+          <% if !sv.recommendation.to_s.empty? %>
+            <span class="label_bold">Recommendation</span>: <%= sv.recommendation %><br/>
+          <% end %>
           <% if !sv.source.to_s.empty? %>
             <span class="label_bold">Source</span>: <%= sv.source %><br/>
           <% end %>
@@ -26,6 +29,9 @@
       <% elsif @product.language.eql?(Product::A_LANGUAGE_NODEJS) %>
         <div class="flash error" style="margin-bottom: 2px;" >
           <span class="label_bold">Title</span>: <%= sv.summary %><br/>
+          <% if !sv.recommendation.to_s.empty? %>
+            <span class="label_bold">Recommendation</span>: <%= sv.recommendation %><br/>
+          <% end %>
           <span class="label_bold">Source</span>:
           <% if sv.source.to_s.eql?('snyk') %>
             <a href="https://snyk.io/vuln/<%= sv.name_id %>" ><%= sv.source %></a><br/>
@@ -98,6 +104,9 @@
             <% end %>
           <% end %>
           <br/>
+          <% if !sv.recommendation.to_s.empty? %>
+            <span class="label_bold">Recommendation</span>: <%= sv.recommendation %><br/>
+          <% end %>
           <% if !sv.source.to_s.empty? %>
             <span class="label_bold">Source</span>: <%= sv.source %><br/>
           <% end %>
@@ -142,6 +151,9 @@
             <%= raw( markdown.render sv.description ) %><br/>
           </div>
           <div>
+            <% if !sv.recommendation.to_s.empty? %>
+              <span class="label_bold">Recommendation</span>: <%= sv.recommendation %><br/>
+            <% end %>
             <% if !sv.framework.to_s.empty? %>
               <span class="label_bold">Framework</span>: <%= sv.framework %><br/>
             <% end %>
