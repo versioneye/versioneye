@@ -78,6 +78,7 @@ Versioneye::Application.routes.draw do
       get  'pullrequests'     , :to => 'organisations#pullrequests' , :as => 'pullrequests'
       get  'pullrequests/:id' , :to => 'pullrequests#show'          , :as => 'show_pullrequest'
       get  'components'     , :to => 'organisations#components'     , :as => 'components'
+      get  'inventory_csv'  , :to => 'organisations#inventory_csv'  , :as => 'inventory_csv'
       get  'projects'       , :to => 'organisations#projects'       , :as => 'projects'
       post 'assign'         , :to => 'organisations#assign'         , :as => 'assign'
       post 'delete_projects', :to => 'organisations#delete_projects', :as => 'delete_projects'

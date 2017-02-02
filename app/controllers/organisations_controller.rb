@@ -119,6 +119,25 @@ class OrganisationsController < ApplicationController
   end
 
 
+  def inventory_csv
+    pteam = params['team']
+    pteam = 'ALL' if pteam.to_s.empty?
+    planguage = params['language']
+    planguage = 'ALL' if planguage.to_s.empty?
+    pversion = params['version']
+    pversion = 'ALL' if pversion.to_s.empty?
+    pduplicates = params['duplicates']
+    pduplicates = 'ALL' if pduplicates.to_s.empty?
+    csv = @organisation.component_list_csv(pteam, planguage, pversion, pduplicates)
+    send_data csv, type: 'text/csv', filename: "#{@organisation.name}_inventory.csv"
+  rescue => e
+    logger.error e.message
+    logger.error e.backtrace.join("\n")
+    flash[:error] = "ERROR: #{e.message}"
+    redirect_to :back
+  end
+
+
   def apikey
   end
 
