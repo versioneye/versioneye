@@ -111,8 +111,11 @@ class User::ProjectsController < ApplicationController
     end
     @child   = @project if @child.nil?
     @child   = add_dependency_classes( @child )
-    @whitelists = LicenseWhitelistService.index( @project.organisation ) if @project.organisation
-    @cwls     = ComponentWhitelistService.index( @project.organisation ) if @project.organisation
+    if @project.organisation
+      @organisation = @project.organisation
+      @whitelists   = LicenseWhitelistService.index(   @organisation )
+      @cwls         = ComponentWhitelistService.index( @organisation )
+    end
     if signed_in? && @project.user && @project.user.ids.eql?(current_user.ids)
       @orgas = OrganisationService.orgas_allowed_to_transfer( current_user )
     end

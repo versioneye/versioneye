@@ -23,7 +23,11 @@ module OrganisationHelper
     return true if current_user.admin == true
     return true if OrganisationService.owner?(@organisation, current_user)
     flash[:error] = "You are not in the Owners team. You don't have the permission for this operation."
-    redirect_to organisation_path(@organisation)
+    if defined?( @organisation ) && @organisation
+      redirect_to organisation_path(@organisation)
+    else
+      redirect_to organisations_path
+    end
     return false
   end
 
