@@ -211,9 +211,12 @@ jQuery(function(){
 			var pie2 = new Chart($("#pie2-chart"), {
 				type: 'doughnut',
 				data: {
-					labels: labels,
+          labels: labels,
 					datasets: [dataset]
-				}
+        },
+        options: {
+          legend: {display: (labels.length > 3 ? false : true) }
+        }
 			});
 
 		});
