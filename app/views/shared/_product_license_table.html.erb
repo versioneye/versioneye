@@ -146,28 +146,28 @@ jQuery(function(){
 
 <% if display_charts == true && license_hash.count > 1 %>
   <div id='pie2' style="text-align: center;">
-  	<canvas id="pie2-chart" style="margin: auto; max-width: 350px; max-height: 350px;"></canvas>
+    <canvas id="pie2-chart" style="margin: auto; max-width: 350px; max-height: 350px;"></canvas>
 
   </div>
   <script type="text/javascript">
-		jQuery(function(){
-			console.log("going to render license pie nr.2...");
+    jQuery(function(){
+      console.log("going to render license pie nr.2...");
 
-			var labels = [];
-			var dataset = {
-				data: [],
-				backgroundColor: []
-			};
+      var labels = [];
+      var dataset = {
+        data: [],
+        backgroundColor: []
+      };
 
 
-			var licCounts = [
-				<% license_hash.sort.map do |license_name, value| %>
-					{
-						label: "<%= license_name %>",
-						value: <%= license_hash[license_name].count %>
-					},
-				<% end %>
-			];
+      var licCounts = [
+        <% license_hash.sort.map do |license_name, value| %>
+          {
+            label: "<%= license_name %>",
+            value: <%= license_hash[license_name].count %>
+          },
+        <% end %>
+      ];
 
       function hex2rgb(h) {
         return [(h & (255 << 16)) >> 16, (h & (255 << 8)) >> 8, h & 255];
@@ -201,25 +201,25 @@ jQuery(function(){
       var n = licCounts.length;
       var colors = getColors(n + 1, 400 / n);
 
-			licCounts.forEach(function(item, i){
-				labels.push(item.label);
-				dataset.data.push(item.value);
-				dataset.backgroundColor.push(colors[i]);
-			});
+      licCounts.forEach(function(item, i){
+        labels.push(item.label);
+        dataset.data.push(item.value);
+        dataset.backgroundColor.push(colors[i]);
+      });
 
-			//-- render graph
-			var pie2 = new Chart($("#pie2-chart"), {
-				type: 'doughnut',
-				data: {
+      //-- render graph
+      var pie2 = new Chart($("#pie2-chart"), {
+        type: 'doughnut',
+        data: {
           labels: labels,
-					datasets: [dataset]
+          datasets: [dataset]
         },
         options: {
           legend: {display: (labels.length > 3 ? false : true) }
         }
-			});
+      });
 
-		});
+    });
   </script>
   <br/><br/>
   <% end %>
