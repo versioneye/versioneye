@@ -314,7 +314,7 @@ class OrganisationsController < ApplicationController
 
       if @organisation.pdf_exports_allowed? == false
         flash[:warning] = "For the PDF/CSV export you need a higher plan. Please upgrade your subscription."
-        redirect_to plan_organisation_path( orga )
+        redirect_to plan_organisation_path( @organisation )
         return false
       end
       return true
