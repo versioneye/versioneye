@@ -10,6 +10,7 @@ class OrganisationsController < ApplicationController
                                             :plan, :update_plan,
                                             :cc, :update_cc,
                                             :payment_history, :receipt]
+  before_filter :export_permission?, :only => [:inventory_csv]
 
 
   def new
@@ -301,6 +302,23 @@ class OrganisationsController < ApplicationController
 
 
   private
+
+
+    def export_permission?
+      return true if Rails.env.enterprise? == true
+
+      if defined?(@organisation).nil? || @organisation.nil?
+        flash[:warning] = "This feature is only available for projects inside of an organisation."
+        return false
+      end
+
+      if @organisation.pdf_exports_allowed? == false
+        flash[:warning] = "For the PDF/CSV export you need a higher plan. Please upgrade your subscription."
+        redirect_to plan_organisation_path( orga )
+        return false
+      end
+      return true
+    end
 
 
     def prepare_update_cc plan_name_id
