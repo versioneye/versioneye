@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 2b7202334105846a24792dbd7d576765215ed518
-  tag: v11.5.0
+  revision: 2ee75b7addbb778839d695587788d23a6e8a43da
+  tag: v11.6.6
   specs:
-    versioneye-core (11.5.0)
+    versioneye-core (11.6.6)
       actionmailer (~> 5.0.1)
       aws-sdk (~> 2.7.2)
       bunny (~> 2.6.0)
@@ -20,7 +20,7 @@ GIT
       gemnasium-parser (~> 0.1.9)
       httparty (~> 0.14.0)
       mongoid (~> 6.1.0)
-      naturalsorter (~> 3.0.15)
+      naturalsorter (~> 3.0.16)
       net-ldap (~> 0.15.0)
       nokogiri (~> 1.7.0.1)
       oauth (~> 0.5.0)
@@ -79,13 +79,13 @@ GEM
     amq-protocol (2.1.0)
     ansi (1.5.0)
     arel (7.1.4)
-    aws-sdk (2.7.3)
-      aws-sdk-resources (= 2.7.3)
-    aws-sdk-core (2.7.3)
+    aws-sdk (2.7.4)
+      aws-sdk-resources (= 2.7.4)
+    aws-sdk-core (2.7.4)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.7.3)
-      aws-sdk-core (= 2.7.3)
+    aws-sdk-resources (2.7.4)
+      aws-sdk-core (= 2.7.4)
     aws-sigv4 (1.0.0)
     bourbon (4.2.7)
       sass (~> 3.4)
@@ -184,7 +184,7 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.0.0)
     nap (1.1.0)
-    naturalsorter (3.0.15)
+    naturalsorter (3.0.16)
     net-ldap (0.15.0)
     netrc (0.11.0)
     nio4r (1.2.1)
@@ -270,7 +270,7 @@ GEM
       rspec-core (>= 2, < 4, != 2.12.0)
     ruby_regex (0.1.1)
       rake
-    rubyzip (1.2.0)
+    rubyzip (1.2.1)
     safe_yaml (1.0.4)
     sass (3.4.23)
     sass-rails (5.0.6)
