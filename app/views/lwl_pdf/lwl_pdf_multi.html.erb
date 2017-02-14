@@ -96,24 +96,29 @@
               <tbody>
                 <% [:whitelisted, :unknown, :violated].each do |key| %>
                   <% project.lwl_pdf_list[key].each do |dep| %>
+                    <% fcolor = "" %>
+                    <% fcolor = "red" if key.to_s.eql?('violated') %>
+                    <% fcolor = "orange" if key.to_s.eql?('unknown') %>
                     <tr>
-                      <td class="left"> <%= key.to_s %> </td>
                       <td class="left">
-                        (<%= dep[:language] %>) <%= dep[:component] %>
+                        <span style="color: <%= fcolor %>"><%= key.to_s %></span>
+                      </td>
+                      <td class="left">
+                        <span style="color: <%= fcolor %>">(<%= dep[:language] %>) <%= dep[:component] %></span>
                         <% if dep[:group_id] %>
                           <br/> <span class='small'>GroupId: <%= dep[:group_id] %></span>
                         <% end %>
                       </td>
                       <td class="left">
                         <% if dep[:version].to_s.strip.match(/\A\:path/) %>
-                          :path
+                          <span style="color: <%= fcolor %>">:path</span>
                         <% elsif dep[:version].to_s.strip.match(/\A\:git/) %>
-                          :git
+                          <span style="color: <%= fcolor %>">:git</span>
                         <% else %>
-                          <%= dep[:version].to_s.strip %>
+                          <span style="color: <%= fcolor %>"><%= dep[:version].to_s.strip %></span>
                         <% end %>
                       </td>
-                      <td class="left"> <%= dep[:license] %> </td>
+                      <td class="left"><span style="color: <%= fcolor %>"><%= dep[:license] %></span></td>
                     </tr>
                     <% license_libs[dep[:license]] = [] if license_libs[dep[:license]].nil? %>
                     <% license_lib_val = "#{dep[:language]} / #{dep[:component]}" %>
