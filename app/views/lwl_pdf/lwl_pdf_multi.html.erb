@@ -118,7 +118,13 @@
                           <span style="color: <%= fcolor %>"><%= dep[:version].to_s.strip %></span>
                         <% end %>
                       </td>
-                      <td class="left"><span style="color: <%= fcolor %>"><%= dep[:license] %></span></td>
+                      <td class="left">
+                        <% if !dep[:license_url].to_s.empty? %>
+                          <a href="<%= dep[:license_url].to_s %>"><span style="color: <%= fcolor %>"><%= dep[:license] %></span></a>
+                        <% else %>
+                          <span style="color: <%= fcolor %>"><%= dep[:license] %></span>
+                        <% end %>
+                      </td>
                     </tr>
                     <% license_libs[dep[:license]] = [] if license_libs[dep[:license]].nil? %>
                     <% license_lib_val = "#{dep[:language]} / #{dep[:component]}" %>
