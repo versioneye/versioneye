@@ -139,7 +139,7 @@
 
       <% if !license_libs.keys.empty? %>
         <p>
-          Licenses used through all dependencies:
+          <%= license_libs.keys.count %> licenses used through all dependencies:
         </p>
         <table class="list">
           <thead>
@@ -157,7 +157,7 @@
                   <% if lwl.include_license_substitute?( key ) %>
                     whitelisted by license whitelist
                   <% else %>
-                    whitelisted by component whitelist
+                    <span style="color: red;">not whitelisted</span>
                   <% end %>
                 </td>
                 <td class="left">
