@@ -89,6 +89,7 @@ class Settings::GlobalsettingsController < ApplicationController
   end
 
   def update_activation
+    env = Settings.instance.environment
     api_key    = params[:api_key]
     resp = EnterpriseService.activate!(api_key)
     if resp == true
