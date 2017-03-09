@@ -18,6 +18,7 @@
       <% @child.scopes.each do |scope| %>
         <% deps = @child.dependencies( scope ) %>
         <% if deps && !deps.empty? %>
+          <% add_status_to_deps( deps ) %>
           <% deps = deps.sort_by {|dep| dep[:status_rank] } %>
           <div style="padding-top: 15px;">
             <span style="color: gray;"><%= scope %> scope</span>

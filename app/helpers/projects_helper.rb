@@ -110,29 +110,37 @@ module ProjectsHelper
     end
     return project if deps.nil? or deps.empty?
 
-    out_number = 0
-    unknown_number = 0
-
-    deps.each do |dep|
-      if dep.unknown?
-        dep[:status_class] = 'info'
-        dep[:status_rank] = 3
-        unknown_number += 1
-      elsif dep.outdated and dep.release? == false
-        dep[:status_class] = 'warning'
-        dep[:status_rank] = 2
-        out_number += 1
-      elsif dep.outdated and dep.release? == true
-        dep[:status_class] = 'error'
-        dep[:status_rank] = 1
-        out_number += 1
-      else
-        dep[:status_class] = 'success'
-        dep[:status_rank] = 4
-      end
-    end
+    add_status_to_deps deps
     project
   end
+
+
+  def add_status_to_deps dependencies
+    dependencies.each do |dep|
+      add_status_to_dep( dep )
+    end
+  end
+
+
+  def add_status_to_dep dep
+    return nil if dep.nil?
+    return nil if !dep[:status_class].to_s.empty? && !dep[:status_rank].to_s.empty?
+
+    if dep.unknown?
+      dep[:status_class] = 'info'
+      dep[:status_rank] = 3
+    elsif dep.outdated and dep.release? == false
+      dep[:status_class] = 'warning'
+      dep[:status_rank] = 2
+    elsif dep.outdated and dep.release? == true
+      dep[:status_class] = 'error'
+      dep[:status_rank] = 1
+    else
+      dep[:status_class] = 'success'
+      dep[:status_rank] = 4
+    end
+  end
+
 
   def merge_to_projects project
     if project.organisation

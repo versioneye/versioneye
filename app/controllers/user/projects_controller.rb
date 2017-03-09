@@ -113,7 +113,6 @@ class User::ProjectsController < ApplicationController
       @child   = ProjectService.find_child( id, child_id )
     end
     @child   = @project if @child.nil?
-    @child   = add_dependency_classes( @child )
     if @project.organisation
       @organisation = @project.organisation
       @whitelists   = LicenseWhitelistService.index(   @organisation )
