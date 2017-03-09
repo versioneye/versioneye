@@ -41,7 +41,10 @@ class User::ProjectsController < ApplicationController
 
   def init_new
     @organisations = OrganisationService.index current_user, true
-    @organisations = [OrganisationService.create_new_for(current_user)] if @organisations.empty?
+    if @organisations.nil? || @organisations.empty?
+      orga = OrganisationService.create_new_for( current_user )
+      @organisations = [orga] if !orga.nil?
+    end
   end
 
   def init_new_f
