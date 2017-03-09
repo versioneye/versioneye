@@ -1,5 +1,7 @@
 
-<tr class="flash <%= dep[:status_class] || 'info' %> dep_row" id="<%= dep.id.to_s %>__row"  >
+<% status_class = dep[:status_class] %>
+<% status_class = dep.status_class if dep.respond_to?("status_class") %>
+<tr class="flash <%= status_class || 'info' %> dep_row" id="<%= dep.id.to_s %>__row"  >
   <td style="padding-left: 5px;">
     <span >
       <% if !dep.ext_link.to_s.empty? %>
