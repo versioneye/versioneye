@@ -8,7 +8,7 @@ GIT
 PATH
   remote: ~/workspace/versioneye/versioneye-core
   specs:
-    versioneye-core (11.7.18)
+    versioneye-core (11.7.19)
       actionmailer (~> 5.0.1)
       aws-sdk (~> 2.7.2)
       bunny (~> 2.6.0)
