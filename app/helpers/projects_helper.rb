@@ -124,21 +124,30 @@ module ProjectsHelper
 
   def add_status_to_dep dep
     return nil if dep.nil?
-    return nil if !dep[:status_class].to_s.empty? && !dep[:status_rank].to_s.empty?
+    return nil if dep.respond_to?("status_class") && !dep.status_class.to_s.empty?
 
     if dep.unknown?
       dep[:status_class] = 'info'
-      dep[:status_rank] = 3
+      dep[:status_rank]  = 3
+      dep.status_class   = 'info' if dep.respond_to?("status_class")
+      dep.status_rank    = 3 if dep.respond_to?("status_rank")
     elsif dep.outdated and dep.release? == false
       dep[:status_class] = 'warning'
-      dep[:status_rank] = 2
+      dep[:status_rank]  = 2
+      dep.status_class   = 'warning' if dep.respond_to?("status_class")
+      dep.status_rank    = 2 if dep.respond_to?("status_rank")
     elsif dep.outdated and dep.release? == true
       dep[:status_class] = 'error'
-      dep[:status_rank] = 1
+      dep[:status_rank]  = 1
+      dep.status_class   = 'error' if dep.respond_to?("status_class")
+      dep.status_rank    = 1 if dep.respond_to?("status_rank")
     else
       dep[:status_class] = 'success'
-      dep[:status_rank] = 4
+      dep[:status_rank]  = 4
+      dep.status_class   = 'success' if dep.respond_to?("status_class")
+      dep.status_rank    = 4 if dep.respond_to?("status_rank")
     end
+    dep.save
   end
 
 
