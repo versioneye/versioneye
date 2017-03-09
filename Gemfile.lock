@@ -5,12 +5,10 @@ GIT
   specs:
     gravatar_image_tag (1.2.0)
 
-GIT
-  remote: https://github.com/versioneye/versioneye-core.git
-  revision: df6c9e88e5fb47449cff4f58ad3f7f5984e595a1
-  tag: v11.7.17
+PATH
+  remote: ~/workspace/versioneye/versioneye-core
   specs:
-    versioneye-core (11.7.17)
+    versioneye-core (11.7.18)
       actionmailer (~> 5.0.1)
       aws-sdk (~> 2.7.2)
       bunny (~> 2.6.0)
@@ -165,7 +163,7 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (2.0.3)
-    libv8 (3.16.14.17)
+    libv8 (3.16.14.19)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
