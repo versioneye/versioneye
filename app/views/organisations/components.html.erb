@@ -4,8 +4,18 @@
 </div>
 <div class="col-md-9">
 
+  <% pteam = params['team'] %>
+  <% pteam = 'ALL' if pteam.to_s.empty? %>
+  <% planguage = params['language'] %>
+  <% planguage = 'ALL' if planguage.to_s.empty? %>
+  <% pversion = params['version'] %>
+  <% pversion = 'ALL' if pversion.to_s.empty? %>
+  <% pduplicates = params['duplicates'] %>
+  <% pduplicates = 'ALL' if pduplicates.to_s.empty? %>
+  <% comps = @organisation.component_list(pteam, planguage, pversion, pduplicates).sort.to_h %>
+
   <div class="content_header_def" >
-    <%= pluralize( @organisation.component_list.count, "component" ) %> used in this organisation (<%= @organisation.name %>)
+    <%= pluralize( comps.count, "component" ) %> used in this organisation (<%= @organisation.name %>)
   </div>
 
   <div class="content" >
@@ -53,16 +63,6 @@
       </form>
     </div>
 
-
-    <% pteam = params['team'] %>
-    <% pteam = 'ALL' if pteam.to_s.empty? %>
-    <% planguage = params['language'] %>
-    <% planguage = 'ALL' if planguage.to_s.empty? %>
-    <% pversion = params['version'] %>
-    <% pversion = 'ALL' if pversion.to_s.empty? %>
-    <% pduplicates = params['duplicates'] %>
-    <% pduplicates = 'ALL' if pduplicates.to_s.empty? %>
-    <% comps = @organisation.component_list(pteam, planguage, pversion, pduplicates).sort.to_h %>
     <% comps.keys.each do |key| %>
       <% sp = key.split(':') %>
       <% language = sp[0].to_s.downcase %>
