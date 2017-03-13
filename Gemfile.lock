@@ -7,12 +7,12 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 4f14643cc220d86dc1d72162772f60e82031558d
-  tag: v11.7.20
+  revision: 8987f016bb39ef40f64b37c2ae6a3577ca9e0ca1
+  tag: v11.7.21
   specs:
-    versioneye-core (11.7.20)
+    versioneye-core (11.7.21)
       actionmailer (~> 5.0.1)
-      aws-sdk (~> 2.7.2)
+      aws-sdk (~> 2.8.5)
       bunny (~> 2.6.0)
       cocoapods-core (~> 0.39.0)
       dalli (~> 2.7.6)
@@ -21,7 +21,7 @@ GIT
       httparty (~> 0.14.0)
       mongoid (~> 6.1.0)
       naturalsorter (~> 3.0.16)
-      net-ldap (~> 0.15.0)
+      net-ldap (~> 0.16.0)
       nokogiri (~> 1.7.0.1)
       oauth (~> 0.5.0)
       octokit (~> 4.6.0)
@@ -79,13 +79,13 @@ GEM
     amq-protocol (2.1.0)
     ansi (1.5.0)
     arel (7.1.4)
-    aws-sdk (2.7.16)
-      aws-sdk-resources (= 2.7.16)
-    aws-sdk-core (2.7.16)
+    aws-sdk (2.8.5)
+      aws-sdk-resources (= 2.8.5)
+    aws-sdk-core (2.8.5)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.7.16)
-      aws-sdk-core (= 2.7.16)
+    aws-sdk-resources (2.8.5)
+      aws-sdk-core (= 2.8.5)
     aws-sigv4 (1.0.0)
     bourbon (4.3.3)
       sass (~> 3.4)
@@ -185,7 +185,7 @@ GEM
     multipart-post (2.0.0)
     nap (1.1.0)
     naturalsorter (3.0.16)
-    net-ldap (0.15.0)
+    net-ldap (0.16.0)
     netrc (0.11.0)
     nio4r (2.0.0)
     nokogiri (1.7.0.1)
@@ -367,7 +367,7 @@ DEPENDENCIES
   gravatar_image_tag!
   htmlentities (~> 4.3.1)
   jquery-rails (~> 4.2.1)
-  net-ldap (= 0.15.0)
+  net-ldap (= 0.16.0)
   oauth (~> 0.5.0)
   psych (~> 2.2.2)
   puma (~> 3.8.1)

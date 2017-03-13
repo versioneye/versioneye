@@ -16,14 +16,14 @@ gem 'cocoapods-core'       , '~> 0.39.0'
 gem 'bunny'                , '~> 2.6.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v11.7.20'
+gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v11.7.21'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 # gem 'gravatar_image_tag'  , '~> 1.2.0'
 # gem 'gravatar_image_tag'    , :git => 'git@github.com:reiz/gravatar_image_tag.git', :tag => 'v1.2.1'
 gem 'gravatar_image_tag'    , :git => 'https://github.com/reiz/gravatar_image_tag.git', :branch => 'bugfix/html_escaping'
 
-gem 'net-ldap', '0.15.0'
+gem 'net-ldap', '0.16.0'
 gem 'redcarpet', '3.4.0'
 
 gem 'font-awesome-sass', '~> 4.7.0'
