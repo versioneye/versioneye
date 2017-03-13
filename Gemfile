@@ -6,10 +6,10 @@ gem 'execjs'               , '~> 2.7.0'
 gem 'therubyracer'         , '~> 0.12.0'
 gem 'oauth'                , '~> 0.5.0'
 gem 'twitter_oauth'        , '~> 0.4.94'
-gem 'puma'                 , '~> 3.6.0'
+gem 'puma'                 , '~> 3.8.1'
 gem 'htmlentities'         , '~> 4.3.1'
 gem 'whenever'             , '~> 0.9.6'
-gem 'bourbon'              , '~> 4.2.0'
+gem 'bourbon'              , '~> 4.3.3'
 gem 'ruby_regex'           , '~> 0.1.0'
 gem 'semverly'             , '~> 1.0.0'
 gem 'cocoapods-core'       , '~> 0.39.0'
@@ -38,7 +38,7 @@ group :assets do
   gem 'sass'                  , :require => 'sass'
   gem 'sass-rails'            , '~> 5.0.3'
   gem 'coffee-rails'          , '~> 4.2.1'
-  gem 'uglifier'              , '~> 3.0.0'
+  gem 'uglifier'              , '~> 3.1.7'
 end
 
 group :test do
@@ -64,7 +64,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-jquery'         , '3.1.1'
   gem 'rails-assets-handlebars'     , '4.0.5'
   gem 'rails-assets-linkifyjs'      , '2.1.4'
-  gem 'rails-assets-chartjs'        , '2.4.0'
+  gem 'rails-assets-chartjs'        , '2.5.0'
   gem 'rails-assets-underscore'     , '1.8.3'
   gem 'rails-assets-moment'         , '2.17.1'
 end
