@@ -99,6 +99,25 @@ module ProjectsHelper
     return false
   end
 
+
+  def sort_hash_deps dependencies
+    dependencies.sort_by {|dep| dep[:status_rank].to_i }
+  rescue
+    logger.error "ERROR in sort_hash_deps: #{e.message}"
+    logger.error e.stacktrace.join "\n"
+    dependencies
+  end
+
+
+  def sort_deps dependencies
+    dependencies.sort_by {|dep| dep.status_rank.to_i }
+  rescue
+    logger.error "ERROR in sort_deps: #{e.message}"
+    logger.error e.stacktrace.join "\n"
+    dependencies
+  end
+
+
   def add_dependency_classes project
     return nil if project.nil?
 
