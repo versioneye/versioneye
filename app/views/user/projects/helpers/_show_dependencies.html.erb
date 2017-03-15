@@ -8,7 +8,7 @@
       <%= render :partial => "user/projects/helpers/project_numbers_sentence", :locals => { :project => proj } %><br/>
       <% if !proj[:dependencies].empty? %>
         <% add_dependency_classes proj %>
-        <% proj[:dependencies] = proj[:dependencies].sort_by {|dep| dep[:status_rank] } %>
+        <% proj[:dependencies] = proj[:dependencies].sort_by {|dep| dep[:status_rank].to_i } %>
         <%= render partial: "project_dependency_table", locals: {deps: proj[:dependencies] } %>
       <% end %>
       </br>
@@ -19,7 +19,7 @@
         <% deps = @child.dependencies( scope ) %>
         <% if deps && !deps.empty? %>
           <% add_status_to_deps( deps ) %>
-          <% deps = deps.sort_by {|dep| dep.status_rank } %>
+          <% deps = deps.sort_by {|dep| dep.status_rank.to_i } %>
           <div style="padding-top: 15px;">
             <span style="color: gray;"><%= scope %> scope</span>
             <%= render partial: "project_dependency_table", locals: {deps: deps } %>
