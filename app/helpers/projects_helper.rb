@@ -112,6 +112,9 @@ module ProjectsHelper
 
     add_status_to_deps deps
     project
+  rescue => e
+    logger.error "ERROR in add_dependency_classes: #{e.message}"
+    logger.error e.stacktrace.join "\n"
   end
 
 
