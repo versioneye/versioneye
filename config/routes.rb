@@ -22,16 +22,6 @@ Versioneye::Application.routes.draw do
     get  '/stash/callback', :to => 'stash#callback'
   end
 
-
-  # DEBUG
-  # -----
-  # author: @rmetzler
-  # description: this is a debugging route to help designing the suggestion-email
-  #
-  # REMOVE THE NEXT LINE FROM production / master branch / default branch
-  #
-  # get   '/emailhelper', :to => 'emailhelper#show'
-
   resources :sessions, :only => [:new, :create, :destroy]
   get    '/signin',                :to => 'sessions#new'
   get    '/signout',               :to => 'sessions#destroy'
