@@ -72,6 +72,8 @@
             <option value="<%= team.name %>" %><%= team.name %></option>
           <% end %>
         </select>
+        <input id="single_assignment" type="checkbox" name="single_assignment" value="1">
+        <label for="single_assignment">One team per project only</label>
         <button type="submit" class="btn btn-primary" onclick="fetch_projects('project_ids');" >Assign</button>
       </form>
 

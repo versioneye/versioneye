@@ -89,7 +89,9 @@ class OrganisationsController < ApplicationController
   def assign
     @team = Team.where(:name => params[:team], :organisation_id => @organisation.ids).first
     pids = params[:project_ids].split(",")
-    TeamService.assign @organisation.ids, @team.name, pids, current_user
+    single_assignment = false
+    single_assignment = true if params[:single_assignment].to_s.eql?("1")
+    TeamService.assign @organisation.ids, @team.name, pids, current_user, single_assignment
     flash[:success] = "Projects have been assigned to the teams."
     redirect_to :back
   rescue => e

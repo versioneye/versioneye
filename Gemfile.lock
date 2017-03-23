@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 5f0c14933e5cda7134a8e131d62ef81f9b5f0095
-  tag: v11.7.22
+  revision: e8e3e4ef4eda01986af0702ca11b2afbd98f4eb9
+  tag: v11.7.23
   specs:
-    versioneye-core (11.7.22)
+    versioneye-core (11.7.23)
       actionmailer (~> 5.0.1)
       aws-sdk (~> 2.8.5)
       bunny (~> 2.6.0)
@@ -79,13 +79,13 @@ GEM
     amq-protocol (2.1.0)
     ansi (1.5.0)
     arel (7.1.4)
-    aws-sdk (2.8.7)
-      aws-sdk-resources (= 2.8.7)
-    aws-sdk-core (2.8.7)
+    aws-sdk (2.8.10)
+      aws-sdk-resources (= 2.8.10)
+    aws-sdk-core (2.8.10)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.8.7)
-      aws-sdk-core (= 2.8.7)
+    aws-sdk-resources (2.8.10)
+      aws-sdk-core (= 2.8.10)
     aws-sigv4 (1.0.0)
     bourbon (4.3.3)
       sass (~> 3.4)
@@ -306,7 +306,7 @@ GEM
       ref
     thor (0.19.4)
     thread_safe (0.3.6)
-    tilt (2.0.6)
+    tilt (2.0.7)
     tire (0.6.2)
       activemodel (>= 3.0)
       activesupport
@@ -323,7 +323,7 @@ GEM
       oauth (>= 0.4.7)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    uglifier (3.1.7)
+    uglifier (3.1.9)
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
