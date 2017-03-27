@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: e8e3e4ef4eda01986af0702ca11b2afbd98f4eb9
-  tag: v11.7.23
+  revision: 03daeb6cf6446242f6bc17ae2f70399f5640d1f3
+  tag: v11.7.24
   specs:
-    versioneye-core (11.7.23)
+    versioneye-core (11.7.24)
       actionmailer (~> 5.0.1)
       aws-sdk (~> 2.8.5)
       bunny (~> 2.6.0)
@@ -79,13 +79,13 @@ GEM
     amq-protocol (2.1.0)
     ansi (1.5.0)
     arel (7.1.4)
-    aws-sdk (2.8.10)
-      aws-sdk-resources (= 2.8.10)
-    aws-sdk-core (2.8.10)
+    aws-sdk (2.8.11)
+      aws-sdk-resources (= 2.8.11)
+    aws-sdk-core (2.8.11)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.8.10)
-      aws-sdk-core (= 2.8.10)
+    aws-sdk-resources (2.8.11)
+      aws-sdk-core (= 2.8.11)
     aws-sigv4 (1.0.0)
     bourbon (4.3.3)
       sass (~> 3.4)
@@ -104,7 +104,7 @@ GEM
     capybara-firebug (2.1.0)
       capybara (>= 1.0, < 3.0)
       selenium-webdriver
-    childprocess (0.6.2)
+    childprocess (0.6.3)
       ffi (~> 1.0, >= 1.0.11)
     chronic (0.10.2)
     cocoapods-core (0.39.0)
@@ -321,9 +321,9 @@ GEM
       json (>= 1.8.0)
       mime-types (>= 1.16)
       oauth (>= 0.4.7)
-    tzinfo (1.2.2)
+    tzinfo (1.2.3)
       thread_safe (~> 0.1)
-    uglifier (3.1.9)
+    uglifier (3.1.10)
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
