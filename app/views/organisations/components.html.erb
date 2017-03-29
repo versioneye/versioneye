@@ -100,7 +100,7 @@
                     : <%= val[:project_version] %>
                   <% end %>
                   <% if !val[:project_teams].to_s.empty? %>
-                    <% tcount = val[:project_teams].count %>
+                    <% tcount = val[:project_teams].to_i.count %>
                     <% z = 1 %>
                     <div style="font-size: 12px;">
                       Teams: [
