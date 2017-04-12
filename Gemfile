@@ -16,7 +16,7 @@ gem 'cocoapods-core'       , '~> 0.39.0'
 gem 'bunny'                , '~> 2.6.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v11.8.3'
+gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v11.8.5'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 # gem 'gravatar_image_tag'  , '~> 1.2.0'
@@ -38,11 +38,11 @@ group :assets do
   gem 'sass'                  , :require => 'sass'
   gem 'sass-rails'            , '~> 5.0.3'
   gem 'coffee-rails'          , '~> 4.2.1'
-  gem 'uglifier'              , '~> 3.1.7'
+  gem 'uglifier'              , '~> 3.2.0'
 end
 
 group :test do
-  gem 'simplecov'         , '~> 0.13.0'
+  gem 'simplecov'         , '~> 0.14.1'
   gem 'turn'              , :require => false
   gem 'rspec'             , '~> 3.5.0'
   gem 'rspec-rails'       , '~> 3.5.0'
@@ -66,5 +66,5 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-linkifyjs'      , '2.1.4'
   gem 'rails-assets-chartjs'        , '2.5.0'
   gem 'rails-assets-underscore'     , '1.8.3'
-  gem 'rails-assets-moment'         , '2.17.1'
+  gem 'rails-assets-moment'         , '2.18.1'
 end
