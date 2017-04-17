@@ -16,7 +16,7 @@ gem 'cocoapods-core'       , '~> 0.39.0'
 gem 'bunny'                , '~> 2.6.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v11.8.5'
+gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v11.8.13'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 # gem 'gravatar_image_tag'  , '~> 1.2.0'
@@ -31,7 +31,6 @@ gem 'font-awesome-sass', '~> 4.7.0'
 group :development do
   gem 'psych'             , '~> 2.2.2'
   gem 'terminal-notifier' , '~> 1.7.1'
-  gem 'fakes3'            , '~> 0.2.1'
 end
 
 group :assets do
@@ -48,7 +47,7 @@ group :test do
   gem 'rspec-rails'       , '~> 3.5.0'
   gem 'rspec-mocks'       , '~> 3.5.0'
   gem 'rspec_junit_formatter', '0.2.3'
-  gem 'capybara'          , '~> 2.12.0'
+  gem 'capybara'          , '~> 2.13.0'
   gem 'capybara-firebug'  , '~> 2.1.0'
   gem 'selenium-webdriver', '~> 2.53.3'
   gem 'vcr'               , '3.0.3',  :require => false
