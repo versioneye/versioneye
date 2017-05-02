@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 60796a4f38879e0705ce3a89b3412d6c196d0eb9
-  tag: v11.9.5
+  revision: 734f98e0313e8dbc907f56eee087f1ad7217c379
+  tag: v11.9.9
   specs:
-    versioneye-core (11.9.5)
+    versioneye-core (11.9.9)
       actionmailer (~> 5.0.1)
       aws-sdk (~> 2.9.1)
       bunny (~> 2.6.0)
@@ -30,6 +30,7 @@ GIT
       semverly (~> 1.0.0)
       stripe (~> 2.3.0)
       tire (~> 0.6.2)
+      tomlrb (~> 1.2)
       will_paginate_mongoid (= 2.0.1)
       wkhtmltopdf-binary (~> 0.12.3)
 
@@ -79,13 +80,13 @@ GEM
     amq-protocol (2.1.0)
     ansi (1.5.0)
     arel (7.1.4)
-    aws-sdk (2.9.12)
-      aws-sdk-resources (= 2.9.12)
-    aws-sdk-core (2.9.12)
+    aws-sdk (2.9.14)
+      aws-sdk-resources (= 2.9.14)
+    aws-sdk-core (2.9.14)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.9.12)
-      aws-sdk-core (= 2.9.12)
+    aws-sdk-resources (2.9.14)
+      aws-sdk-core (= 2.9.14)
     aws-sigv4 (1.0.0)
     bourbon (4.3.4)
       sass (~> 3.4)
@@ -148,7 +149,7 @@ GEM
       thread_safe
     globalid (0.4.0)
       activesupport (>= 4.2.0)
-    hashdiff (0.3.2)
+    hashdiff (0.3.4)
     hashr (0.0.22)
     htmlentities (4.3.4)
     http-cookie (1.0.3)
@@ -312,6 +313,7 @@ GEM
       multi_json (~> 1.3)
       rake
       rest-client (~> 1.6)
+    tomlrb (1.2.4)
     turn (0.9.6)
       ansi
     twitter_oauth (0.4.94)
