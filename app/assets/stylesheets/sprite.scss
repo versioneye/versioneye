@@ -8,6 +8,7 @@ $csharp_url: "/assets/language/csharp.png";
 $html_url: "/assets/language/html.png";
 $coffeescript_url: "/assets/language/coffeescript.png";
 $chef_url: "/assets/language/chef.png";
+$rust_url: "/assets/language/rust.png";
 
 @mixin sprite($x, $y, $width, $height){
   background: url($sprite_url) $x $y no-repeat;
@@ -34,6 +35,14 @@ $chef_url: "/assets/language/chef.png";
 
 @mixin csharp_icon($x, $y, $width, $height){
   background: url($csharp_url) no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+  width: $width;
+  height: $height;
+}
+
+@mixin rust_icon($x, $y, $width, $height){
+  background: url($rust_url) no-repeat;
   display: inline-block;
   vertical-align: middle;
   width: $width;
@@ -91,6 +100,12 @@ $chef_url: "/assets/language/chef.png";
   &.on { @include csharp_icon($x2, $y2, $width, $height);}
   &:hover { @include csharp_icon($x2, $y2, $width, $height);}
   &:active { @include csharp_icon($x2, $y2, $width, $height);}
+}
+@mixin rust_toggle($x1, $y1, $x2, $y2, $width, $height){
+  @include rust_icon($x1, $y1, $width, $height);
+  &.on { @include rust_icon($x2, $y2, $width, $height);}
+  &:hover { @include rust_icon($x2, $y2, $width, $height);}
+  &:active { @include rust_icon($x2, $y2, $width, $height);}
 }
 @mixin html_toggle($x1, $y1, $x2, $y2, $width, $height){
   @include html_icon($x1, $y1, $width, $height);
@@ -231,6 +246,13 @@ $chef_url: "/assets/language/chef.png";
 }
 
 .icon_csharp_small_container{
+  margin: 0;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+}
+
+.icon_rust_small_container{
   margin: 0;
   width: 30px;
   height: 30px;
@@ -423,6 +445,23 @@ $chef_url: "/assets/language/chef.png";
 }
 .icon_csharp.small.on{
   background: url(/assets/language/csharp_small.png) no-repeat;
+  margin: 0;
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+}
+
+.icon_rust {
+  @include rust_toggle(0px, 0px, 0px, 0px, 56px, 56px);
+}
+.icon_rust_big_container{
+  padding: 0;
+  width: 56px;
+  height: 56px;
+  display: inline-block;
+}
+.icon_rust.small.on{
+  background: url(/assets/language/rust_small.png) no-repeat;
   margin: 0;
   width: 25px;
   height: 25px;
