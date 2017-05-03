@@ -33,7 +33,7 @@ class TeamsController < ApplicationController
     else
       flash[:error] = "Something went wrong. Please contact the VersionEye team."
     end
-    redirect_to :back
+    redirect_back
   end
 
 
@@ -55,7 +55,7 @@ class TeamsController < ApplicationController
     logger.error e.message
     logger.error e.backtrace.join("\n")
     flash[:error] = "ERROR: #{e.message}"
-    redirect_to :back
+    redirect_back
   end
 
 

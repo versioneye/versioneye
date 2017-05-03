@@ -46,7 +46,7 @@ class Admin::SubmittedUrlsController < ApplicationController
         flash[:error] = new_resource.errors.full_messages.to_sentence
       end
     end
-    redirect_to :back
+    redirect_back
   end
 
   def decline
@@ -63,7 +63,7 @@ class Admin::SubmittedUrlsController < ApplicationController
         flash[:error] - submitted_url.errors.full_messages.to_sentence
       end
     end
-    redirect_to :back
+    redirect_back
   end
 
   def destroy
@@ -75,7 +75,7 @@ class Admin::SubmittedUrlsController < ApplicationController
       submitted_url.delete
       flash[:notice] = 'Submitted Url is now deleted.'
     end
-    redirect_to :back
+    redirect_back
   end
 
   private

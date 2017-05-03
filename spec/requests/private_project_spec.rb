@@ -19,10 +19,10 @@ describe "Private Project" do
   end
 
   it "ensure that private user projects stay private" do
-    get "/signin", nil, "HTTPS" => "on"
+    get "/signin"
     assert_response :success
 
-    post "/sessions", {:session => {:email => @user1.email, :password => "12345"}}, "HTTPS" => "on"
+    post "/sessions", params: {:session => {:email => @user1.email, :password => "12345"}}
     assert_response 302
     response.should redirect_to( projects_organisation_path( Organisation.first ) )
 
@@ -38,7 +38,7 @@ describe "Private Project" do
     assert_response 302
     response.should redirect_to("/signin")
 
-    post "/sessions", {:session => {:email => @user2.email, :password => "12345"}}, "HTTPS" => "on"
+    post "/sessions", params: {:session => {:email => @user2.email, :password => "12345"}}
     assert_response 302
 
     get "/user/projects/#{@project._id.to_s}"

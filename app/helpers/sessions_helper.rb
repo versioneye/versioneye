@@ -8,6 +8,12 @@ module SessionsHelper
     return true
   end
 
+  def redirect_back
+    ref = request.referer
+    ref = "/" if ref.to_s.empty?
+    redirect_to ref
+  end
+
   def sign_in(user)
     reset_session
     cookies.permanent.signed[:remember_token] = [user.id, user.salt]

@@ -24,7 +24,7 @@ describe "search" do
   end
 
   it "shows the default search" do
-    get "/search", :q => ""
+    get "/search", params: {:q => ""}
     assert_response :success
     assert_select "form[action=?]", "/search"
     assert_select "input[name=?]", "q"
@@ -43,7 +43,7 @@ describe "search" do
 
     EsProduct.index_all
 
-    get "/search", :q => "json"
+    get "/search", params: {:q => "json"}
     assert_response :success
     assert_select "form[action=?]", "/search"
     assert_select "input[name=?]", "q"
@@ -65,7 +65,7 @@ describe "search" do
 
     EsProduct.index_newest
 
-    get "/search", :q => "json"
+    get "/search", params: {:q => "json"}
     assert_response :success
     assert_select "form[action=?]", "/search"
     assert_select "input[name=?]", "q"

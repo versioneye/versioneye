@@ -19,7 +19,7 @@ class LicensesController < ApplicationController
       LicenseMailer.new_license_suggestion(ls).deliver_now
     else
       flash[:error] = "#{ls.errors.full_messages.to_sentence}."
-      redirect_to :back
+      redirect_back
       return
     end
   end

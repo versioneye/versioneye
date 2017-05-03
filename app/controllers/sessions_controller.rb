@@ -19,10 +19,10 @@ class SessionsController < ApplicationController
     if user.nil?
       flash[:error] = 'Invalid email/password combination.'
       @title = 'Sign in'
-      redirect_to :back
+      redirect_back
     elsif !user.activated?
       flash[:error] = 'Your Account is not active. Please validate your email address by clicking the verification link in the verification E-Mail.'
-      redirect_to :back
+      redirect_back
     else
       sign_in user
       if current_user.admin?

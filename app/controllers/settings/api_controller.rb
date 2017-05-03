@@ -22,7 +22,7 @@ class Settings::ApiController < ApplicationController
     unless @user_api.save
       flash[:notice] << @user_api.errors.full_messages.to_sentence
     end
-    redirect_to :back
+    redirect_back
   end
 
 

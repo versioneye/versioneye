@@ -19,26 +19,26 @@ class LicenseWhitelistsController < ApplicationController
     resp = LicenseWhitelistService.create @organisation, list_name
     if resp
       flash[:success] = "Whitelist #{list_name} was created successfully."
-      redirect_to :back
+      redirect_back
     else
       flash[:error] = "An error occured. We couldn't save the new Whitelist."
-      redirect_to :back
+      redirect_back
     end
   rescue => e
     logger.error e.message
     flash[:error] = "An error occured. We couldn't save the new Whitelist."
-    redirect_to :back
+    redirect_back
   end
 
   def destroy
     license_whitelist = LicenseWhitelist.fetch_by @organisation, params[:id]
     license_whitelist.destroy
     flash[:success] = "Whitelist deleted successfully."
-    redirect_to :back
+    redirect_back
   rescue => e
     logger.error e.message
     flash[:error] = "An error occured. We couldn't delete the Whitelist."
-    redirect_to :back
+    redirect_back
   end
 
   def update_pessimistic
@@ -55,11 +55,11 @@ class LicenseWhitelistsController < ApplicationController
     else
       flash[:error] = "An error occured. "
     end
-    redirect_to :back
+    redirect_back
   rescue => e
     logger.error e.message
     flash[:error] = "An error occured. We could not update the status."
-    redirect_to :back
+    redirect_back
   end
 
   def add
@@ -72,11 +72,11 @@ class LicenseWhitelistsController < ApplicationController
     else
       flash[:error] = "An error occured. Not able to add the license to the list."
     end
-    redirect_to :back
+    redirect_back
   rescue => e
     logger.error e.message
     flash[:error] = "An error occured. We could not add the license."
-    redirect_to :back
+    redirect_back
   end
 
   def default
@@ -86,11 +86,11 @@ class LicenseWhitelistsController < ApplicationController
     Auditlog.add current_user, 'LicenseWhitelist', lwl.id.to_s, "Marked \"#{params[:id]}\" to default list."
     flash[:success] = "License Whitelist updated successfully."
 
-    redirect_to :back
+    redirect_back
   rescue => e
     logger.error e.message
     flash[:error] = "An error occured. We could not update the status."
-    redirect_to :back
+    redirect_back
   end
 
   def remove
@@ -102,11 +102,11 @@ class LicenseWhitelistsController < ApplicationController
     else
       flash[:error] = "An error occured. Not able to remove the license from the list."
     end
-    redirect_to :back
+    redirect_back
   rescue => e
     logger.error e.message
     flash[:error] = "An error occured. We could not remove the license from the list."
-    redirect_to :back
+    redirect_back
   end
 
   def autocomplete

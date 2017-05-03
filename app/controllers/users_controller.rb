@@ -217,7 +217,7 @@ class UsersController < ApplicationController
       flash[:error] = "Can't save new password:\n #{user.errors.full_messages.to_sentence}"
     end
     if has_failure
-      redirect_to :back
+      redirect_back
       return false
     end
 

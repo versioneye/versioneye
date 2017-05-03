@@ -16,7 +16,7 @@ describe "UsersController" do
     created.should eq(1)
 
     fav_path = "/users/#{user1.username}/favoritepackages.rss"
-    get fav_path, nil, "HTTPS" => "on"
+    get fav_path
     assert_response :success
     response.body.should match( product.name     )
     response.body.should match( product.language )

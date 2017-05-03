@@ -28,7 +28,7 @@ class Admin::LanguageController < ApplicationController
       redirect_to admin_language_index_path
     else
       flash[:error] = "Can not save language: #{new_lang.errors.full_messages.to_sentence}"
-      redirect_to :back
+      redirect_back
     end
   end
 
@@ -41,7 +41,7 @@ class Admin::LanguageController < ApplicationController
       redirect_to admin_language_index_path
     else
       flash[:error] = "Can't save updates."
-      redirect_to :back
+      redirect_back
     end
   end
 
@@ -54,7 +54,7 @@ class Admin::LanguageController < ApplicationController
       flash[:success] = "Success: #{lang[:name]} is now removed."
     end
 
-    redirect_to :back
+    redirect_back
   end
 
   def upload_json
@@ -73,7 +73,7 @@ class Admin::LanguageController < ApplicationController
     end
 
     flash[:success] = 'Uploaded successfully'
-    redirect_to :back
+    redirect_back
   end
 
   def download_json

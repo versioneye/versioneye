@@ -33,8 +33,8 @@ describe "Getting data from github_repos_controller" do
       {body: %Q|{"public_repos": 2}|}
     )
 
-   get signin_path, nil, "HTTPS" => "on"
-    post sessions_path, {session: {email: user.email, password: "12345"}}, "HTTPS" => "on"
+    get signin_path
+    post sessions_path, params: {session: {email: user.email, password: "12345"}}
     assert_response 302
     response.should redirect_to( projects_organisation_path( Organisation.first ) )
     user.save

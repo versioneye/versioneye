@@ -87,13 +87,13 @@ class User::ProjectsController < ApplicationController
       redirect_to user_project_path( project._id )
     else
       flash[:error] = "Can't import that project: unparseable project file or issues with filestorage. Please contact the VersionEye team."
-      redirect_to :back
+      redirect_back
     end
   rescue => e
     logger.error e.message
     logger.error e.backtrace.join("\n")
     flash[:error] = "ERROR: #{e.message}"
-    redirect_to :back
+    redirect_back
   end
 
 
@@ -151,7 +151,7 @@ class User::ProjectsController < ApplicationController
     logger.error e.message
     logger.error e.backtrace.join("\n")
     flash[:error] = "ERROR: #{e.message}"
-    redirect_to :back
+    redirect_back
   end
 
 
@@ -166,7 +166,7 @@ class User::ProjectsController < ApplicationController
     logger.error e.message
     logger.error e.backtrace.join("\n")
     flash[:error] = "ERROR: #{e.message}"
-    redirect_to :back
+    redirect_back
   end
 
 
@@ -181,7 +181,7 @@ class User::ProjectsController < ApplicationController
     logger.error e.message
     logger.error e.backtrace.join("\n")
     flash[:error] = "ERROR: #{e.message}"
-    redirect_to :back
+    redirect_back
   end
 
 
@@ -196,7 +196,7 @@ class User::ProjectsController < ApplicationController
     logger.error e.message
     logger.error e.backtrace.join("\n")
     flash[:error] = "ERROR: #{e.message}"
-    redirect_to :back
+    redirect_back
   end
 
 
@@ -301,7 +301,7 @@ class User::ProjectsController < ApplicationController
     logger.error e.message
     logger.error e.backtrace.join("\n")
     flash[:error] = "ERROR: #{e.message}"
-    redirect_to :back
+    redirect_back
   end
 
 
@@ -346,7 +346,7 @@ class User::ProjectsController < ApplicationController
     redirect_to rpath
   rescue => e
     flash[:error] = "ERROR: #{e.message}"
-    redirect_to :back
+    redirect_back
   end
 
 
@@ -374,7 +374,7 @@ class User::ProjectsController < ApplicationController
     else
       flash[:success] = "Something went wrong. Unmerge not possible."
     end
-    redirect_to :back
+    redirect_back
   rescue => e
     flash[:error] = "ERROR: (#{e.message})."
     Rails.logger.error e.message
@@ -582,14 +582,14 @@ class User::ProjectsController < ApplicationController
       @project = Project.find_by_id id
       if @project.nil?
         flash[:error] = "The project you are looking for doesn't exist."
-        redirect_to :back
+        redirect_back
         false
       end
 
       return true if project_member?( @project, current_user )
 
       flash[:error] = "Permission denied. You are not a collaborator of this project!"
-      redirect_to :back
+      redirect_back
       false
     end
 

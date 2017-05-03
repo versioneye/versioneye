@@ -3,7 +3,7 @@ class SubmittedUrlsController < ApplicationController
   def create
     if current_user.nil?
       flash[:error] = 'Sorry, but you have to be logged in for this action'
-      redirect_to :back and return
+      redirect_back and return
     end
 
     user_id = current_user.id
@@ -17,7 +17,7 @@ class SubmittedUrlsController < ApplicationController
     else
       flash[:error] = new_submitted_url.errors.full_messages.to_sentence
     end
-    redirect_to :back
+    redirect_back
   end
 
 end

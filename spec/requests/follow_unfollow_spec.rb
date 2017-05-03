@@ -48,14 +48,14 @@ describe "follow and unfollow" do
       Rails.cache.clear
       LanguageService.cache.delete "distinct_languages"
 
-      post "/sessions", {:session => {:email => user.email, :password => user.password}}, "HTTPS" => "on"
+      post "/sessions", params: {:session => {:email => user.email, :password => user.password}}
       assert_response 302
       response.should redirect_to( projects_organisation_path( Organisation.first ) )
     end
 
     it "does follow successfully" do
       init_product
-      post "/package/follow", :product_key => prod_key, :product_lang => prod_lang
+      post "/package/follow", params: {:product_key => prod_key, :product_lang => prod_lang}
       assert_response 302
       response.should redirect_to( "/#{prod_lang.downcase}/#{prod_key}/#{version}" )
       response.body.should_not match( "An error occured" )
@@ -72,7 +72,7 @@ describe "follow and unfollow" do
 
     it "fetches the i follow page successfully" do
       init_product
-      post "/package/follow", :product_key => prod_key, :product_lang => prod_lang
+      post "/package/follow", params: {:product_key => prod_key, :product_lang => prod_lang}
       get user_packages_i_follow_path
       assert_response :success
       assert_select "div[class=?]", "row search-item"
@@ -81,8 +81,8 @@ describe "follow and unfollow" do
 
     it "unfollows successfully" do
       init_product
-      post "/package/follow",   :product_key => prod_key, :product_lang => prod_lang
-      post "/package/unfollow", :product_key => prod_key, :product_lang => prod_lang, :src_hidden => "detail"
+      post "/package/follow",   params: {:product_key => prod_key, :product_lang => prod_lang}
+      post "/package/unfollow", params: {:product_key => prod_key, :product_lang => prod_lang, :src_hidden => "detail"}
       assert_response 302
       response.should redirect_to( "/#{prod_lang.downcase}/#{prod_key}/#{version}" )
 

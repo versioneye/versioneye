@@ -222,7 +222,7 @@ class ProductsController < ApplicationController
       Auditlog.add current_user, 'Product', @product.id.to_s, "Added Link #{link_url}."
       flash[:success] = "New link added."
     end
-    redirect_to :back
+    redirect_back
   end
 
 
@@ -233,7 +233,7 @@ class ProductsController < ApplicationController
     Versionlink.remove_project_link( lang, key, link_url )
     Auditlog.add current_user, 'Product', @product.id.to_s, "Remove Link #{link_url}"
     flash[:success] = "Link removed."
-    redirect_to :back
+    redirect_back
   end
 
 
@@ -245,7 +245,7 @@ class ProductsController < ApplicationController
       license.remove
       flash[:success] = "License removed."
     end
-    redirect_to :back
+    redirect_back
   end
 
 
@@ -254,7 +254,7 @@ class ProductsController < ApplicationController
       Auditlog.add current_user, 'Product', @product.id.to_s, "Remove Version #{params[:version]}"
       flash[:success] = "Version removed."
     end
-    redirect_to :back
+    redirect_back
   end
 
 
@@ -265,7 +265,7 @@ class ProductsController < ApplicationController
       flash[:success] = "Keyword removed."
       Auditlog.add current_user, 'Product', @product.id.to_s, "Removed keyword #{keyword}"
     end
-    redirect_to :back
+    redirect_back
   end
 
 
@@ -276,7 +276,7 @@ class ProductsController < ApplicationController
       Auditlog.add current_user, 'Product', @product.id.to_s, "Added keyword #{keyword}"
       flash[:success] = "Keyword added."
     end
-    redirect_to :back
+    redirect_back
   end
 
 

@@ -5,10 +5,10 @@ describe "registration" do
   context "no user" do
 
     it "signs_up successfully" do
-      get "/signup", nil, "HTTPS" => "on"
+      get "/signup"
       assert_response :success
 
-      post "/users", { :user => {:fullname => "test123", :email => "test@test.de", :password => "test123", :terms => "1", :datenerhebung => "1"} }, "HTTPS" => "on"
+      post "/users", params: { :user => {:fullname => "test123", :email => "test@test.de", :password => "test123", :terms => "1", :datenerhebung => "1"} }
       assert_response :success
 
       user = User.find_by_email("test@test.de")
@@ -19,20 +19,20 @@ describe "registration" do
     end
 
     it "don't sign_up because something is missing" do
-      get "/signup", nil, "HTTPS" => "on"
+      get "/signup"
       assert_response :success
 
-      post "/users", {:user => {:fullname => "test123", :email => "test_bad@test.de", :password => "test123", :terms => "0", :datenerhebung => "0"}}, "HTTPS" => "on"
+      post "/users", params: {:user => {:fullname => "test123", :email => "test_bad@test.de", :password => "test123", :terms => "0", :datenerhebung => "0"}}
       assert_response 302
       response.should redirect_to( signup_path )
       User.all.count.should eq(0)
     end
 
     it "don't sign_up because email is not valid" do
-      get "/signup", nil, "HTTPS" => "on"
+      get "/signup"
       assert_response :success
 
-      post "/users", {:user => {:fullname => "test123", :email => "test_bad@test.", :password => "test123", :terms => "1", :datenerhebung => "1"}}, "HTTPS" => "on"
+      post "/users", params: {:user => {:fullname => "test123", :email => "test_bad@test.", :password => "test123", :terms => "1", :datenerhebung => "1"}}
       assert_response 302
       response.should redirect_to( signup_path )
       User.all.count.should eq(0)
@@ -49,10 +49,10 @@ describe "registration" do
       user.verification = "asgasfg"
       user.save
 
-      get "/signin", nil, "HTTPS" => "on"
+      get "/signin"
       assert_response :success
 
-      post "/sessions", {:session => {:email => user.email, :password => user.password}}, {"HTTPS" => "on", 'HTTP_REFERER' => '/signin'}
+      post "/sessions", params: {:session => {:email => user.email, :password => user.password}}, headers: {'HTTP_REFERER' => '/signin'}
       assert_response 302
       response.should redirect_to("/signin")
     end
@@ -61,15 +61,15 @@ describe "registration" do
       Plan.create_defaults
       user.verification = "asgasfg"
       user.save
-      get "/users/activate/email/#{user.verification}", nil, "HTTPS" => "on"
+      get "/users/activate/email/#{user.verification}"
       assert_response 200
       user_db = User.find_by_username( user.username )
       user_db.verification.should be_nil
 
-      get "/signin", nil, "HTTPS" => "on"
+      get "/signin"
       assert_response :success
 
-      post "/sessions", {:session => {:email => user.email, :password => user.password}} , "HTTPS" => "on"
+      post "/sessions", params: {:session => {:email => user.email, :password => user.password}}
       assert_response 302
       response.should redirect_to( projects_organisation_path( Organisation.first ) )
 
@@ -78,10 +78,10 @@ describe "registration" do
     end
 
     it "login not successfully, because password is wrong" do
-      get "/signin", nil, "HTTPS" => "on"
+      get "/signin"
       assert_response :success
 
-      post "/sessions", {:session => {:email => "test@test.de", :password => "test123asfgas"}}, {"HTTPS" => "on", 'HTTP_REFERER' => '/signin'}
+      post "/sessions", params: {:session => {:email => "test@test.de", :password => "test123asfgas"}}, headers: {'HTTP_REFERER' => '/signin'}
       assert_response 302
       response.should redirect_to("/signin")
     end

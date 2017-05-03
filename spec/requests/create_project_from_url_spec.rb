@@ -11,24 +11,24 @@ describe "Create Project from URL" do
   end
 
   it "create a project from URL" do
-    get signin_path, nil, "HTTPS" => "on"
+    get signin_path
     assert_response :success
 
-    post sessions_path, {:session => {:email => @user1.email, :password => "12345"}}, "HTTPS" => "on"
+    post sessions_path, params: {:session => {:email => @user1.email, :password => "12345"}}
     assert_response 302
     response.should redirect_to( projects_organisation_path( Organisation.first ) )
 
-    get new_user_project_path, nil, "HTTPS" => "on"
+    get new_user_project_path
     assert_response :success
     response.body.should match("Create a new project")
 
-    post "/user/projects", {:project => {:url => "https://s3.amazonaws.com/veye_test_env/Gemfile" }}, "HTTPS" => "on"
+    post "/user/projects", params: {:project => {:url => "https://s3.amazonaws.com/veye_test_env/Gemfile" }}
     assert_response 302
     project = Project.first
     project.should_not be_nil
     response.should redirect_to( user_project_path( project ) )
 
-    get user_project_path( project ), nil, "HTTPS" => "on"
+    get user_project_path( project )
     response.body.should match("outdated.")
     response.body.should match("rails")
     response.body.should match("jquery-rails")

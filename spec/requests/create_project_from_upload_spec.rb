@@ -11,27 +11,27 @@ describe "Create Project from file uplaod" do
   end
 
   it "create a project from file upload as singned in user." do
-    get signin_path, nil, "HTTPS" => "on"
+    get signin_path
     assert_response :success
 
-    post sessions_path, {:session => {:email => @user1.email, :password => "12345"}}, "HTTPS" => "on"
+    post sessions_path, params: {:session => {:email => @user1.email, :password => "12345"}}
     assert_response 302
     expect( response ).to redirect_to( projects_organisation_path( Organisation.first ) )
 
-    get new_user_project_path, nil, "HTTPS" => "on"
+    get new_user_project_path
     assert_response :success
     expect( response.body ).to match("Create a new project")
 
     gemfile = "#{Rails.root}/spec/assets/Gemfile"
     file_attachment = Rack::Test::UploadedFile.new(gemfile, "application/octet-stream")
-    post "/user/projects", {:utf8 => true, :upload => {:datafile => file_attachment }}, "HTTPS" => "on"
+    post "/user/projects", params: {:utf8 => true, :upload => {:datafile => file_attachment }}
     file_attachment.close
     assert_response 302
     project = Project.first
     expect( project ).to_not be_nil
     expect( response ).to redirect_to( user_project_path( project ) )
 
-    get user_project_path( project ), nil, "HTTPS" => "on"
+    get user_project_path( project )
     expect( response.body ).to match("Gemfile")
     expect( response.body ).to match("rails")
     expect( response.body ).to match("jquery-rails")

@@ -29,7 +29,7 @@ class OrganisationsController < ApplicationController
     redirect_to organisations_path
   rescue => e
     flash[:error] = e.message
-    redirect_to :back
+    redirect_back
   end
 
 
@@ -59,7 +59,7 @@ class OrganisationsController < ApplicationController
     redirect_to organisation_path(@organisation)
   rescue => e
     flash[:error] = e.message
-    redirect_to :back
+    redirect_back
   end
 
 
@@ -93,12 +93,12 @@ class OrganisationsController < ApplicationController
     single_assignment = true if params[:single_assignment].to_s.eql?("1")
     TeamService.assign @organisation.ids, @team.name, pids, current_user, single_assignment
     flash[:success] = "Projects have been assigned to the teams."
-    redirect_to :back
+    redirect_back
   rescue => e
     logger.error e.message
     logger.error e.backtrace.join("\n")
     flash[:error] = "ERROR: #{e.message}"
-    redirect_to :back
+    redirect_back
   end
 
 
@@ -109,12 +109,12 @@ class OrganisationsController < ApplicationController
       ProjectService.destroy project
     end
     flash[:success] = "Projects have been deleted."
-    redirect_to :back
+    redirect_back
   rescue => e
     logger.error e.message
     logger.error e.backtrace.join("\n")
     flash[:error] = "ERROR: #{e.message}"
-    redirect_to :back
+    redirect_back
   end
 
 
@@ -137,7 +137,7 @@ class OrganisationsController < ApplicationController
     logger.error e.message
     logger.error e.backtrace.join("\n")
     flash[:error] = "ERROR: #{e.message}"
-    redirect_to :back
+    redirect_back
   end
 
 
@@ -158,7 +158,7 @@ class OrganisationsController < ApplicationController
     unless api.save
       flash[:notice] << api.errors.full_messages.to_sentence
     end
-    redirect_to :back
+    redirect_back
   end
 
 

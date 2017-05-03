@@ -15,7 +15,7 @@ describe "unsubscribe" do
       uns = UserNotificationSetting.fetch_or_create_notification_setting user
       uns.newsletter_features.should be_truthy
 
-      get "/unsubscribe/NAN/newsletter_features", nil, "HTTPS" => "on"
+      get "/unsubscribe/NAN/newsletter_features"
       assert_response :success
 
       user = User.find user.ids
@@ -31,7 +31,7 @@ describe "unsubscribe" do
 
       email = user.email.unpack("H*").first
 
-      get "/unsubscribe/#{email}/newsletter_news", nil, "HTTPS" => "on"
+      get "/unsubscribe/#{email}/newsletter_news"
       assert_response :success
 
       user = User.find user.id
@@ -46,7 +46,7 @@ describe "unsubscribe" do
 
       email = user.email.unpack("H*").first
 
-      get "/unsubscribe/#{email}/newsletter_features", nil, "HTTPS" => "on"
+      get "/unsubscribe/#{email}/newsletter_features"
       assert_response :success
 
       user = User.find user.id
@@ -61,7 +61,7 @@ describe "unsubscribe" do
 
       email = user.email.unpack("H*").first
 
-      get "/unsubscribe/#{email}/notification_emails", nil, "HTTPS" => "on"
+      get "/unsubscribe/#{email}/notification_emails"
       assert_response :success
 
       user = User.find user.id
@@ -76,7 +76,7 @@ describe "unsubscribe" do
 
       email = user.email.unpack("H*").first
 
-      get "/unsubscribe/#{email}/project_emails", nil, "HTTPS" => "on"
+      get "/unsubscribe/#{email}/project_emails"
       assert_response :success
 
       user = User.find user.id

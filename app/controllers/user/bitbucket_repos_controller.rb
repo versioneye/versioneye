@@ -60,7 +60,7 @@ class User::BitbucketReposController < User::ScmReposController
       repo.save
       clear_repo_cache repo
     end
-    redirect_to :back
+    redirect_back
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
@@ -89,7 +89,7 @@ class User::BitbucketReposController < User::ScmReposController
     user_task_key = "#{user[:username]}-bitbucket"
     BitbucketService.cache.delete( user_task_key )
     flash[:success] = "Cache is cleaned. Ready to re-import."
-    redirect_to :back
+    redirect_back
   end
 
 

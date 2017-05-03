@@ -20,7 +20,7 @@ class EnterpriseController < ApplicationController
       LeadMailer.new_lead( @ent_lead ).deliver_now
     else
       flash[:error] = "Something went wrong - #{@ent_lead.errors.full_messages.to_sentence}"
-      redirect_to :back
+      redirect_back
     end
   end
 
@@ -41,12 +41,12 @@ class EnterpriseController < ApplicationController
     api_key = params[:api_key]
     if !Set['1', 'on', 'true'].include?(params[:agreement])
       flash[:error] = "You have to accept the VersionEye Enterprise License Agreements"
-      redirect_to :back and return
+      redirect_back and return
     end
 
     if EnterpriseService.activate!( api_key ) == false
       flash[:error] = "API Key could not be verified. Make sure that you have internet connection and the API Key is correct."
-      redirect_to :back and return
+      redirect_back and return
     end
 
     flash[:success] = "Congratulation. Your VersionEye Enterprise instance is activated. Login with admin/admin."

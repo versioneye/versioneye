@@ -47,7 +47,7 @@ group :test do
   gem 'rspec-rails'       , '~> 3.5.0'
   gem 'rspec-mocks'       , '~> 3.5.0'
   gem 'rspec_junit_formatter', '0.2.3'
-  gem 'capybara'          , '~> 2.13.0'
+  gem 'capybara'          , '~> 2.14.0'
   gem 'capybara-firebug'  , '~> 2.1.0'
   gem 'selenium-webdriver', '~> 2.53.3'
   gem 'vcr'               , '3.0.3',  :require => false
