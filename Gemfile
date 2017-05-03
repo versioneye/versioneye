@@ -67,3 +67,4 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-underscore'     , '1.8.3'
   gem 'rails-assets-moment'         , '2.18.1'
 end
+
