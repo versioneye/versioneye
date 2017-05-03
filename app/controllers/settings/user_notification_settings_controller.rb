@@ -1,6 +1,6 @@
 class Settings::UserNotificationSettingsController < ApplicationController
 
-  before_filter :authenticate
+  before_action :authenticate
 
   def index
     @user_notification = UserNotificationSetting.fetch_or_create_notification_setting current_user

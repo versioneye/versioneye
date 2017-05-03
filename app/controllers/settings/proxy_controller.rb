@@ -1,6 +1,6 @@
 class Settings::ProxyController < ApplicationController
 
-  before_filter :authenticate
+  before_action :authenticate
 
   def index
     env = Settings.instance.environment

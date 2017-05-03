@@ -1,16 +1,16 @@
 class OrganisationsController < ApplicationController
 
 
-  before_filter :authenticate
-  before_filter :load_orga_by_name
-  before_filter :auth_org_member, :only => [:projects, :show, :assign, :components, :pullrequests]
-  before_filter :auth_org_owner,  :only => [:update, :delete, :destroy,
+  before_action :authenticate
+  before_action :load_orga_by_name
+  before_action :auth_org_member, :only => [:projects, :show, :assign, :components, :pullrequests]
+  before_action :auth_org_owner,  :only => [:update, :delete, :destroy,
                                             :apikey, :update_apikey,
                                             :billing_address, :update_billing_address,
                                             :plan, :update_plan,
                                             :cc, :update_cc,
                                             :payment_history, :receipt]
-  before_filter :export_permission?, :only => [:inventory_csv]
+  before_action :export_permission?, :only => [:inventory_csv]
 
 
   def new
@@ -64,7 +64,7 @@ class OrganisationsController < ApplicationController
 
 
   def show
-    # see before_filter auth_org_member
+    # see before_action auth_org_member
   end
 
 

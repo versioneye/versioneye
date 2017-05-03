@@ -1,6 +1,6 @@
 class Settings::LinksController < ApplicationController
 
-  before_filter :authenticate
+  before_action :authenticate
 
   def index
     @userlinkcollection = Userlinkcollection.find_all_by_user( current_user.id )

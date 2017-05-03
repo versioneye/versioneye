@@ -1,6 +1,6 @@
 class Settings::DeleteController < ApplicationController
 
-  before_filter :authenticate
+  before_action :authenticate
 
   def index
   end
@@ -15,7 +15,7 @@ class Settings::DeleteController < ApplicationController
       return
     end
     user.password = password
-    UserService.delete user, why 
+    UserService.delete user, why
     sign_out
     redirect_to root_path
   end

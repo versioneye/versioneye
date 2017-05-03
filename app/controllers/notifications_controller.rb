@@ -1,6 +1,6 @@
 class NotificationsController < ApplicationController
 
-  before_filter :authenticate
+  before_action :authenticate
 
   def index
     page = params[:page]

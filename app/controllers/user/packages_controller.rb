@@ -1,6 +1,6 @@
 class User::PackagesController < ApplicationController
 
-  before_filter :authenticate
+  before_action :authenticate
 
   def i_follow
     @products = current_user.products.paginate(:page => params[:page])

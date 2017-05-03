@@ -1,6 +1,6 @@
 class VersioncommentrepliesController < ApplicationController
 
-  before_filter :authenticate
+  before_action :authenticate
 
   def create
     user = current_user

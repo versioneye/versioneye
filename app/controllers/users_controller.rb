@@ -1,11 +1,11 @@
 class UsersController < ApplicationController
 
 
-  before_filter :authenticate, :only => [:update, :index, :update_permissions]
-  before_filter :correct_user, :only => [:update]
-  before_filter :admin_user,   :only => [:index, :update_permissions]
-  before_filter :set_locale
-  before_filter :enterprise_activated?
+  before_action :authenticate, :only => [:update, :index, :update_permissions]
+  before_action :correct_user, :only => [:update]
+  before_action :admin_user,   :only => [:index, :update_permissions]
+  before_action :set_locale
+  before_action :enterprise_activated?
 
 
   def index

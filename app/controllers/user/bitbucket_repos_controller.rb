@@ -1,6 +1,6 @@
 class User::BitbucketReposController < User::ScmReposController
 
-  before_filter :authenticate
+  before_action :authenticate
 
 
   def index

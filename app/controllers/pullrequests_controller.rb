@@ -1,7 +1,7 @@
 class PullrequestsController < ApplicationController
 
 
-  before_filter :load_orga
+  before_action :load_orga
 
 
   def index

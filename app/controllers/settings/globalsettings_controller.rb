@@ -1,6 +1,6 @@
 class Settings::GlobalsettingsController < ApplicationController
 
-  before_filter :authenticate_admin
+  before_action :authenticate_admin
 
   def index
     Settings.instance.reload_from_db GlobalSetting.new

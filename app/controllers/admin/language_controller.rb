@@ -1,5 +1,6 @@
 class Admin::LanguageController < ApplicationController
-  #before_filter :admin_user
+
+  # before_action :admin_user
 
   def index
     @languages = Language.all.desc(:updated_at)

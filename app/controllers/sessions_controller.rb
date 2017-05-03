@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
 
-  before_filter :enterprise_activated?
+  before_action :enterprise_activated?
 
 
   def new

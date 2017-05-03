@@ -1,6 +1,6 @@
 class Admin::SubmittedUrlsController < ApplicationController
 
-  before_filter :admin_user
+  before_action :admin_user
 
   def index
     @show_state = params[:by_state]

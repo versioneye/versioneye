@@ -1,6 +1,6 @@
 class Auth::BitbucketController < ApplicationController
 
-  before_filter :set_locale
+  before_action :set_locale
 
 
   def signin

@@ -1,6 +1,6 @@
 class VersioncommentsController < ApplicationController
 
-  before_filter :authenticate, :except => [:show]
+  before_action :authenticate, :except => [:show]
 
   def create
     user                      = current_user

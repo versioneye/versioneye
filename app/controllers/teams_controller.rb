@@ -1,8 +1,8 @@
 class TeamsController < ApplicationController
 
-  before_filter :authenticate, :load_orga, :auth_org_member
-  before_filter :auth_org_owner   , :only => [:create]
-  before_filter :auth_team_add_del, :only => [:add, :remove]
+  before_action :authenticate, :load_orga, :auth_org_member
+  before_action :auth_org_owner   , :only => [:create]
+  before_action :auth_team_add_del, :only => [:add, :remove]
 
 
   def index

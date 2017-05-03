@@ -1,6 +1,6 @@
 class LicensesController < ApplicationController
 
-  before_filter :authenticate
+  before_action :authenticate
 
   def new
     @license = License.new({:language => params[:language], :prod_key => params[:prod_key], :version => params[:version] })

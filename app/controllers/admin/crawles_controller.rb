@@ -1,6 +1,6 @@
 class Admin::CrawlesController < ApplicationController
 
-  before_filter :admin_user
+  before_action :admin_user
 
   def index
     @exec_groups = Crawle.all().distinct(:exec_group).reverse()

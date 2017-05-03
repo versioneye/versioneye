@@ -1,6 +1,6 @@
 class User::ScmReposController < ApplicationController
 
-  before_filter :load_orga, :only => [:index, :show, :import, :init]
+  before_action :load_orga, :only => [:index, :show, :import, :init]
 
   def init
     render 'init', layout: 'application'

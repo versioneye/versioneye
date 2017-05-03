@@ -4,11 +4,11 @@ class ProductsController < ApplicationController
   require 'will_paginate/array'
 
 
-  before_filter :authenticate                  , :only => [:edit, :edit_links, :edit_licenses, :update, :delete_link, :delete_license, :edit_keywords, :delete_keyword, :add_keyword]
-  before_filter :maintainer?                   , :only => [:edit, :edit_links, :edit_licenses, :edit_versions, :edit_keywords, :update, :delete_link, :delete_license, :delete_version, :delete_keyword, :add_keyword]
-  before_filter :check_redirects_package       , :only => [:show]
-  before_filter :check_redirects_package_visual, :only => [:show_visual]
-  before_filter :check_refer                   , :only => [:index]
+  before_action :authenticate                  , :only => [:edit, :edit_links, :edit_licenses, :update, :delete_link, :delete_license, :edit_keywords, :delete_keyword, :add_keyword]
+  before_action :maintainer?                   , :only => [:edit, :edit_links, :edit_licenses, :edit_versions, :edit_keywords, :update, :delete_link, :delete_license, :delete_version, :delete_keyword, :add_keyword]
+  before_action :check_redirects_package       , :only => [:show]
+  before_action :check_redirects_package_visual, :only => [:show_visual]
+  before_action :check_refer                   , :only => [:index]
 
 
 

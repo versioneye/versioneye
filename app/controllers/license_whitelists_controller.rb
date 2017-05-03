@@ -1,9 +1,9 @@
 class LicenseWhitelistsController < ApplicationController
 
-  before_filter :authenticate
-  before_filter :load_orga
-  before_filter :auth_org_member
-  before_filter :auth_org_owner, :except => [:index, :show]
+  before_action :authenticate
+  before_action :load_orga
+  before_action :auth_org_member
+  before_action :auth_org_owner, :except => [:index, :show]
 
   def index
     @whitelists = LicenseWhitelistService.index @organisation

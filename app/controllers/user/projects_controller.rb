@@ -1,9 +1,9 @@
 class User::ProjectsController < ApplicationController
 
-  before_filter :authenticate,  :except => [:show, :badge, :transitive_dependencies, :status, :lwl_export, :lwl_csv_export]
-  before_filter :collaborator?, :only   => [:add_collaborator, :save_visibility, :save_whitelist, :save_cwl, :update, :update_name, :destroy, :transfer, :team]
-  before_filter :pdf_export_permission?, :only => [:lwl_export, :lwl_csv_export, :sec_export]
-  before_filter :load_orga, :only => [:show, :new, :create, :upload, :destroy]
+  before_action :authenticate,  :except => [:show, :badge, :transitive_dependencies, :status, :lwl_export, :lwl_csv_export]
+  before_action :collaborator?, :only   => [:add_collaborator, :save_visibility, :save_whitelist, :save_cwl, :update, :update_name, :destroy, :transfer, :team]
+  before_action :pdf_export_permission?, :only => [:lwl_export, :lwl_csv_export, :sec_export]
+  before_action :load_orga, :only => [:show, :new, :create, :upload, :destroy]
 
 
   def index
