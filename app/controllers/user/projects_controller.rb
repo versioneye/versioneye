@@ -317,19 +317,20 @@ class User::ProjectsController < ApplicationController
 
   def status
     id = params[:id]
+    @status = ProjectUpdateService.status_for(id)
     respond_to do |format|
-      format.json { render :json => {"status": ProjectUpdateService.status_for(id) } }
-      format.text { render :text => ProjectUpdateService.status_for(id) }
+      format.json
+      format.text
     end
   end
 
 
   def dependencies_status
     id = params[:id]
-    sync_status = SyncStatus.find_or_create_by( :object_type => 'Project', :object_id => id.to_s )
+    @sync_status = SyncStatus.find_or_create_by( :object_type => 'Project', :object_id => id.to_s )
     respond_to do |format|
-      format.json { render :json => {"status": sync_status.status, "info": sync_status.info } }
-      format.text { render :text => sync_status.status }
+      format.json
+      format.text
     end
   end
 

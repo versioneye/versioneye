@@ -292,13 +292,13 @@ class ProductsController < ApplicationController
     @prod_key_param  = params[:product_key]
     product_key      = Product.decode_prod_key @prod_key_param
     language         = Product.decode_language lang_param
-    follow           = ProductService.follow language, product_key, current_user
+    @follow_status   = ProductService.follow language, product_key, current_user
     @prod_lang_param = Product.encode_language language
     respond_to do |format|
       format.js
-      format.json {render json: {success: follow}}
+      format.json
       format.html {
-        unless follow
+        unless @follow_status
           flash.now[:error] = "An error occured. Please try again later and contact the VersionEye Team."
         end
         product = Product.fetch_product( language, product_key )
@@ -314,13 +314,13 @@ class ProductsController < ApplicationController
     @prod_key_param  = params[:product_key]
     language         = Product.decode_language lang_param
     product_key      = Product.decode_prod_key @prod_key_param
-    unfollow         = ProductService.unfollow language, product_key, current_user
+    @unfollow        = ProductService.unfollow language, product_key, current_user
     @prod_lang_param = Product.encode_language language
     respond_to do |format|
       format.js
-      format.json {render json: {success: unfollow}}
+      format.json
       format.html {
-          unless unfollow
+          unless @unfollow
             flash.now[:error] = "An error occured. Please try again later."
           end
           if src_hidden.eql? "detail"
