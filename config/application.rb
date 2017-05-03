@@ -35,6 +35,8 @@ module Versioneye
 
     config.assets.initialize_on_precompile = false
 
+    config.action_controller.permit_all_parameters = true
+
     # http://groups.google.com/group/mongoid/browse_thread/thread/df278a11dba4d331?pli=1
     # config.generators do |g|
     #   g.orm :active_record
