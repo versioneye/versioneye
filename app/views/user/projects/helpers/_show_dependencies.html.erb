@@ -6,6 +6,7 @@
     </div>
   <% end %>
 
+  <% @license_hash = Hash.new %>
   <% if @summary  %>
     <% @summary.keys.each do |key| %>
       <% proj = @summary[key] %>
@@ -36,7 +37,6 @@
       <% @summary = nil %>
       <%= render partial: "pfile_summary", locals: { :display_grouping => true, :display_charts => true } %>
     </div>
-
   <% else %>
     No dependencies available for <b><%= @child.name %></b>
   <% end %>

@@ -1,5 +1,5 @@
 <% if defined?(display_grouping) && display_grouping && display_grouping == true && defined?(@license_hash) && @license_hash %>
-  <h3>Dependencies gruped by licenses</h3>
+  <h3>Dependencies grouped by licenses</h3>
   <% @license_hash.sort.map do |license_name, value| %>
     <div>
       <% if license_name.eql?("unknown") || license_name.eql?("UNKNOWN") %>
