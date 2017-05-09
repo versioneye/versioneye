@@ -1,4 +1,11 @@
 
+  <% if !@project.nil? && !@project.license_whitelist_id.to_s.empty? %>
+    <div style="margin: 10px 0 7px 0;">
+      <%= link_to 'BoM PDF Export', lwl_export_user_project_path( @project.ids ) %> |
+      <%= link_to 'BoM CSV Export', lwl_csv_export_user_project_path( @project.ids ) %>
+    </div>
+  <% end %>
+
   <% if @summary  %>
     <% @summary.keys.each do |key| %>
       <% proj = @summary[key] %>
@@ -9,7 +16,7 @@
       <% if !proj[:dependencies].empty? %>
         <% add_dependency_classes proj %>
         <% proj[:dependencies] = sort_hash_deps( proj[:dependencies] ) %>
-        <%= render partial: "project_dependency_table", locals: {deps: proj[:dependencies] } %>
+        <%= render partial: "project_dependency_table", locals: {deps: proj[:dependencies], :display_grouping => false, :display_charts => false } %>
       <% end %>
       </br>
     <% end %>
@@ -22,17 +29,12 @@
           <% deps = sort_deps( deps ) %>
           <div style="padding-top: 15px;">
             <span style="color: gray;"><%= scope %> scope</span>
-            <%= render partial: "project_dependency_table", locals: {deps: deps } %>
+            <%= render partial: "project_dependency_table", locals: {deps: deps, :display_grouping => true, :display_charts => true } %>
           </div>
         <% end %>
       <% end %>
     </div>
-    <% if !@child.language.to_s.eql?(Product::A_LANGUAGE_PYTHON) && !@child.language.to_s.eql?(Product::A_LANGUAGE_R) %>
-      <div style="padding-top: 7px;">
-        <%= link_to "Visual Dependencies", visual_user_project_path( @child ) %>
-      </div>
-    <% end %>
-    <%= render partial: "dep_pie_chart", locals: {deps: @child.dependencies } %>
+
   <% else %>
     No dependencies available for <b><%= @child.name %></b>
   <% end %>

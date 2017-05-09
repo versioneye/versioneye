@@ -1,5 +1,29 @@
+
+<% text_color = '' %>
+<% if license.respond_to? 'is_whitelisted?' %>
+  <% if license.is_whitelisted? == false %>
+    <% text_color = 'red'    %>
+  <% end %>
+  <% if license.is_whitelisted? == true %>
+    <% text_color = ''   %>
+  <% end %>
+<% elsif @project.license_whitelist %>
+  <% on_whitelist = @project.license_whitelist.include_license_substitute?( license.name_substitute ) %>
+  <% if on_whitelist == false %>
+    <% text_color = 'red'    %>
+  <% end %>
+  <% if on_whitelist == true %>
+    <% text_color = ''  %>
+  <% end %>
+<% end %>
+
 <% if license.link && !license.link.empty? %>
-  <a href="<%= license.link %> "><%= license.name_substitute %> </a>
+  <a href="<%= license.link %>" style="color: <%= text_color %>;"><%= license.name_substitute %> </a>
 <% else %>
   <%= license.name_substitute %>
+<% end %>
+
+<% if defined?(dependency) && dependency %>
+  <% @license_hash[license.name_substitute] = [] if @license_hash[license.name_substitute].nil? %>
+  <% @license_hash[license.name_substitute] << dependency %>
 <% end %>

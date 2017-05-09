@@ -16,7 +16,7 @@ gem 'cocoapods-core'       , '~> 0.39.0'
 gem 'bunny'                , '~> 2.6.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v11.10.1'
+gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v11.10.2'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 # gem 'gravatar_image_tag'  , '~> 1.2.0'
@@ -43,9 +43,9 @@ end
 group :test do
   gem 'simplecov'         , '~> 0.14.1'
   gem 'turn'              , :require => false
-  gem 'rspec'             , '~> 3.5.0'
-  gem 'rspec-rails'       , '~> 3.5.0'
-  gem 'rspec-mocks'       , '~> 3.5.0'
+  gem 'rspec'             , '~> 3.6.0'
+  gem 'rspec-rails'       , '~> 3.6.0'
+  gem 'rspec-mocks'       , '~> 3.6.0'
   gem 'rspec_junit_formatter', '0.2.3'
   gem 'capybara'          , '~> 2.14.0'
   gem 'capybara-firebug'  , '~> 2.1.0'

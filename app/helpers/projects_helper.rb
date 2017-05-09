@@ -13,10 +13,16 @@ module ProjectsHelper
     return true if project.dependencies.where(:artifact_id => "versioneye-maven-plugin").count > 0
     return true if project.dependencies.where(:artifact_id => "sbt-versioneye-plugin").count > 0
     return true if project.dependencies.where(:artifact_id => "gradle-versioneye-plugin").count > 0
+    return true if project.dependencies.where(:name => "versioneye-maven-plugin").count > 0
+    return true if project.dependencies.where(:name => "sbt-versioneye-plugin").count > 0
+    return true if project.dependencies.where(:name => "gradle-versioneye-plugin").count > 0
     project.children.each do |child|
       return true if child.dependencies.where(:artifact_id => "versioneye-maven-plugin").count > 0
       return true if child.dependencies.where(:artifact_id => "sbt-versioneye-plugin").count > 0
       return true if child.dependencies.where(:artifact_id => "gradle-versioneye-plugin").count > 0
+      return true if child.dependencies.where(:name => "versioneye-maven-plugin").count > 0
+      return true if child.dependencies.where(:name => "sbt-versioneye-plugin").count > 0
+      return true if child.dependencies.where(:name => "gradle-versioneye-plugin").count > 0
     end
     false
   end

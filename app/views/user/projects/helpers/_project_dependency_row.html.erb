@@ -1,44 +1,7 @@
 
-<% status_class = dep[:status_class] %>
-<% status_class = dep.status_class if dep.respond_to?("status_class") %>
-<tr class="flash <%= status_class || 'info' %> dep_row" id="<%= dep.id.to_s %>__row"  >
-  <td style="padding-left: 5px;">
-    <span >
-      <% if !dep.ext_link.to_s.empty? %>
-        <a class="#a dep_link" href="<%= dep.ext_link %>" >
-          <span><%= dep.name %></span>
-        </a>
-      <% elsif dep.known? %>
-        <% product = dep.find_or_init_product %>
-        <a class="#a dep_link" href="<%= product_version_path( product, dep.version_requested ) %>" >
-          <span><%= product.name %></span>
-        </a>
-      <% else %>
-        <span><%= dep.name %></span>
-      <% end %>
-
-    </span>
-  </td>
-  <td>
-    <span >
-      <% if dep.version_requested.to_s.match(/\A\:path/) %>
-        <span title="<%= dep.version_requested %>">:path</span>
-      <% elsif dep.version_requested.to_s.match(/\A\:git/) %>
-        <span title="<%= dep.version_requested %>">:git</span>
-      <% elsif dep.version_requested.to_s.match(/\Agit\+ssh/) %>
-        <span title="<%= dep.version_requested %>">:git+ssh</span>
-      <% elsif dep.version_requested.to_s.match(/\A\:http/) || dep.version_requested.to_s.match(/\Ahttp/) %>
-        <a href="<%= dep.version_requested %>"><span title="<%= dep.version_requested %>">:http</span></a>
-      <% else %>
-        <%= dep.version_requested || "UNKNOWN" %>
-      <% end %>
-    </span>
-  </td>
-  <td>
-    <%= render partial: '/user/projects/helpers/project_mute_button', locals: {dep: dep} %>
-    <%= dep.version_current || "UNKNOWN" %>
-  </td>
-  <td style="padding-right: 5px;">
-    <%= dep.licenses_string %>
-  </td>
+<tr class="dep_row" id="<%= dep.id.to_s %>__row"  >
+  <%= render partial: 'shared/pdep_name',           locals: {dep: dep} %>
+  <%= render partial: 'shared/pdep_version_used',   locals: {dep: dep} %>
+  <%= render partial: 'shared/pdep_version_newest', locals: {dep: dep} %>
+  <%= render partial: 'shared/pdep_license',        locals: {dep: dep} %>
 </tr>

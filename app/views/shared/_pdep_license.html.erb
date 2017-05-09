@@ -1,0 +1,17 @@
+
+<% licenses = dep.license_caches if dep.respond_to?( 'license_caches' ) %>
+<% licenses = dep.licenses       if dep.respond_to?( 'licenses' ) %>
+
+<td style="padding-right: 5px;">
+  <% if licenses && !licenses.empty? %>
+    <% licenses.each do |license| %>
+      <div>
+        <%= render :partial => "shared/license_name", :locals => { :license => license, :dependency => dep } %>
+      </div>
+    <% end %>
+  <% else %>
+    <span style="color: orange;">UNKNOWN</span>
+    <% @license_hash['UNKNOWN'] = [] if @license_hash['UNKNOWN'].nil? %>
+    <% @license_hash['UNKNOWN'] << dep %>
+  <% end %>
+</td>

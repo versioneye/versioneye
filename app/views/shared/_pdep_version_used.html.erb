@@ -1,0 +1,19 @@
+<td>
+  <span >
+    <% if dep.version_requested.to_s.match(/\A\:path/) %>
+      <span title="<%= dep.version_requested %>">:path</span>
+    <% elsif dep.version_requested.to_s.match(/\A\:git/) %>
+      <span title="<%= dep.version_requested %>">:git</span>
+    <% elsif dep.version_requested.to_s.match(/\Agit\+ssh/) %>
+      <span title="<%= dep.version_requested %>">:git+ssh</span>
+    <% elsif dep.version_requested.to_s.match(/\A\:http/) || dep.version_requested.to_s.match(/\Ahttp/) %>
+      <a href="<%= dep.version_requested %>"><span title="<%= dep.version_requested %>">:http</span></a>
+    <% else %>
+      <% if dep.outdated %>
+        <span style="color: red;"><%= dep.version_requested || "UNKNOWN" %></span>
+      <% else %>
+        <%= dep.version_requested || "UNKNOWN" %>
+      <% end %>
+    <% end %>
+  </span>
+</td>

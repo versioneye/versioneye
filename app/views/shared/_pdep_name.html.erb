@@ -1,0 +1,21 @@
+
+<td style="padding-left: 5px;">
+  <span >
+    <% if !dep.ext_link.to_s.empty? %>
+      <a class="#a dep_link" href="<%= dep.ext_link %>" >
+        <span><%= dep.name %></span>
+      </a>
+    <% elsif dep.known? %>
+      <% product = dep.find_or_init_product %>
+      <a class="#a dep_link" href="<%= product_version_path( product, dep.version_requested ) %>" >
+        <span><%= product.name %></span>
+        <% if dep.sv_ids.to_a.count.to_i > 0 %>
+          <span class="fa fa-shield" style="font-size: 14px; color: red;"></span>
+          <%= dep.sv_ids.to_a.count.to_i %>
+        <% end %>
+      </a>
+    <% else %>
+      <span><%= dep.name %></span>
+    <% end %>
+  </span>
+</td>

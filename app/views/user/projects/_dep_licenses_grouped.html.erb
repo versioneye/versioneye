@@ -1,0 +1,18 @@
+<% if defined?(display_grouping) && display_grouping && display_grouping == true && defined?(@license_hash) && @license_hash %>
+  <h3>Dependencies gruped by licenses</h3>
+  <% @license_hash.sort.map do |license_name, value| %>
+    <div>
+      <% if license_name.eql?("unknown") || license_name.eql?("UNKNOWN") %>
+        <span class="label label-warning">License: <%= license_name %></span>
+      <% else %>
+        <span style="font-weight: bold" >License: </span><span><%= license_name %></span>
+      <% end %>
+    </div>
+    <div style="padding-bottom: 15px;">
+      <span style="font-weight: bold" >Dependencies: </span>
+      <% @license_hash[license_name].each do |dependency| %>
+        <span class="license_box"><a href="<%= product_url_for_projectdependency( dependency ) %>" ><%= dependency.name %></a></span>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
