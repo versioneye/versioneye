@@ -215,11 +215,7 @@
 
           </div>
 
-          <% if @project.language.eql?(Product::A_LANGUAGE_PHP) ||
-                @project.language.eql?(Product::A_LANGUAGE_NODEJS) ||
-                @project.language.eql?(Product::A_LANGUAGE_JAVA) ||
-                @project.language.eql?(Product::A_LANGUAGE_PYTHON) ||
-                @project.language.eql?(Product::A_LANGUAGE_RUBY) %>
+          <% if security_available?( @project ) %>
             <div id="security" class="tab-pane">
 
               <%= render partial: "user/projects/helpers/show_subprojects", locals: {parent_project: @project, child_project: @child, tab_id: 'security'} %>

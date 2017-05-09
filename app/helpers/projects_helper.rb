@@ -27,6 +27,15 @@ module ProjectsHelper
     false
   end
 
+  def security_available?( project )
+    return false if project.nil?
+    project.language.eql?(Product::A_LANGUAGE_PHP) ||
+    project.language.eql?(Product::A_LANGUAGE_NODEJS) ||
+    project.language.eql?(Product::A_LANGUAGE_JAVA) ||
+    project.language.eql?(Product::A_LANGUAGE_PYTHON) ||
+    project.language.eql?(Product::A_LANGUAGE_RUBY)
+  end
+
   def outdated_color project
     return 'red' if project[:out_number_sum].to_i > 0
     'green'
