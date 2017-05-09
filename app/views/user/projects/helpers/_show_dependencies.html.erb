@@ -1,8 +1,9 @@
 
   <% if !@project.nil? && !@project.license_whitelist_id.to_s.empty? %>
-    <div style="margin: 10px 0 7px 0;">
-      <%= link_to 'BoM PDF Export', lwl_export_user_project_path( @project.ids ) %> |
-      <%= link_to 'BoM CSV Export', lwl_csv_export_user_project_path( @project.ids ) %>
+    <div style="margin: 10px 0 10px 0;">
+      <span style="font-weight: bold">Exports:</span>
+      <%= link_to 'licenses.pdf', lwl_export_user_project_path( @project.ids ) %> |
+      <%= link_to 'licenses.csv', lwl_csv_export_user_project_path( @project.ids ) %>
     </div>
   <% end %>
 
