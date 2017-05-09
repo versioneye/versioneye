@@ -92,16 +92,19 @@
           </thead>
           <tbody>
             <% [:whitelisted, :unknown, :violated].each do |key| %>
+              <% text_color = 'black' %>
+              <% text_color = 'orange' if key.to_s.eql?('unknown') %>
+              <% text_color = 'red'    if key.to_s.eql?('violated') %>
               <% project.lwl_pdf_list[key].each do |dep| %>
                 <tr>
-                  <td class="left"> <%= key.to_s %> </td>
-                  <td class="left">
+                  <td class="left" style="color: <%= text_color %> "> <%= key.to_s %> </td>
+                  <td class="left" style="color: <%= text_color %> ">
                     (<%= dep[:language] %>) <%= dep[:component] %>
                     <% if dep[:group_id] %>
                       <br/> <span class='small'>GroupId: <%= dep[:group_id] %></span>
                     <% end %>
                   </td>
-                  <td class="left">
+                  <td class="left" style="color: <%= text_color %> ">
                     <% if dep[:version].to_s.strip.match(/\A\:path/) %>
                       :path
                     <% elsif dep[:version].to_s.strip.match(/\A\:git/) %>
@@ -110,7 +113,7 @@
                       <%= dep[:version].to_s.strip %>
                     <% end %>
                   </td>
-                  <td class="left"> <%= dep[:license] %> </td>
+                  <td class="left" style="color: <%= text_color %> "> <%= dep[:license] %> </td>
                 </tr>
               <% end %>
             <% end %>
@@ -137,16 +140,19 @@
               </thead>
               <tbody>
                 <% [:whitelisted, :unknown, :violated].each do |key| %>
+                  <% text_color = 'black' %>
+                  <% text_color = 'orange' if key.to_s.eql?('unknown') %>
+                  <% text_color = 'red'    if key.to_s.eql?('violated') %>
                   <% project.lwl_pdf_list[key].each do |dep| %>
                     <tr>
-                      <td class="left"> <%= key.to_s %> </td>
-                      <td class="left">
+                      <td class="left" style="color: <%= text_color %> "> <%= key.to_s %> </td>
+                      <td class="left" style="color: <%= text_color %> ">
                         (<%= dep[:language] %>) <%= dep[:component] %>
                         <% if dep[:group_id] %>
                           <br/> <span class='small'>GroupId: <%= dep[:group_id] %></span>
                         <% end %>
                       </td>
-                      <td class="left">
+                      <td class="left" style="color: <%= text_color %> ">
                         <% if dep[:version].to_s.strip.match(/\A\:path/) %>
                           :path
                         <% elsif dep[:version].to_s.strip.match(/\A\:git/) %>
@@ -155,7 +161,7 @@
                           <%= dep[:version].to_s.strip %>
                         <% end %>
                       </td>
-                      <td class="left"> <%= dep[:license] %> </td>
+                      <td class="left" style="color: <%= text_color %> "> <%= dep[:license] %> </td>
                     </tr>
                   <% end %>
                 <% end %>
