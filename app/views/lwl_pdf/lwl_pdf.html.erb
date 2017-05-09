@@ -113,7 +113,13 @@
                       <%= dep[:version].to_s.strip %>
                     <% end %>
                   </td>
-                  <td class="left" style="color: <%= text_color %> "> <%= dep[:license] %> </td>
+                  <td class="left" style="color: <%= text_color %> ">
+                    <% if !dep[:license_url].to_s.empty? %>
+                      <a href="<%= dep[:license_url].to_s %>"><span style="color: <%= text_color %>"><%= dep[:license] %></span></a>
+                    <% else %>
+                      <span style="color: <%= text_color %>"><%= dep[:license] %></span>
+                    <% end %>
+                  </td>
                 </tr>
               <% end %>
             <% end %>
@@ -161,7 +167,13 @@
                           <%= dep[:version].to_s.strip %>
                         <% end %>
                       </td>
-                      <td class="left" style="color: <%= text_color %> "> <%= dep[:license] %> </td>
+                      <td class="left" style="color: <%= text_color %> ">
+                        <% if !dep[:license_url].to_s.empty? %>
+                          <a href="<%= dep[:license_url].to_s %>"><span style="color: <%= text_color %>"><%= dep[:license] %></span></a>
+                        <% else %>
+                          <span style="color: <%= text_color %>"><%= dep[:license] %></span>
+                        <% end %>
+                      </td>
                     </tr>
                   <% end %>
                 <% end %>
