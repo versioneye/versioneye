@@ -88,12 +88,12 @@
             <tr>
               <td class="left">Status</td>
               <td class="left">Component</td>
-              <td class="left">Version Used</td>
+              <td class="left">Used Version</td>
               <td class="left">Newest Version</td>
             </tr>
           </thead>
           <tbody>
-            <% [:ok, :outdated, :unknown].each do |key| %>
+            <% [:outdated, :unknown, :ok].each do |key| %>
               <% project.ver_pdf_list[key].each do |dep| %>
                 <% cell_style = "" %>
                 <% if key.to_s.eql?("outdated") %>
@@ -142,13 +142,13 @@
               <thead>
                 <tr>
                   <td class="left">Status</td>
-                  <td class="left">Status</td>
                   <td class="left">Component</td>
-                  <td class="left">Version</td>
+                  <td class="left">Used Version</td>
+                  <td class="left">Newest Version</td>
                 </tr>
               </thead>
               <tbody>
-                <% [:ok, :outdated, :unknown].each do |key| %>
+                <% [:outdated, :unknown, :ok].each do |key| %>
                   <% project.ver_pdf_list[key].each do |dep| %>
                     <% cell_style = "" %>
                     <% if key.to_s.eql?("outdated") %>
