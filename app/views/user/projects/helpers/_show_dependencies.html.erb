@@ -33,6 +33,8 @@
           </div>
         <% end %>
       <% end %>
+      <% @summary = nil %>
+      <%= render partial: "pfile_summary", locals: { :display_grouping => true, :display_charts => true } %>
     </div>
 
   <% else %>
