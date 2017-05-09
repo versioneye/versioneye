@@ -187,7 +187,7 @@ class UsersController < ApplicationController
     @verification = params[:verification]
     user = User.by_verification(@verification).first
     if @verification.nil? or user.nil?
-      render text: "Verification code is wrong, malformed or doesnt exist. If
+      render plain: "Verification code is wrong, malformed or doesnt exist. If
       it's mistake, please send feedback to support@versioneye.com.",
              layout: "application"
       return false

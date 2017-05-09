@@ -37,7 +37,7 @@ class User::StashReposController < User::ScmReposController
   rescue => e
     logger.error e.message
     logger.error e.backtrace.join("\n")
-    render text: "An error occured. We are not able to import Stash repositories. Please contact the VersionEye team.", status: 503
+    render plain: "An error occured. We are not able to import Stash repositories. Please contact the VersionEye team.", status: 503
   end
 
 
@@ -99,7 +99,7 @@ class User::StashReposController < User::ScmReposController
     render json: result
   rescue => e
     Rails.logger.error "failed to remove: #{e.message}"
-    render text: e.message, status: 503
+    render plain: e.message, status: 503
   end
 
 

@@ -38,7 +38,7 @@ class User::GithubReposController < User::ScmReposController
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
-    render text: 'An error occured. We are not able to import GitHub repositories. Please contact the VersionEye team.', status: 500
+    render plain: 'An error occured. We are not able to import GitHub repositories. Please contact the VersionEye team.', status: 500
   end
 
 
@@ -100,7 +100,7 @@ class User::GithubReposController < User::ScmReposController
     render json: result
   rescue => e
     Rails.logger.error "failed to remove: #{e.message}"
-    render text: e.message, status: 500
+    render plain: e.message, status: 500
   end
 
 
@@ -166,7 +166,7 @@ class User::GithubReposController < User::ScmReposController
     rescue => e
       Rails.logger.error e.message
       Rails.logger.error e.backtrace.join "\n"
-      render text: 'An error occured. Please contact the VersionEye team.', status: 500
+      render plain: 'An error occured. Please contact the VersionEye team.', status: 500
     end
 
 

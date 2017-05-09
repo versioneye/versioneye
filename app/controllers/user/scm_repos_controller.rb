@@ -20,15 +20,15 @@ class User::ScmReposController < ApplicationController
     path   = sps[2].gsub(":", "/")
     repo   = import_repo( repo_fullname, branch, path )
     if repo.is_a?(String) && repo.match(/\Aerror_/)
-      render text: repo.gsub("error_", ""), status: 500
+      render plain: repo.to_s.gsub("error_", ""), status: 500
     elsif repo.is_a?(String)
-      render text: repo, status: 405
+      render plain: repo.to_s, status: 405
     else
       render json: repo
     end
   rescue => e
     logger.error "failed to import: #{e.message}"
-    render text: e.message, status: 503
+    render plain: e.message, status: 503
   end
 
 

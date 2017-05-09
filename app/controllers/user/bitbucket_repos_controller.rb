@@ -37,7 +37,7 @@ class User::BitbucketReposController < User::ScmReposController
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
-    render text: "An error occured. We are not able to import BitBucket repositories. Please contact the VersionEye team.", status: 503
+    render plain: "An error occured. We are not able to import BitBucket repositories. Please contact the VersionEye team.", status: 503
   end
 
 
@@ -99,7 +99,7 @@ class User::BitbucketReposController < User::ScmReposController
     render json: result
   rescue => e
     Rails.logger.error "failed to remove: #{e.message}"
-    render text: e.message, status: 503
+    render plain: e.message, status: 503
   end
 
 
