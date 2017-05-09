@@ -1,7 +1,7 @@
 class User::ProjectsController < ApplicationController
 
   before_action :authenticate,  :except => [:show, :badge, :transitive_dependencies, :status, :lwl_export, :lwl_csv_export]
-  before_action :collaborator?, :only   => [:add_collaborator, :save_visibility, :save_whitelist, :save_cwl, :update, :update_name, :destroy, :transfer, :team]
+  before_action :collaborator?, :only   => [:add_collaborator, :save_visibility, :save_whitelist, :save_cwl, :update, :update_name, :destroy, :transfer, :team, :version_export]
   before_action :pdf_export_permission?, :only => [:lwl_export, :lwl_csv_export, :sec_export]
   before_action :load_orga, :only => [:show, :new, :create, :upload, :destroy]
 
@@ -192,6 +192,21 @@ class User::ProjectsController < ApplicationController
     project_name = project.name.gsub("/", "-")
     pdf = SecPdfService.process project, false, true
     send_data pdf, type: 'application/pdf', filename: "#{date_string}_#{project_name}_security.pdf"
+  rescue => e
+    logger.error e.message
+    logger.error e.backtrace.join("\n")
+    flash[:error] = "ERROR: #{e.message}"
+    redirect_back
+  end
+
+
+  def version_export
+    id      = params[:id]
+    project = ProjectService.find( id )
+    date_string = DateTime.now.strftime("%d_%m_%Y")
+    project_name = project.name.gsub("/", "-")
+    pdf = VersionPdfService.process project, false, false
+    send_data pdf, type: 'application/pdf', filename: "#{date_string}_#{project_name}_version.pdf"
   rescue => e
     logger.error e.message
     logger.error e.backtrace.join("\n")

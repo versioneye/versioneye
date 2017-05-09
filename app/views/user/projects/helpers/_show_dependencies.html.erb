@@ -2,6 +2,7 @@
   <% if !@project.nil? && !@project.license_whitelist_id.to_s.empty? %>
     <div style="margin: 10px 0 10px 0;">
       <span style="font-weight: bold">Exports:</span>
+      <%= link_to 'version.pdf', version_export_user_project_path( @project.ids ) %> |
       <%= link_to 'licenses.pdf', lwl_export_user_project_path( @project.ids ) %> |
       <%= link_to 'licenses.csv', lwl_csv_export_user_project_path( @project.ids ) %>
       <% if security_available?( @project ) %> | <%= link_to 'security.pdf', sec_export_user_project_path( @project.ids ) %><% end %>
