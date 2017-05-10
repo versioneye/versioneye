@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 91526f33a66880ede72f67bcd86f21ec1d07ed70
-  tag: v11.11.1
+  revision: cc42f6a8b86102a1c3f0be6b66cddf506ebb98ad
+  tag: v11.11.3
   specs:
-    versioneye-core (11.11.1)
+    versioneye-core (11.11.3)
       actionmailer (~> 5.1.0)
       aws-sdk (~> 2.9.1)
       bunny (~> 2.6.0)
@@ -171,7 +171,7 @@ GEM
     method_source (0.8.2)
     mime-types (2.99.3)
     mini_portile2 (2.1.0)
-    minitest (5.10.1)
+    minitest (5.10.2)
     mixlib-log (1.7.1)
     mongo (2.4.1)
       bson (>= 4.2.1, < 5.0.0)
@@ -186,7 +186,7 @@ GEM
     net-ldap (0.16.0)
     netrc (0.11.0)
     nio4r (2.0.0)
-    nokogiri (1.7.1)
+    nokogiri (1.7.2)
       mini_portile2 (~> 2.1.0)
     oauth (0.5.1)
     octokit (4.7.0)
