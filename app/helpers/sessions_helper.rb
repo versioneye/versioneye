@@ -73,7 +73,7 @@ module SessionsHelper
   end
 
   def redirect_back_or(default)
-    redirect_to(session[:return_to] || default, :status => 302)
+    redirect_to( session[:return_to] || default, :status => 302 )
     clear_return_to
   end
 
