@@ -15,3 +15,9 @@ YiledLove Ads:
     googletag.pubads().display('/53015287/versioneye.com_d_728x90_1', [728, 90], 'div-gpt-ad-1407836245189-0');
   });
 </script>
+
+<script type='text/javascript'>
+  googletag.cmd.push(function() {
+    googletag.pubads().display('/53015287/versioneye.com_d_160x600_1', [160, 600], 'div-gpt-ad-1407836165464-0');
+  });
+</script>
