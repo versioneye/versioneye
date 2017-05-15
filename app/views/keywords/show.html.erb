@@ -22,9 +22,11 @@
           <% end %>
         </div>
 
-        <div id='div-gpt-ad-1407836165464-0'>
-          <script data-cfasync="false" type="text/javascript" src="//www.eboundservices.com/ads/160x600_responsive.js"></script>
-        </div>
+        <% if !Settings.instance.environment.to_s.eql?('enterprise') && request.original_url.to_s.match("@").nil? %>
+          <div id='div-gpt-ad-1407836165464-0'>
+            <script data-cfasync="false" type="text/javascript" src="//www.eboundservices.com/ads/160x600_responsive.js"></script>
+          </div>
+        <% end %>
 
       </div>
       <div class="col-md-8 col-xs-12 pull-left">

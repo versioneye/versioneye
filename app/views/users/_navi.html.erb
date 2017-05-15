@@ -5,11 +5,11 @@
     <div class="box content" >
       <% @user['product_ids'] ||= [] %>
       <% languages = Product.unique_languages_for_product_ids( @user['product_ids'] ) %>
-      <% z = 1 %> 
+      <% z = 1 %>
       <table>
         <tr>
           <% languages.each do |language| %>
-            
+
             <% next if !Product::A_LANGS_SUPPORTED.include?( language ) %>
 
             <td style="width: 56px; height: 56px; text-align: center; vertical-align: middle;">
@@ -18,14 +18,14 @@
             </td>
 
             <% if (z % 3) == 0 %>
-                </tr> 
+                </tr>
                 <tr>
             <% end %>
 
             <% z = z + 1 %>
-            
+
           <% end %>
-        <tr> 
+        <tr>
       </table>
     </div>
 
@@ -52,5 +52,11 @@
         <% if !@userlinkcollection.xing_empty? %>
           <%= link_to image_tag("socialnetworks/xing.png"), @userlinkcollection.xing_url, :target => "xing" %>
         <% end %>
+      </div>
+    <% end %>
+
+    <% if !Settings.instance.environment.to_s.eql?('enterprise') && request.original_url.to_s.match("@").nil? %>
+      <div id='div-gpt-ad-1407836165464-0'>
+        <script data-cfasync="false" type="text/javascript" src="//www.eboundservices.com/ads/160x600_responsive.js"></script>
       </div>
     <% end %>
