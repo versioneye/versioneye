@@ -2,6 +2,8 @@
 <html lang="en">
 
   <head >
+
+  <% if !Settings.instance.environment.to_s.eql?('enterprise') && request.original_url.to_s.match("@").nil? %>
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script>
       (adsbygoogle = window.adsbygoogle || []).push({
@@ -9,6 +11,7 @@
         enable_page_level_ads: true
       });
     </script>
+  <% end %>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
