@@ -20,7 +20,7 @@ class Admin::CrawlesController < ApplicationController
   private
 
     def admin_user
-      redirect_to(root_path) unless signed_in_admin?
+      redirect_to(root_url) unless signed_in_admin?
     end
 
 end

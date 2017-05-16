@@ -50,7 +50,7 @@ class EnterpriseController < ApplicationController
     end
 
     flash[:success] = "Congratulation. Your VersionEye Enterprise instance is activated. Login with admin/admin."
-    redirect_to signin_path
+    redirect_to signin_url
   end
 
 
