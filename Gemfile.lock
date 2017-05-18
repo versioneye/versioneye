@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: d4fa504025c1470167b07530b3e3bc7fb6f80556
-  tag: v11.12.1
+  revision: aa4934ae8b80f5b565a88bf1274b8166b1af776e
+  tag: v11.12.5
   specs:
-    versioneye-core (11.12.1)
+    versioneye-core (11.12.5)
       actionmailer (~> 5.1.0)
       aws-sdk (~> 2.9.1)
       bunny (~> 2.6.0)
@@ -80,13 +80,13 @@ GEM
     amq-protocol (2.2.0)
     ansi (1.5.0)
     arel (8.0.0)
-    aws-sdk (2.9.17)
-      aws-sdk-resources (= 2.9.17)
-    aws-sdk-core (2.9.17)
+    aws-sdk (2.9.20)
+      aws-sdk-resources (= 2.9.20)
+    aws-sdk-core (2.9.20)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.9.17)
-      aws-sdk-core (= 2.9.17)
+    aws-sdk-resources (2.9.20)
+      aws-sdk-core (= 2.9.20)
     aws-sigv4 (1.0.0)
     bourbon (4.3.4)
       sass (~> 3.4)
@@ -188,7 +188,7 @@ GEM
     nio4r (2.0.0)
     nokogiri (1.7.2)
       mini_portile2 (~> 2.1.0)
-    oauth (0.5.1)
+    oauth (0.5.2)
     octokit (4.7.0)
       sawyer (~> 0.8.0, >= 0.5.3)
     pdfkit (0.8.2)
@@ -200,7 +200,7 @@ GEM
     psych (2.2.4)
     public_suffix (2.0.5)
     puma (3.8.2)
-    rack (2.0.2)
+    rack (2.0.3)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (5.1.1)
@@ -288,7 +288,7 @@ GEM
       docile (~> 1.1.0)
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
-    simplecov-html (0.10.0)
+    simplecov-html (0.10.1)
     sprockets (3.7.1)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
