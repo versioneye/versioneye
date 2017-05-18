@@ -19,11 +19,15 @@ function getLanguageColor(langName){
     "r" : "#8B7D6B",
     "javascript" : "#9ACD32",
     "node.js" : "#6B8E23",
+    "nodejs" : "#6B8E23",
     "php" : "#8B6914",
-    "clojure" : "#999999"
+    "clojure" : "#999999",
+    "rust": "#B7410E",
+    "chef": "#2C0091",
+    "objective-c": "#FF033E"
   }
 
-  var langName_ = langName.toLowerCase(); 
+  var langName_ = langName.toLowerCase();
   return ( _.has(colorMap, langName_) ? colorMap[langName_] : colorMap['default']);
 }
 
@@ -32,7 +36,7 @@ function renderSummaryPlot(ctx, summaryData){
   var colNames = [], colValues = [], colColors = [];
   var _summaryData = summaryData.sort(function(a,b){
     return (a['value'] <= b['value']) ? 1 : -1;
-  }); 
+  });
 
   //build value arrays from the summary doc
   _summaryData.forEach(function(x){
@@ -46,7 +50,7 @@ function renderSummaryPlot(ctx, summaryData){
     datasets: [{
       label: "Number of packages",
       data: colValues,
-      backgroundColor: colColors 
+      backgroundColor: colColors
     }],
     options: {
       legend: { display: false }
@@ -61,26 +65,24 @@ function renderSummaryPlot(ctx, summaryData){
 
 function renderTrendPlot(ctx, trendData){
   var dateLabels = [];
-  var languageVals = {
-    'r'      : [],
-    'C#'     : [],
-    'java'   : [],
-    'ruby'   : [],
-    'python' : [],
-    'nodejs' : [],
-    'php'    : [],
-    'clojure': [],
-    'objective-c' : []
-  }; 
+  var languageLabels = _.keys(trendData[0]);
+
+  var languageVals = _.reduce(languageLabels, function(acc, val){
+    if( val != 'date' ) {
+      acc[val] = [];
+    }
+
+    return acc;
+  }, {});
 
   trendData.forEach(function(x){
     dateLabels.push(reformatDate(x['date'], 'YYYY-MM-DD', 'YYYY.MM'))
-    
+
     _.each(x, function(val, key){
       //collect each language stats into own array
 			if(key !== "date"){ languageVals[key].push(val); }
   	});
-	
+
 	});
 
   var datasets = [];
@@ -88,7 +90,8 @@ function renderTrendPlot(ctx, trendData){
     datasets.push({
       label: key,
       data: val,
-      borderColor: getLanguageColor(key)
+      borderColor: getLanguageColor(key),
+      fill: false
     });
   });
 
