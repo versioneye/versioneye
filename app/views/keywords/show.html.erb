@@ -3,7 +3,7 @@
 
 <% if @products %>
     <div class="row">
-      <div class="col-md-3 col-xs-12 pull-left">
+      <div class="col-md-3 col-xs-12 pull-left sticky">
 
         <%= pluralize(@products.total_entries, 'software library') %> tagged with the keyword <span style="font-weight: bold;"><%= params[:id] %></span>
 
@@ -22,17 +22,7 @@
           <% end %>
         </div>
 
-        <% if !Settings.instance.environment.to_s.eql?('enterprise') && request.original_url.to_s.match("@").nil? %>
-          <!-- veye_responsive_ad -->
-          <ins class="adsbygoogle"
-               style="display:block"
-               data-ad-client="ca-pub-9602950531496152"
-               data-ad-slot="1656409224"
-               data-ad-format="auto"></ins>
-          <script>
-          (adsbygoogle = window.adsbygoogle || []).push({});
-          </script>
-        <% end %>
+        <%= render partial: "/shared/ad_vert_resp" %>
 
       </div>
       <div class="col-md-8 col-xs-12 pull-left">
