@@ -13,12 +13,12 @@
           :class => "input form-control",
           :maxlength => "1000", :rows => 5, :cols => 70
         %>
-        
+
         <%= f.hidden_field :language,    :value => @product.language %>
         <%= f.hidden_field :product_key, :value => @product.prod_key %>
         <%= f.hidden_field :version,     :value => @product.version %>
       </div>
-      <div class = "form-group">
+      <div class = "form-group" style="display: inline-block;">
         <div class = "pull-left">
           <button type="submit" class="btn btn-large btn-primary" >Submit</button>
         </div>
