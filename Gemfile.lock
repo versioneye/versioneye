@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 896330706f7d2a1553b4c3f1072f33af70b6a616
-  tag: v11.12.8
+  revision: a94fa385cba698a5afb2f5e39bdd2f8de52724fb
+  tag: v11.12.9
   specs:
-    versioneye-core (11.12.8)
+    versioneye-core (11.12.9)
       actionmailer (~> 5.1.0)
       aws-sdk (~> 2.9.1)
       bunny (~> 2.7.0)
@@ -80,13 +80,13 @@ GEM
     amq-protocol (2.2.0)
     ansi (1.5.0)
     arel (8.0.0)
-    aws-sdk (2.9.21)
-      aws-sdk-resources (= 2.9.21)
-    aws-sdk-core (2.9.21)
+    aws-sdk (2.9.22)
+      aws-sdk-resources (= 2.9.22)
+    aws-sdk-core (2.9.22)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.9.21)
-      aws-sdk-core (= 2.9.21)
+    aws-sdk-resources (2.9.22)
+      aws-sdk-core (= 2.9.22)
     aws-sigv4 (1.0.0)
     bourbon (4.3.4)
       sass (~> 3.4)
@@ -218,7 +218,7 @@ GEM
     rails-assets-bootstrap (3.3.7)
       rails-assets-jquery (>= 1.9.1, < 4)
     rails-assets-chartjs (2.5.0)
-    rails-assets-handlebars (4.0.5)
+    rails-assets-handlebars (4.0.10)
     rails-assets-jquery (3.1.1)
     rails-assets-linkifyjs (2.1.4)
       rails-assets-jquery (>= 1.7.0)
@@ -298,7 +298,7 @@ GEM
       sprockets (>= 3.0.0)
     stripe (2.3.0)
       faraday (~> 0.9)
-    terminal-notifier (1.7.2)
+    terminal-notifier (1.8.0)
     therubyracer (0.12.3)
       libv8 (~> 3.16.14.15)
       ref
@@ -372,7 +372,7 @@ DEPENDENCIES
   rails (~> 5.1.1)
   rails-assets-bootstrap (= 3.3.7)!
   rails-assets-chartjs (= 2.5.0)!
-  rails-assets-handlebars (= 4.0.5)!
+  rails-assets-handlebars (= 4.0.10)!
   rails-assets-jquery (= 3.1.1)!
   rails-assets-linkifyjs (= 2.1.4)!
   rails-assets-moment (= 2.18.1)!
@@ -388,7 +388,7 @@ DEPENDENCIES
   selenium-webdriver (~> 2.53.3)
   semverly (~> 1.0.0)
   simplecov (~> 0.14.1)
-  terminal-notifier (~> 1.7.1)
+  terminal-notifier (~> 1.8.0)
   therubyracer (~> 0.12.0)
   turn
   twitter_oauth (~> 0.4.94)
