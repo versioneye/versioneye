@@ -1,5 +1,10 @@
 module ApplicationHelper
 
+  def url_abs( url )
+    return url if url.to_s.match(/\Ahttp/i)
+    "http://#{url}"
+  end
+
   def title( page_title )
     content_for(:title){ page_title }
   end

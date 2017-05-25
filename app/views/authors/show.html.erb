@@ -8,7 +8,7 @@
 
       <%=  gravatar_image_tag( @author.email, :alt => @author.name, :class => 'round12', :gravatar => { :size => 200, :default => "#{Settings.instance.server_url}/profile_icon.png" }) %><br/>
       <% if !@author.homepage.to_s.empty? %>
-        <br/><a href="<%= @author.homepage %>">Homepage</a>
+        <br/><a href="<%= url_abs(@author.homepage) %>">Homepage</a>
       <% end %>
       <% if !@author.role.to_s.empty? %>
         <br/><span style="font-weight:bold;">Role:</span> <%= @author.role %>
