@@ -10,6 +10,12 @@ class AuthorsController < ApplicationController
     name_id = params[:id]
     @author = Author.find_by :name_id => name_id
     if @author.nil?
+      dev = Developer.find name_id
+      if dev
+        @author = AuthorService.dev_to_author dev
+      end
+    end
+    if @author.nil?
       render :text => "This page doesn't exist", :status => 404
       return
     end
