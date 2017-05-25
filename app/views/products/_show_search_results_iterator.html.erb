@@ -3,13 +3,15 @@
   <% products.each do |product| %>
     <% next if product.nil? %>
     <% i += 1 %>
-    <div class="row search-item" >
 
-      <% if i % 10 == 0 %>
-        <div class="col-md-2 pull-left" >
-          <%= render partial: "/shared/ad_hor" %>
+      <% if i % 10 == 0 && !Settings.instance.environment.to_s.eql?('enterprise') %>
+        <div class="row search-item" >
+          <div class="col-md-2 pull-left" >
+            <%= render partial: "/shared/ad_hor" %>
+          </div>
         </div>
-      <% else %>
+      <% end %>
+      <div class="row search-item" >
         <div class="col-md-1 pull-left" >
           <% prog_lang = product.language.to_s.downcase.gsub(/\./, '') %>
           <span class="icon_<%= prog_lang %> on" style="margin-left: -12px;" ></span>
@@ -34,8 +36,7 @@
             <span class="meta_info" >Released:</span> <span class="meta_info_bold" ><%= product.released_ago_in_words %> ago.</span>
           </div>
         </div>
-      <% end %>
+      </div>
 
-    </div>
   <% end %>
 <% end %>
