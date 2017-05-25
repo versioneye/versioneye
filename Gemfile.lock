@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: a94fa385cba698a5afb2f5e39bdd2f8de52724fb
-  tag: v11.12.9
+  revision: f99f94e4de6bfa7e4a006c5639039cce86dc51ee
+  tag: v11.12.12
   specs:
-    versioneye-core (11.12.9)
+    versioneye-core (11.12.12)
       actionmailer (~> 5.1.0)
       aws-sdk (~> 2.9.1)
       bunny (~> 2.7.0)
@@ -80,13 +80,13 @@ GEM
     amq-protocol (2.2.0)
     ansi (1.5.0)
     arel (8.0.0)
-    aws-sdk (2.9.22)
-      aws-sdk-resources (= 2.9.22)
-    aws-sdk-core (2.9.22)
+    aws-sdk (2.9.24)
+      aws-sdk-resources (= 2.9.24)
+    aws-sdk-core (2.9.24)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.9.22)
-      aws-sdk-core (= 2.9.22)
+    aws-sdk-resources (2.9.24)
+      aws-sdk-core (= 2.9.24)
     aws-sigv4 (1.0.0)
     bourbon (4.3.4)
       sass (~> 3.4)
@@ -112,9 +112,9 @@ GEM
       activesupport (>= 4.0.2)
       fuzzy_match (~> 2.0.4)
       nap (~> 1.0)
-    coffee-rails (4.2.1)
+    coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
-      railties (>= 4.0.0, < 5.2.x)
+      railties (>= 4.0.0)
     coffee-script (2.4.1)
       coffee-script-source
       execjs
@@ -188,7 +188,7 @@ GEM
     nio4r (2.0.0)
     nokogiri (1.7.2)
       mini_portile2 (~> 2.1.0)
-    oauth (0.5.2)
+    oauth (0.5.3)
     octokit (4.7.0)
       sawyer (~> 0.8.0, >= 0.5.3)
     pdfkit (0.8.2)
