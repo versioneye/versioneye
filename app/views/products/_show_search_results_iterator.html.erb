@@ -1,35 +1,40 @@
 <% if products && !products.empty? %>
-
+  <% i = 1 %>
   <% products.each do |product| %>
     <% next if product.nil? %>
+    <% i += 1 %>
     <div class="row search-item" >
 
-      <div class="col-md-1 pull-left" >
-        <% prog_lang = product.language.to_s.downcase.gsub(/\./, '') %>
-        <span class="icon_<%= prog_lang %> on" style="margin-left: -12px;" ></span>
-      </div>
-
-      <div class = "col-md-11">
-        <a href="<%= product_version_path(product) %>" class="searchResultLink"><span ><%= product.name_version(name_limit) %></span></a><br/>
-        <% if product.prod_type == "Maven2" %>
-          <span class="group_id_small">GroupId: <%= product.group_id %></span><br/>
-          <% if !product.short_summary.to_s.empty? %>
+      <% if i % 10 == 0 %>
+        <div class="col-md-2 pull-left" >
+          <%= render partial: "/shared/ad_hor" %>
+        </div>
+      <% else %>
+        <div class="col-md-1 pull-left" >
+          <% prog_lang = product.language.to_s.downcase.gsub(/\./, '') %>
+          <span class="icon_<%= prog_lang %> on" style="margin-left: -12px;" ></span>
+        </div>
+        <div class = "col-md-11">
+          <a href="<%= product_version_path(product) %>" class="searchResultLink"><span ><%= product.name_version(name_limit) %></span></a><br/>
+          <% if product.prod_type == "Maven2" %>
+            <span class="group_id_small">GroupId: <%= product.group_id %></span><br/>
+            <% if !product.short_summary.to_s.empty? %>
+              <span class="meta_prod_description"><%= product.short_summary %></span><br/>
+            <% end %>
+          <% else %>
             <span class="meta_prod_description"><%= product.short_summary %></span><br/>
           <% end %>
-        <% else %>
-          <span class="meta_prod_description"><%= product.short_summary %></span><br/>
-        <% end %>
 
-        <span class="meta_info" >References:</span> <span class="meta_info_bold"> <%= link_to product.used_by_count, product_references_path( :lang => product.language_esc, :key => product.to_param ) %></span> |
-        <span class="meta_info" >License:</span> <span class="meta_info_bold"><%= product.license_info %></span>
+          <span class="meta_info" >References:</span> <span class="meta_info_bold"> <%= link_to product.used_by_count, product_references_path( :lang => product.language_esc, :key => product.to_param ) %></span> |
+          <span class="meta_info" >License:</span> <span class="meta_info_bold"><%= product.license_info %></span>
 
-        <% update_release_infos( product.version_by_number(product.version), product ) %>
-        <% rel_bg = color_for_released_ago product %>
-        <div class="flash <%= rel_bg %>">
-          <span class="meta_info" >Released:</span> <span class="meta_info_bold" ><%= product.released_ago_in_words %> ago.</span>
+          <% update_release_infos( product.version_by_number(product.version), product ) %>
+          <% rel_bg = color_for_released_ago product %>
+          <div class="flash <%= rel_bg %>">
+            <span class="meta_info" >Released:</span> <span class="meta_info_bold" ><%= product.released_ago_in_words %> ago.</span>
+          </div>
         </div>
-
-      </div>
+      <% end %>
 
     </div>
   <% end %>
