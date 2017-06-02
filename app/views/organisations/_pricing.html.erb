@@ -29,7 +29,7 @@
         <% if @plan && @plan.name_id.eql?( plan.name_id ) %>
           <p class="badge badge-info" style="font-size: 16px; middle; padding: 7px;">Current</p>
         <% else %>
-          <% btn_txt = 'Book it' %>
+          <% btn_txt = 'Book now' %>
           <% btn_style = 'font-size: 17px;' %>
           <form action="<%= update_plan_organisation_path( @organisation ) %>" method="POST" >
             <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
@@ -73,7 +73,7 @@
         <% if @plan && @plan.name_id.eql?( plan.name_id ) %>
           <p class="badge badge-info" style="font-size: 16px; middle; padding: 7px;">Current</p>
         <% else %>
-          <% btn_txt = 'Book it' %>
+          <% btn_txt = 'Book now' %>
           <% btn_style = 'font-size: 17px;' %>
           <form action="<%= update_plan_organisation_path( @organisation ) %>" method="POST" >
             <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
