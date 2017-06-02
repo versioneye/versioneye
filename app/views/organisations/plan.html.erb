@@ -10,21 +10,50 @@
 
   <div class="content" >
     <p>
+      This organisation is currently using the <span style="font-weight: bold"><%= @organisation.plan.name %></span> plan.
+    </p>
+    <p>
+      <% comp_count = @organisation.comp_bucket_count %>
+      <% os_project_count = @organisation.os_project_count %>
       <% private_project_count = @organisation.private_project_count %>
       <% projects_remain = @organisation.plan.private_projects.to_i - private_project_count.to_i %>
-      This organisation is currently using the <span style="font-weight: bold"><%= @organisation.plan.name %></span> plan which allows to monitor <span style="font-weight: bold"><%= pluralize(@organisation.plan.private_projects, 'private project') %></span>.
-      <% if (projects_remain.to_i < 1) %>
-        Currently there are <span style="font-weight: bold"><%= pluralize(private_project_count, 'private project') %></span> in this organisation and the limits are reached. Upgrade to a higher plan if more private projects are needed.<br/>
-      <% end %>
-      <% if (projects_remain.to_i > 0) %>
-        Currently there are <span style="font-weight: bold"><%= pluralize(private_project_count, 'private project') %></span> in this organisation and <span style="font-weight: bold"><%= pluralize(projects_remain, 'more private project') %></span> can be monitored.<br/>
-      <% end %>
+      <% os_remain = @organisation.plan.os_projects.to_i - os_project_count.to_i %>
+      <% comp_remain = @organisation.plan.cmp_rate_limit.to_i - comp_count.to_i %>
+      <table class="table table-striped">
+        <thead style="font-weight: bold;">
+          <tr>
+            <td></td>
+            <td>Max</td>
+            <td>Used</td>
+            <td>Remain</td>
+          </tr>
+        </thead>
+        <tr>
+          <td>Private Projects:</td>
+          <td><%= @organisation.plan.private_projects.to_i %></td>
+          <td><%= private_project_count %></td>
+          <td><%= projects_remain %></td>
+        </tr>
+        <tr>
+          <td>Open Source Projects:</td>
+          <td><%= @organisation.plan.os_projects.to_i %></td>
+          <td><%= os_project_count %></td>
+          <td><%= projects_remain %></td>
+        </tr>
+        <tr>
+          <td>Components to sync:</td>
+          <td><%= @organisation.plan.cmp_rate_limit.to_i %></td>
+          <td><%= comp_count %></td>
+          <td><%= comp_remain %></td>
+        </tr>
+        <tr>
+          <td>API Calls / Hour:</td>
+          <td><%= @organisation.plan.api_rate_limit.to_i %></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
     </p>
-    <hr />
-    <p>
-      We only charge a small fee for monitoring project files in GitHub/Bitbucket repositories.<br/>
-    </p>
-    <hr />
 
     <%= render "pricing" %>
 
@@ -41,7 +70,7 @@
       <br/>
       <ul>
         <li style="padding-bottom: 10px;">
-          <b>Project</b>: A private VersionEye project is a project which is based on a project file (Gemfile, pom.xml and so on) in an Git repository.
+          <b>Project</b>: A VersionEye project can contain one or multiple project files, like for example a Gemfile, pom.xml and so on.
         </li>
         <li style="padding-bottom: 10px;">
           <b>API calls per hour</b>: The number of HTTP requests per hour you can do to the VersionEye <a href="/api">API</a> depends on your subscription. As higher your subscription plan as more API calls per hour you can do. The API calls are especially important for you if you want to integrate VersionEye into your own tool chain.

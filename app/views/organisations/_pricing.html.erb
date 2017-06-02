@@ -1,15 +1,19 @@
+
+<p style="padding-top: 15px;">
+  Here are our <b>monthly</b> subscriptions:
+</p>
 <div class="plans" id="plans" >
   <table class="table table-striped">
     <thead style="font-weight: bold;">
       <tr>
         <td>Plan</td>
-        <td>Price / Month</td>
-        <td>Projects</td>
+        <td>Price</td>
+        <td>Private</br>Projects</td>
+        <td>OS</br>Projects</td>
         <td>
-          API calls per hour &amp;<br/>
-          components to sync
+          API Calls / Hour &amp;<br/>
+          Components to sync
         </td>
-        <td>AddOns</td>
         <td></td>
       </tr>
     </thead>
@@ -19,12 +23,8 @@
       <td><%= plan.name %></td>
       <td>€ <%= plan.price %></td>
       <td><%= plan.private_projects %></td>
+      <td><%= plan.os_projects %></td>
       <td><%= plan.api_rate_limit %></td>
-      <td>
-        <% if plan.price.to_i > 20 %>
-          PDF/CSV Reports
-        <% end %>
-      </td>
       <td>
         <% if @plan && @plan.name_id.eql?( plan.name_id ) %>
           <p class="badge badge-info" style="font-size: 16px; middle; padding: 7px;">Current</p>
@@ -42,21 +42,22 @@
     <% end %>
   </table>
 
-  <div style="padding: 10px 0 20px 0; font-weight: normal;">
-    Get 2 projects on top of the normal offering by paying yearly.
+  <div style="padding: 15px 0 20px 0; font-weight: normal;">
+    Here are our <b>yearly</b> subscriptions. <br/>
+    Get 2 projects on top of the normal offering by paying <b>yearly</b>.
   </div>
 
   <table class="table table-striped">
     <thead style="font-weight: bold;">
       <tr>
         <td>Plan</td>
-        <td>Price / Yearly</td>
-        <td>Projects</td>
+        <td>Price</td>
+        <td>Private</br>Projects</td>
+        <td>OS</br>Projects</td>
         <td>
-          API calls per hour &amp;<br/>
-          components to sync
+          API Calls / Hour &amp;<br/>
+          Components to sync
         </td>
-        <td>AddOns</td>
         <td></td>
       </tr>
     </thead>
@@ -66,12 +67,8 @@
       <td><%= plan.name %></td>
       <td>€ <%= plan.price %></td>
       <td><%= plan.private_projects %></td>
+      <td><%= plan.os_projects %></td>
       <td><%= plan.api_rate_limit %></td>
-      <td>
-        <% if plan.price.to_i > 20 %>
-          PDF/CSV Reports
-        <% end %>
-      </td>
       <td>
         <% if @plan && @plan.name_id.eql?( plan.name_id ) %>
           <p class="badge badge-info" style="font-size: 16px; middle; padding: 7px;">Current</p>
