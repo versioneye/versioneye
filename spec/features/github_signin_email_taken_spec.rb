@@ -27,6 +27,10 @@ describe "Signin with GitHub" do
     ue = UserEmail.new(:user_id => default_user.ids, :email => "test@versioneye.com")
     expect( ue.save ).to be_truthy
 
+    Plan.delete_all
+    Plan.create_defaults
+    orga = OrganisationService.create_new default_user, 'my_orga'
+
     visit signin_path
     page.has_css? 'button.btn-github'
     within("#sm_list") do

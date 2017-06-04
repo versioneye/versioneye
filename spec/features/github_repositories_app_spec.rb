@@ -26,6 +26,10 @@ describe "frontend APP for importing Github repositories", :js => true do
 
   describe "as authorized user without github token" do
     before :each do
+      Plan.delete_all
+      Plan.create_defaults
+      orga = OrganisationService.create_new user, 'my_orga'
+
       FakeWeb.allow_net_connect = true
       FakeWeb.clean_registry
 
@@ -44,6 +48,10 @@ describe "frontend APP for importing Github repositories", :js => true do
 
   describe "as authorized user", :firebug => true, js: true do
     before :each do
+      Plan.delete_all
+      Plan.create_defaults
+      orga = OrganisationService.create_new user, 'my_orga'
+
       FakeWeb.allow_net_connect = %r[^https?://127\.0\.0\.1]
       FakeWeb.register_uri(
         :get,

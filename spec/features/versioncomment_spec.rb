@@ -13,7 +13,9 @@ describe "Submit a Comment to specific package" do
     Rails.cache.clear
     LanguageService.cache.delete "distinct_languages"
 
+    Plan.create_defaults
     @user = UserFactory.create_new
+    orga = OrganisationService.create_new @user, 'my_orga'
     visit signin_path
     fill_in 'session[email]',    :with => @user.email
     fill_in 'session[password]', :with => @user.password

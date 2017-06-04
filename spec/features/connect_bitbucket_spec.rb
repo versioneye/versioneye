@@ -17,7 +17,11 @@ describe "Connect with Bitbucket" do
 
   it "connects Bitbucket account for authorized user", js: true do
     user.save
+    Plan.delete_all
+    Plan.create_defaults
     User.all.count.should eql(1)
+
+    orga = OrganisationService.create_new user, 'my_orga_1'
 
     visit signin_path
     within("form.form-horizontal") do

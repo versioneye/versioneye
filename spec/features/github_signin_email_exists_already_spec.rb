@@ -25,6 +25,10 @@ describe "Signin with GitHub" do
     default_user.save
     User.all.count.should eql(1)
 
+    Plan.delete_all
+    Plan.create_defaults
+    orga = OrganisationService.create_new user, 'my_orga'
+
     visit signin_path
     page.has_css? 'button.btn-github'
     within("#sm_list") do

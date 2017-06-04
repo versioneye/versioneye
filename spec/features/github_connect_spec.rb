@@ -24,6 +24,10 @@ describe "Connect with GitHub" do
     user.github_id = nil
     user.save.should be_truthy
 
+    Plan.delete_all
+    Plan.create_defaults
+    orga = OrganisationService.create_new user, 'my_orga'
+
     visit signin_path
     within("form.form-horizontal") do
       fill_in "Email", with: user[:email]
