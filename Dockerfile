@@ -1,4 +1,4 @@
-FROM        versioneye/ruby-base:2.4.19
+FROM        versioneye/ruby-base:2.4.20
 MAINTAINER  Robert Reiz <reiz@versioneye.com>
 
 ADD . /app
