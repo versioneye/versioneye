@@ -8,6 +8,8 @@ class LanguageConstraint
     languages << 'Chef'   if !languages.include?('Chef')
     languages << 'CSharp' if !languages.include?('CSharp')
     languages << 'Rust'   if !languages.include?('Rust')
+    languages << 'Go'     if !languages.include?('Go')
+    languages << 'Elixir' if !languages.include?('Elixir')
     languages.each do |lang|
       return true if /\A#{lang}\z/i =~ path || /\A#{lang}\/.*\z/i =~ path
       return true if path.match(/c\+\+/i)
