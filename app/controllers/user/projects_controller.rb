@@ -342,7 +342,7 @@ class User::ProjectsController < ApplicationController
 
   def dependencies_status
     id = params[:id]
-    @sync_status = SyncStatus.find_or_create_by( :object_type => 'Project', :object_id => id.to_s )
+    @sync_status = SyncStatus.find_or_create_by( :comp_type => 'Project', :comp_id => id.to_s )
     respond_to do |format|
       format.json
       format.text
