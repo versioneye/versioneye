@@ -1,0 +1,37 @@
+<h2 class="section_header"> Hex </h2>
+
+<div class = "well box_snippet" >
+
+  <div style="margin-bottom: 5px;">
+    <div >
+      <h5 class="dep_header">mix.exs</h5>
+    </div>
+    <div style="margin-bottom: 0;"><pre class = "prettyprint" style="background-color: #fff; margin-bottom: 0;"><code>{:<%= @product.name %>, "~> <%= @version.to_s %>"}</code></pre></div>
+  </div>
+
+  <div style="margin-bottom: 5px;">
+    <div >
+      <h5 class="dep_header">rebar.config</h5>
+    </div>
+    <div style="margin-bottom: 0;"><pre class="prettyprint download_area" style="margin-bottom: 0;"><code>{<%= @product.name %>, "<%= @version.to_s %>"}</code></pre>
+    </div>
+  </div>
+
+  <div style="margin-bottom: 5px;">
+    <div >
+      <h5 class="dep_header">erlang.mk</h5>
+    </div>
+    <div style="margin-bottom: 0;"><pre class="prettyprint download_area" style="margin-bottom: 0;"><code>dep_<%= @product.name %> = hex <%= @version.to_s %></code></pre>
+    </div>
+  </div>
+
+  <div  style="margin-bottom: 5px;">
+    <div >
+
+    </div>
+    <div  style="margin-bottom: 0;">
+      <%= render "products/helpers/notify_me" %>
+    </div>
+  </div>
+
+</div>
