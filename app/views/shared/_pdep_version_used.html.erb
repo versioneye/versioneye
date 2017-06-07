@@ -6,6 +6,10 @@
       <span title="<%= dep.version_requested %>">:git</span>
     <% elsif dep.version_requested.to_s.match(/\Agit\+ssh/) %>
       <span title="<%= dep.version_requested %>">:git+ssh</span>
+    <% elsif dep.version_requested.to_s.match(/\Agit\+https/) %>
+      <span title="<%= dep.version_requested %>">:git+https</span>
+    <% elsif dep.version_requested.to_s.match(/\Agit\+http/) %>
+      <span title="<%= dep.version_requested %>">:git+http</span>
     <% elsif dep.version_requested.to_s.match(/\A\:http/) || dep.version_requested.to_s.match(/\Ahttp/) %>
       <a href="<%= dep.version_requested %>"><span title="<%= dep.version_requested %>">:http</span></a>
     <% else %>

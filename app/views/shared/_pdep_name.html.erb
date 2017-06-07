@@ -7,7 +7,9 @@
       </a>
     <% elsif dep.known? %>
       <% product = dep.find_or_init_product %>
-      <a class="#a dep_link" href="<%= product_version_path( product, dep.version_requested ) %>" >
+      <% version_requested = dep.version_requested %>
+      <% version_requested = product.version if version_requested.match(/\Ahttp/i) || version_requested.match(/\Assh/i) || version_requested.match(/\Agit/i) || version_requested.match(/\A:/i) %>
+      <a class="#a dep_link" href="<%= product_version_path( product, version_requested ) %>" >
         <span><%= product.name %></span>
         <% if dep.sv_ids.to_a.count.to_i > 0 %>
           <span class="fa fa-shield" style="font-size: 14px; color: red;"></span>
