@@ -27,7 +27,7 @@ describe "Signin with GitHub" do
 
     Plan.delete_all
     Plan.create_defaults
-    orga = OrganisationService.create_new user, 'my_orga'
+    orga = OrganisationService.create_new default_user, 'my_orga'
 
     visit signin_path
     page.has_css? 'button.btn-github'
