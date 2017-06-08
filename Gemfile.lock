@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: b46716ab931b057da146b1412cdb3cc2573199f4
-  tag: v12.0.1
+  revision: 28f3383fc051dcd8cc98f03f688f31d8bc12d627
+  tag: v12.0.2
   specs:
-    versioneye-core (12.0.1)
+    versioneye-core (12.0.2)
       actionmailer (~> 5.1.0)
       aws-sdk (~> 2.9.1)
       bunny (~> 2.7.0)
@@ -80,13 +80,13 @@ GEM
     amq-protocol (2.2.0)
     ansi (1.5.0)
     arel (8.0.0)
-    aws-sdk (2.9.31)
-      aws-sdk-resources (= 2.9.31)
-    aws-sdk-core (2.9.31)
+    aws-sdk (2.9.35)
+      aws-sdk-resources (= 2.9.35)
+    aws-sdk-core (2.9.35)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.9.31)
-      aws-sdk-core (= 2.9.31)
+    aws-sdk-resources (2.9.35)
+      aws-sdk-core (= 2.9.35)
     aws-sigv4 (1.0.0)
     bourbon (4.3.4)
       sass (~> 3.4)
@@ -95,7 +95,7 @@ GEM
     builder (3.2.3)
     bunny (2.7.0)
       amq-protocol (>= 2.2.0)
-    capybara (2.14.0)
+    capybara (2.14.1)
       addressable
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -338,7 +338,7 @@ GEM
     websocket-extensions (0.1.2)
     whenever (0.9.7)
       chronic (>= 0.6.3)
-    will_paginate (3.1.5)
+    will_paginate (3.1.6)
     will_paginate_mongoid (2.0.1)
       mongoid
       will_paginate (~> 3.0)
