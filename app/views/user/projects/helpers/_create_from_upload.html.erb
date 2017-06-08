@@ -2,11 +2,12 @@
 <div style="padding-bottom: 20px;">
   <b>Creating a new project can take a couple of seconds. Please be patient.</b>
   <br/><br/>
-  Supported files are pom.xml, *.gradle, build.sbt,
-  Gemfile, Gemfile.lock,
+  Supported files are: <br />
+  pom.xml, *.gradle, build.sbt, Gemfile, Gemfile.lock,
   requirements.txt, setup.py, biicode.conf, Berksfile.lock, metadata.rb,
   project.json, *.nuspec, packages.config, *.csproj, Cargo.toml, Cargo.lock,
-  package.json, composer.json, composer.lock, bower.json, Podfile, Podfile.lock and project.clj
+  package.json, yarn.lock, npm-shrinkwrap.json, bower.json, composer.json, composer.lock,
+  Podfile, Podfile.lock, project.clj and mix.exs
 </div>
 
 <%= form_for [:user, @project], :html => {:multipart => true, :accept => "text/xml" } do |f|  %>
