@@ -246,7 +246,9 @@ module ProductsHelper
   def current_version( dependency )
     if dependency.known && dependency.product
       return dependency[:current_version]
-      # return dependency.product.version
+    end
+    if dependency.language.eql?(Product::A_LANGUAGE_PHP) && dependency.prod_key.to_s.match(/\Apext-/i)
+      return '*'
     end
     'UNKNOWN'
   end
