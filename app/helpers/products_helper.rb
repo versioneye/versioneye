@@ -247,7 +247,7 @@ module ProductsHelper
     if dependency.known && dependency.product
       return dependency[:current_version]
     end
-    if dependency.language.eql?(Product::A_LANGUAGE_PHP) && dependency.prod_key.to_s.match(/\Apext-/i)
+    if dependency.language.eql?(Product::A_LANGUAGE_PHP) && dependency.dep_prod_key.to_s.match(/\Aext-.*/i)
       return '*'
     end
     'UNKNOWN'
