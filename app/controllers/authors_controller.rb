@@ -15,12 +15,10 @@ class AuthorsController < ApplicationController
         @author = AuthorService.dev_to_author dev
       end
     end
-    if @author.nil?
-      render :text => "This page doesn't exist", :status => 404
-      return
+    if @author
+      @products = find_products @author
+      @keywords = fill_keywords @products
     end
-    @products = find_products @author
-    @keywords = fill_keywords @products
   end
 
 
