@@ -54,6 +54,7 @@ class OrganisationsController < ApplicationController
     @organisation.mattp    = params[:organisation][:mattp]
     @organisation.matattp  = params[:organisation][:matattp]
     @organisation.matanmtt = params[:organisation][:matanmtt]
+    @organisation.skip_license_check_on_pr = params[:organisation][:skip_license_check_on_pr]
     @organisation.save
     flash[:success] = "Organisation saved successfully"
     redirect_to organisation_path(@organisation)
