@@ -204,6 +204,8 @@ class ProductsController < ApplicationController
       flash[:success] = "Description updated."
     elsif !license.to_s.empty?
       license = License.find_or_create @product.language, @product.prod_key, license_version, license, license_link
+      license.crowdsourced = true
+      license.save
       Auditlog.add current_user, 'Product', @product.id.to_s, "Added License #{license}"
       flash[:success] = "License updated."
     elsif twitter_name && !twitter_name.empty?
