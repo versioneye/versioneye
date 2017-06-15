@@ -123,7 +123,8 @@ class ProductsController < ApplicationController
 
     @product   = fetch_product language, prod_key
     if @product.nil?
-      render :text => "This page doesn't exist", :status => 404 and return
+      render :status => 200
+      return
     end
 
     reference = ReferenceService.find_by @product.language, prod_key
