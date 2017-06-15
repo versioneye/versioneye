@@ -29,10 +29,22 @@
 <% else %>
   <div class="col-md-9" >
     <div class="row content_header_def" >
-      No Package selected.
+      Package does not exist
     </div>
     <div class="content">
-      There is no package selected for this page.
+      <p>
+        Does the package you are looking for exist in our database?
+      </p>
+      <div style="text-align: left;">
+        <img src="/assets/grumpy_cat_no.jpg" >
+      </div>
+      <p style="color: grey; font-size: 8px;">
+        <%= Random.new_seed %>
+      </p>
+      <hr/>
+      <div>
+        <%= render :partial => 'products/show_empty_results' %>
+      </div>
     </div>
   </div>
 <% end %>
