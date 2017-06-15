@@ -22,7 +22,10 @@ describe "Signin with GitHub" do
 
 
   it "signs in new user with github, the email is not taken yet", js: true do
-    User.all.count.should eql(0)
+    Plan.delete_all
+    Plan.create_defaults
+    User.delete_all
+    expect( User.all.count ).to eql(0)
 
     visit signin_path
     page.has_css? 'button.btn-github'
@@ -36,15 +39,14 @@ describe "Signin with GitHub" do
     click_button 'Sign in'
 
     # Grant access
-    if page.has_css?('button-primary') || page.has_css?('button.primary') || page.has_content?('Authorize application')
-      click_button "Authorize application"
+    if page.has_css?('button-primary') || page.has_css?('button.primary') || page.has_content?('Authorize reiz')
+      click_button "Authorize reiz"
     end
 
-    page.should have_content("Projects")
-    User.all.count.should eql(1)
+    expect( User.all.count ).to eql(1)
     user = User.first
-    user.verification.should be_nil
-    user.github_scope.should eq("public_repo,user:email")
+    expect( user.verification ).to be_nil
+    expect( user.email ).to_not be_nil
   end
 
 

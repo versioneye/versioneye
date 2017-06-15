@@ -156,7 +156,7 @@ class Auth::GithubController < ApplicationController
       json_user = Github.user token
       return nil if json_user.nil?
 
-      user      = User.new
+      user = User.new
       user.update_from_github_json( json_user, token )
       user.email         = email
       user.terms         = terms
@@ -191,7 +191,7 @@ class Auth::GithubController < ApplicationController
         orga  = get_orga_for_login( user )
         rpath = user_projects_github_repositories_path
         rpath = projects_organisation_path( orga ) if orga.projects && !orga.projects.empty?
-        rpath = cc_organisation_path( orga ) if !cookies.signed[:plan_selected].to_s.empty?
+        rpath = cc_organisation_path( orga.name ) if !cookies.signed[:plan_selected].to_s.empty?
         return rpath
       end
     end

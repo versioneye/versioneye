@@ -22,10 +22,10 @@ describe "Signin with GitHub" do
 
 
   it "signs in new user with github, the email is not taken yet", js: true do
-    User.all.count.should eql(0)
+    User.delete_all
     Plan.delete_all
     Plan.create_defaults
-    orga = OrganisationService.create_new default_user, 'my_orga'
+    expect( User.all.count ).to eql(0)
 
     visit pricing_path
     page.has_css? 'pricing_head'

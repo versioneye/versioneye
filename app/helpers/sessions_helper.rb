@@ -108,7 +108,7 @@ module SessionsHelper
     orgas = OrganisationService.index(user, true)
     orgas = OrganisationService.index(user, false) if orgas.nil? || orgas.empty?
     orga  = if orgas.to_a.empty?
-              OrganisationService.create_new_for(user)
+              OrganisationService.create_new_for( user )
             else
               orgas.first
             end
