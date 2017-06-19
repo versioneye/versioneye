@@ -37,9 +37,10 @@
           <% if !sv.affected_versions_string.to_s.empty? %>
             <li>Affected versions: <%= sv.affected_versions_string %></li>
           <% end %>
-          <% if !dep.project.muted_svs.keys.include?(sv.ids) %>
+          <% if signed_in? && !dep.project.muted_svs.keys.include?(sv.ids) %>
             <li><button class="btn btn-xs btn-warning" onclick="load_dialog_mute_security('<%= dep.project.ids %>', '<%= sv.ids %>', '<%= sv.name_id %>'); return false;">Mute this security issue</button></li>
-          <% else %>
+          <% end %>
+          <% if dep.project.muted_svs.keys.include?(sv.ids) %>
             <li>
               <b>Muted: <%= dep.project.muted_svs[sv.ids] %></b><br/>
               <form id="form" action="/user/projects/unmute_security" method="POST">
