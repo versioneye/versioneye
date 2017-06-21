@@ -228,10 +228,11 @@
               <%= label_tag :scm, "Git Server", :class => "control-label", :for => "scm" %>
               <div class="controls" >
                 <select name="scm"  id="scm" class="form-control">
-                  <option value="github" <%= "selected" if @ent_lead['scm'] == 'github' %> >GitHub Enterprise</option>
-                  <option value="stash" <%= "selected" if @ent_lead['scm'] == 'stash' %> >Atlassian Stash</option>
-                  <option value="gitlab" <%= "selected" if @ent_lead['scm'] == 'gitlab' %> >GitLab</option>
-                  <option value="other" <%= "selected" if @ent_lead['scm'] == 'else' %> >Other</option>
+                  <option value="githubcom" <%= "selected" if @ent_lead['scm'] == 'githubcom' %> >GitHub.com</option>
+                  <option value="github"    <%= "selected" if @ent_lead['scm'] == 'github' %> >GitHub Enterprise</option>
+                  <option value="stash"     <%= "selected" if @ent_lead['scm'] == 'stash' %> >Atlassian Stash</option>
+                  <option value="gitlab"    <%= "selected" if @ent_lead['scm'] == 'gitlab' %> >GitLab</option>
+                  <option value="other"     <%= "selected" if @ent_lead['scm'] == 'else' %> >Other</option>
                 </select>
               </div>
             </div>
@@ -266,6 +267,8 @@
               <%= label_tag :virtualization, "Virtualization", :class => "control-label", :for => "virtualization" %>
               <div class="controls" >
                 <select name="virtualization"  id="virtualization" class="form-control" >
+                  <option value="docker" <%= "selected" if @ent_lead['virtualization'] == 'docker' %> >Docker</option>
+                  <option value="ec2" <%= "selected" if @ent_lead['virtualization'] == 'ec2' %> >AWS EC2</option>
                   <option value="vmware" <%= "selected" if @ent_lead['virtualization'] == 'vmware' %> >VMWare</option>
                   <option value="vb" <%= "selected" if @ent_lead['virtualization'] == 'vb' %> >VirtualBox</option>
                   <option value="kvm" <%= "selected" if @ent_lead['virtualization'] == 'kvm' %> >KVM</option>
