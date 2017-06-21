@@ -8,7 +8,7 @@
     <% elsif dep.known? %>
       <% product = dep.find_or_init_product %>
       <% version_requested = dep.version_requested %>
-      <% version_requested = product.version if version_requested.match(/\Ahttp/i) || version_requested.match(/\Assh/i) || version_requested.match(/\Agit/i) || version_requested.match(/\A:/i) %>
+      <% version_requested = product.version if version_requested.to_s.empty? || version_requested.match(/\Ahttp/i) || version_requested.match(/\Assh/i) || version_requested.match(/\Agit/i) || version_requested.match(/\A:/i) %>
       <a class="#a dep_link" href="<%= product_version_path( product, version_requested ) %>" >
         <span><%= product.name %></span>
         <% if dep.sv_ids.to_a.count.to_i > 0 %>
