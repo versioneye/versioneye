@@ -24,7 +24,7 @@ class Settings::EmailsettingsController < ApplicationController
 
   def test_email
     UserMailer.test_email( params[:testemail] ).deliver
-    flash[:success] = "Email is out to #{current_user.email}"
+    flash[:success] = "Email is out to #{params[:testemail]}"
     redirect_to settings_emailsettings_path
   rescue => e
     flash[:error] = "Something went wrong! #{e.message}"
