@@ -45,7 +45,14 @@
 
       <% if @globalsetting['mvn_repo_1_type'] == 'artifactory' %>
         <div class="form-group">
-          <div class="controls">Comma sperated list of repository keys which should excluded from crawling.</div>
+          <div class="controls">Repository key of a single repository. If this is set only this repo will be scanned.</div>
+          <%= label_tag :mvn_art_single_repo, "Single Repo", :class => "control-label", :for => "mvn_art_single_repo" %>
+          <div class="controls">
+            <%= text_field_tag :mvn_art_single_repo, @globalsetting['mvn_art_single_repo'], :id => "mvn_art_single_repo", :class => 'form-control' %>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="controls">Comma sperated list of repository keys which should be excluded from crawling.</div>
           <%= label_tag :mvn_art_ignore_keys, "Ignore Repos", :class => "control-label", :for => "mvn_art_ignore_keys" %>
           <div class="controls">
             <%= text_field_tag :mvn_art_ignore_keys, @globalsetting['mvn_art_ignore_keys'], :id => "mvn_art_ignore_keys", :class => 'form-control' %>
