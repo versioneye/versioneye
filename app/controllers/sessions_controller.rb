@@ -26,7 +26,7 @@ class SessionsController < ApplicationController
     else
       sign_in user
       if current_user.admin?
-        redirect_to settings_emailsettings_path
+        redirect_to settings_activation_path
       else
         if redirect_url
           redirect_to redirect_url
