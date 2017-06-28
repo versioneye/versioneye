@@ -340,29 +340,23 @@ class Settings::GlobalsettingsController < ApplicationController
   def index_scheduler
     env = Settings.instance.environment
     @globalsetting = {}
-    @globalsetting['schedule_follow_notifications']         = GlobalSetting.get env, 'schedule_follow_notifications'
-    @globalsetting['schedule_project_notification_daily']   = GlobalSetting.get env, 'schedule_project_notification_daily'
-    @globalsetting['schedule_project_notification_weekly']  = GlobalSetting.get env, 'schedule_project_notification_weekly'
-    @globalsetting['schedule_project_notification_monthly'] = GlobalSetting.get env, 'schedule_project_notification_monthly'
-    @globalsetting['sync_db']                               = GlobalSetting.get env, 'sync_db'
+    @globalsetting['schedule_follow_notifications'] = GlobalSetting.get env, 'schedule_follow_notifications'
+    @globalsetting['schedule_team_notifications']   = GlobalSetting.get env, 'schedule_team_notifications'
+    @globalsetting['sync_db']                       = GlobalSetting.get env, 'sync_db'
 
-    @globalsetting['schedule_follow_notifications']         = '15 8 * * *'  if @globalsetting['schedule_follow_notifications'].to_s.empty?
-    @globalsetting['schedule_project_notification_daily']   = '15 9 * * *'  if @globalsetting['schedule_project_notification_daily'].to_s.empty?
-    @globalsetting['schedule_project_notification_weekly']  = '15 11 * * 2' if @globalsetting['schedule_project_notification_weekly'].to_s.empty?
-    @globalsetting['schedule_project_notification_monthly'] = '1 11 1 * *'  if @globalsetting['schedule_project_notification_monthly'].to_s.empty?
+    @globalsetting['schedule_follow_notifications'] = '15 8 * * *'  if @globalsetting['schedule_follow_notifications'].to_s.empty?
+    @globalsetting['schedule_team_notifications']   = '50 7 * * *'  if @globalsetting['schedule_team_notifications'].to_s.empty?
   end
 
   def update_scheduler
     env = Settings.instance.environment
 
-    GlobalSetting.set( env, 'schedule_follow_notifications',         params[:schedule_follow_notifications] )
-    GlobalSetting.set( env, 'schedule_project_notification_daily',   params[:schedule_project_notification_daily] )
-    GlobalSetting.set( env, 'schedule_project_notification_weekly',  params[:schedule_project_notification_weekly] )
-    GlobalSetting.set( env, 'schedule_project_notification_monthly', params[:schedule_project_notification_monthly] )
+    GlobalSetting.set( env, 'schedule_follow_notifications', params[:schedule_follow_notifications] )
+    GlobalSetting.set( env, 'schedule_team_notifications',   params[:schedule_team_notifications] )
     GlobalSetting.set( env, 'sync_db', params[:sync_db] )
 
     Settings.instance.reload_from_db GlobalSetting.new
-    flash[:success] = "Scheduler updated successfully. Please restart the veye/tasks Docker container to activate the changes."
+    flash[:success] = "Scheduler updated successfully. Please restart the versioneye/tasks Docker container to activate the changes."
     redirect_to settings_scheduler_path
   end
 

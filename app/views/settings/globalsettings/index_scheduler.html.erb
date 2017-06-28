@@ -14,7 +14,7 @@
     <%= form_tag( settings_scheduler_path, :method => "post", :class => "form-horizontal") do  %>
 
       <p class="description">
-        Here you can configure when VersionEye should perform several tasks.
+        Here you can configure when VersionEye should perform background tasks.
       </p>
 
       <hr/>
@@ -32,53 +32,27 @@
 
       <hr/>
       <p class="description">
-        User projects an be monitored daily, weekly and monthly.
-        When should VersionEye send out the notification emails for projects which are monitored <b>daily</b>?
+        When should VersionEye send out the team notification emails? The team notification emails contain information about software projects, such as number of security vulnerabilities, number of license violations and number of out-dated dependencies.
         Use a <a href="https://en.wikipedia.org/wiki/Cron#CRON_expression" target="_Cron">cron expression</a>. For example <b>15 9 * * *</b> for every day at 9:15 AM in the morning.
       </p>
 
       <div class="form-group">
-        <%= label_tag :schedule_project_notification_daily, "Daily", :class => "control-label", :for => "schedule_project_notification_daily" %>
+        <%= label_tag :schedule_team_notifications, "Team Emails", :class => "control-label", :for => "schedule_team_notifications" %>
         <div class="controls">
-          <%= text_field_tag :schedule_project_notification_daily, @globalsetting['schedule_project_notification_daily'], :id => "schedule_project_notification_daily", :class => 'form-control' %>
+          <%= text_field_tag :schedule_team_notifications, @globalsetting['schedule_team_notifications'], :id => "schedule_team_notifications", :class => 'form-control' %>
         </div>
       </div>
 
 
       <hr/>
       <p class="description">
-        User projects an be monitored daily, weekly and monthly.
-        When should VersionEye send out the notification emails for projects which are monitored <b>weekly</b>?
-        Use a <a href="https://en.wikipedia.org/wiki/Cron#CRON_expression" target="_Cron">cron expression</a>. For example <b>15 11 * * 2</b> for every 2nd day of the week at 11:15 AM in the morning.
-      </p>
-
-      <div class="form-group">
-        <%= label_tag :schedule_project_notification_weekly, "Weekly", :class => "control-label", :for => "schedule_project_notification_weekly" %>
-        <div class="controls">
-          <%= text_field_tag :schedule_project_notification_weekly, @globalsetting['schedule_project_notification_weekly'], :id => "schedule_project_notification_weekly", :class => 'form-control' %>
-        </div>
-      </div>
-
-
-      <hr/>
-      <p class="description">
-        User projects an be monitored daily, weekly and monthly.
-        When should VersionEye send out the notification emails for projects which are monitored <b>monthly</b>?
-        Use a <a href="https://en.wikipedia.org/wiki/Cron#CRON_expression" target="_Cron">cron expression</a>. For example <b>1 11 1 * *</b> for every first day of the month at 11:01 AM in the morning.
-      </p>
-
-      <div class="form-group">
-        <%= label_tag :schedule_project_notification_monthly, "Monthly", :class => "control-label", :for => "schedule_project_notification_monthly" %>
-        <div class="controls">
-          <%= text_field_tag :schedule_project_notification_monthly, @globalsetting['schedule_project_notification_monthly'], :id => "schedule_project_notification_monthly", :class => 'form-control' %>
-        </div>
-      </div>
-
-
-      <hr/>
-      <p class="description">
-        VersionEye Enterprise can fetch information from VersionEye.com about software packages in the VersionEye Enterprise database. That is especially useful for software packages not hosted in your network. When should VersionEye perform this partial sync?
-        Use a <a href="https://en.wikipedia.org/wiki/Cron#CRON_expression" target="_Cron">cron expression</a>. For example <b>17 2 * * *</b> for every day at 02:17 AM in the morning.
+        There is a build in sync service to keep the locale database of this VersionEye instance up-to-date.
+        That sync service is pulling meta information about open source dependencies from the public VersionEye API.
+        The sync service is running every time on demand after a new dependency was created in the system.
+        Beside that it's running once a day to update the meta information for all dependencies in the locale database.
+        Here you can configure when the sync service should run.
+        Use a <a href="https://en.wikipedia.org/wiki/Cron#CRON_expression" target="_Cron">cron expression</a>. For example <b>17 2 * * *</b> for every day at 02:17 AM in the morning.<br/>
+        Changing the value here requires a restart of the Docker containers!
       </p>
 
       <div class="form-group">
