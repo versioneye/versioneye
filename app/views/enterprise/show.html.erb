@@ -280,6 +280,13 @@
             </div>
 
             <div >
+              <%= label_tag :name, "Package Managers", :class => "control-label", :for => "package_managers" %>
+              <div class="controls">
+                <%= text_field_tag :package_managers, @ent_lead['package_managers'], :id => "package_managers", :class => 'form-control', :value => 'Maven, NPM' %>
+              </div>
+            </div>
+
+            <div >
               <%= label_tag :name, "Name", :class => "control-label", :for => "name" %>
               <div class="controls">
                 <%= text_field_tag :name, @ent_lead['name'], :id => "name", :class => 'form-control' %>
