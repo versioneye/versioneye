@@ -404,18 +404,14 @@ class User::ProjectsController < ApplicationController
     old_visibility = @project.public
     orga = @project.organisation
 
-    if orga.change_visibility_allowed? == true
-      @project.public = visibility.eql?("public")
-      if @project.save
-        flash[:success] = "Your changes are saved successfully."
-        Auditlog.add current_user, "Project", @project.ids, "Changed visibility.public from `#{old_visibility}` to `#{@project.public}`"
-      else
-        flash[:error] = "Something went wrong. Please try again later."
-      end
+    @project.public = visibility.eql?("public")
+    if @project.save
+      flash[:success] = "Your changes are saved successfully."
+      Auditlog.add current_user, "Project", @project.ids, "Changed visibility.public from `#{old_visibility}` to `#{@project.public}`"
     else
-      flash[:warning] = "To keep your project visible only for collaborators you need a paid plan. Please upgrade your subscription."
-      url = plan_organisation_path( orga ) if orga
+      flash[:error] = "Something went wrong. Please try again later."
     end
+
     redirect_to url
   end
 

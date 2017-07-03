@@ -9,22 +9,25 @@
         <td>Plan</td>
         <td>Price</td>
         <td>Private</br>Projects</td>
-        <td>OS</br>Projects</td>
         <td>
-          API Calls / Hour &amp;<br/>
-          Components to sync
+          API Calls / Hour
         </td>
+        <td>Extras</td>
         <td></td>
       </tr>
     </thead>
-    <% @plans = Plan.current_plans().where(:period => 'monthly') %>
+    <% @plans = Plan.current_plans_monthly %>
     <% @plans.each do |plan| %>
     <tr>
       <td><%= plan.name %></td>
       <td>€ <%= plan.price %></td>
       <td><%= plan.private_projects %></td>
-      <td><%= plan.os_projects %></td>
       <td><%= plan.api_rate_limit %></td>
+      <td>
+        <% if plan.price.to_i >= 22 %>
+          PDF &amp; CSV Exports
+        <% end %>
+      </td>
       <td>
         <% if @plan && @plan.name_id.eql?( plan.name_id ) %>
           <p class="badge badge-info" style="font-size: 16px; middle; padding: 7px;">Current</p>
@@ -53,22 +56,25 @@
         <td>Plan</td>
         <td>Price</td>
         <td>Private</br>Projects</td>
-        <td>OS</br>Projects</td>
         <td>
-          API Calls / Hour &amp;<br/>
-          Components to sync
+          API Calls / Hour
         </td>
+        <td>Extras</td>
         <td></td>
       </tr>
     </thead>
-    <% @plans = Plan.current_plans().where(:period => 'yearly') %>
+    <% @plans = Plan.current_plans_yearly %>
     <% @plans.each do |plan| %>
     <tr>
       <td><%= plan.name %></td>
       <td>€ <%= plan.price %></td>
       <td><%= plan.private_projects %></td>
-      <td><%= plan.os_projects %></td>
       <td><%= plan.api_rate_limit %></td>
+      <td>
+        <% if plan.price.to_i >= 22 %>
+          PDF &amp; CSV Exports
+        <% end %>
+      </td>
       <td>
         <% if @plan && @plan.name_id.eql?( plan.name_id ) %>
           <p class="badge badge-info" style="font-size: 16px; middle; padding: 7px;">Current</p>
