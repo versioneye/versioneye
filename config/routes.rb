@@ -75,6 +75,7 @@ Versioneye::Application.routes.draw do
       get  'apikey'         , :to => 'organisations#apikey'         , :as => 'apikey'
       post 'update_apikey'  , :to => 'organisations#update_apikey'  , :as => 'update_apikey'
       get  'plan'           , :to => 'organisations#plan'           , :as => 'plan'
+      get  'plan_enterprise', :to => 'organisations#plan_enterprise', :as => 'plan_enterprise'
       post 'update_plan'    , :to => 'organisations#update_plan'    , :as => 'update_plan'
       get  'cc'             , :to => 'organisations#cc'             , :as => 'cc'
       post 'update_cc'      , :to => 'organisations#update_cc'      , :as => 'update_cc'

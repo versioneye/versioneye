@@ -11,11 +11,11 @@
   <div class="content" >
 
     <p style="font-size: 24px;">
-      <span class="label label-success">Cloud Pricing</span>
-      <span class="label label-default"><%= link_to 'Enterprise Pricing', plan_enterprise_organisation_path(@organisation), :style => "color: white;" %></span>
+      <span class="label label-default"><%= link_to 'Cloud Pricing', plan_organisation_path(@organisation), :style => "color: white;" %></span>
+      <span class="label label-success">Enterprise Pricing</span>
     </p>
 
-    <%= render "pricing" %>
+    <%= render "pricing_enterprise" %>
 
     <p>
       Send a message to <a href="mailto:support@versioneye.com">support@versioneye.com</a> if you need higher plans.
@@ -30,16 +30,11 @@
       <br/>
       <ul>
         <li style="padding-bottom: 10px;">
-          <b>Project</b>: A VersionEye project can contain one or multiple project files, like for example a Gemfile, pom.xml and so on.
-        </li>
-        <li style="padding-bottom: 10px;">
-          <b>Private Project</b>: A private project is a VersionEye project based on a file in a private GitHub/Bitbucket repository. Projects created through the VersionEye API are considered as private as well.
-        </li>
-        <li style="padding-bottom: 10px;">
-          <b>OS Project</b>: A OS (Open Source) project is a VersionEye project based on a file in a public GitHub/Bitbucket repository.
-        </li>
-        <li style="padding-bottom: 10px;">
           <b>API calls per hour</b>: The number of HTTP requests per hour you can do to the VersionEye <a href="/api">API</a> depends on your subscription. As higher your subscription plan as more API calls per hour you can do. The API calls are especially important for you if you want to integrate VersionEye into your own tool chain.
+        </li>
+        <li style="padding-bottom: 10px;">
+          <b>Components to sync</b>: The "components to sync" number is important for you if you run your own instance
+          of VersionEye. Any VersionEye Enterprise instance tries to keep the local database up-to-date through a build in sync mechanism which is based on the public VersionEye API. If you are using 210 different open source components/dependencies over all your software projects and you always want to have current meta information to that 210 OS components in your local VersionEye Enterprise instance, you will need at least the "Freelance" plan.
         </li>
       </ul>
     </p>
@@ -64,16 +59,10 @@
           </tr>
         </thead>
         <tr>
-          <td>Private Projects:</td>
-          <td><%= @organisation.plan.private_projects.to_i %></td>
-          <td><%= private_project_count %></td>
-          <td><%= projects_remain %></td>
-        </tr>
-        <tr>
-          <td>Open Source Projects:</td>
-          <td><%= @organisation.plan.os_projects.to_i %></td>
-          <td><%= os_project_count %></td>
-          <td><%= os_remain %></td>
+          <td>Components to sync (for Enterprise users):</td>
+          <td><%= @organisation.plan.cmp_rate_limit.to_i %></td>
+          <td><%= comp_count %></td>
+          <td><%= comp_remain %></td>
         </tr>
         <tr>
           <td>API Calls / Hour:</td>

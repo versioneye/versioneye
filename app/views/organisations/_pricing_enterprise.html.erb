@@ -1,0 +1,77 @@
+
+<p style="padding-top: 15px;">
+  Here are our <b>monthly</b> subscriptions:
+</p>
+<div class="plans" id="plans" >
+  <table class="table table-striped">
+    <thead style="font-weight: bold;">
+      <tr>
+        <td>Plan</td>
+        <td>Price</td>
+        <td>API Calls / Hour</td>
+        <td>Components to sync</td>
+        <td></td>
+      </tr>
+    </thead>
+    <% @plans = Plan.current_plans_monthly %>
+    <% @plans.each do |plan| %>
+    <tr>
+      <td><%= plan.name %></td>
+      <td>€ <%= plan.price %></td>
+      <td><%= plan.api_rate_limit %></td>
+      <td><%= plan.api_rate_limit %></td>
+      <td>
+        <% if @plan && @plan.name_id.eql?( plan.name_id ) %>
+          <p class="badge badge-info" style="font-size: 16px; middle; padding: 7px;">Current</p>
+        <% else %>
+          <% btn_txt = 'Book now' %>
+          <% btn_style = 'font-size: 17px;' %>
+          <form action="<%= update_plan_organisation_path( @organisation ) %>" method="POST" >
+            <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+            <input  type="hidden" name="plan" value="<%= plan.name_id %>" />
+            <button type="submit" class="btn btn-info" style="<%= btn_style %>" id="<%= plan.name_id %>_button" ><%=btn_txt%></button>
+          </form>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+
+  <div style="padding: 15px 0 20px 0; font-weight: normal;">
+    Here are our <b>yearly</b> subscriptions. <br/>
+  </div>
+
+  <table class="table table-striped">
+    <thead style="font-weight: bold;">
+      <tr>
+        <td>Plan</td>
+        <td>Price</td>
+        <td>API Calls / Hour</td>
+        <td>Components to sync</td>
+        <td></td>
+      </tr>
+    </thead>
+    <% @plans = Plan.current_plans_yearly %>
+    <% @plans.each do |plan| %>
+    <tr>
+      <td><%= plan.name %></td>
+      <td>€ <%= plan.price %></td>
+      <td><%= plan.api_rate_limit %></td>
+      <td><%= plan.api_rate_limit %></td>
+      <td>
+        <% if @plan && @plan.name_id.eql?( plan.name_id ) %>
+          <p class="badge badge-info" style="font-size: 16px; middle; padding: 7px;">Current</p>
+        <% else %>
+          <% btn_txt = 'Book now' %>
+          <% btn_style = 'font-size: 17px;' %>
+          <form action="<%= update_plan_organisation_path( @organisation ) %>" method="POST" >
+            <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+            <input  type="hidden" name="plan" value="<%= plan.name_id %>" />
+            <button type="submit" class="btn btn-info" style="<%= btn_style %>" id="<%= plan.name_id %>_button" ><%=btn_txt%></button>
+          </form>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+</div>

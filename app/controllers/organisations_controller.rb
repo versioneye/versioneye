@@ -247,6 +247,15 @@ class OrganisationsController < ApplicationController
     cookies.permanent.signed[:plan_selected] = @plan.name_id
   end
 
+  def plan_enterprise
+    if @organisation.plan.nil?
+      @organisation.plan = Plan.free_plan
+      @organisation.save
+    end
+    @plan = @organisation.plan
+    cookies.permanent.signed[:plan_selected] = @plan.name_id
+  end
+
 
    def update_plan
     @plan_name_id = params[:plan]
