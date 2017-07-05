@@ -15,6 +15,19 @@
       <span class="label label-success">Enterprise Pricing</span>
     </p>
 
+    <p>
+      If you run your own <a href="https://github.com/versioneye/ops_contrib" target="VE_ENTERPRISE">instance of VersionEye</a> you have to pay for the build in sync service to keep your locale database up-to-date.
+      The sync service requires an valid API key and the price depends on the number of unique open source dependencies you are using over all your projects.
+      An open source dependency is a "component" like for example <a href="https://www.versioneye.com/java/org.springframework:spring-core/">spring-core</a>
+      or <a href="https://www.versioneye.com/php/symfony:symfony">symfony</a>.
+      The build in sync service is pulling meta information from the public VersionEye API to each of your dependencies. That includes ALL versions, licenses and security vulnerabilities to each dependency / component.
+      <br/>
+    </p>
+    <p>
+    On your own VersionEye instance there are no limitations regarding projects and users.<br/>
+    You can have <b>UNLIMITED</b> projects and <b>UNLIMITED</b> users.
+    </p>
+
     <%= render "pricing_enterprise" %>
 
     <p>
@@ -29,6 +42,9 @@
     <p>
       <br/>
       <ul>
+        <li style="padding-bottom: 10px;">
+          <b>Project</b>: A VersionEye project can contain one or multiple project files, like for example a Gemfile, package.json, composer.json, pom.xml and so on.
+        </li>
         <li style="padding-bottom: 10px;">
           <b>API calls per hour</b>: The number of HTTP requests per hour you can do to the VersionEye <a href="/api">API</a> depends on your subscription. As higher your subscription plan as more API calls per hour you can do. The API calls are especially important for you if you want to integrate VersionEye into your own tool chain.
         </li>
