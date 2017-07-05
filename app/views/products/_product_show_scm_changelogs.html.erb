@@ -11,7 +11,7 @@
       <hr/>
       <% scm_changelogs.each do |entry| %>
         <div>
-          <b><%= entry.change_date.strftime("%b %d, %Y - %I:%m %p") %> <% if entry.author %>- <%= entry.author %><% end %> </b> <br/>
+          <b><%= entry.change_date.in_time_zone(timezone).strftime("%b %d, %Y - %H:%M") %> <% if entry.author %>- <%= entry.author %><% end %> </b> <br/>
           <%= entry.action %> <b><%= entry.file %></b>
 
           <% if !entry.revision_base.to_s.empty? %>

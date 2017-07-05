@@ -41,6 +41,23 @@
       <hr/>
 
       <p class="description">
+        Set the locale timezone.
+      </p>
+
+      <div class="form-group">
+        <%= label_tag :timezone, "Timezone", :class => "control-label", :for => "timezone" %>
+        <div class="controls">
+          <select name="timezone"  id="timezone" class="form-control" >
+            <% ActiveSupport::TimeZone::MAPPING.each do |tz| %>
+              <option value="<%= tz[0] %>"  <%= "selected" if @globalsetting['timezone'] == tz[0] %> ><%= tz[1] %></option>
+            <% end %>
+          </select>
+        </div>
+      </div>
+
+      <hr/>
+
+      <p class="description">
         Default project settings.
       </p>
 

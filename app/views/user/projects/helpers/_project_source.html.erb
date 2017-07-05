@@ -30,4 +30,4 @@
     <% else %>
       This is a project from file upload.
     <% end %>
-    Last checked at <span>"<%= project.updated_at.strftime("%b %d, %Y - %H:%M") %>" (UTC)</span>.
+    Last checked at <span>"<%= project.updated_at.in_time_zone(timezone).strftime("%b %d, %Y - %H:%M") %>" (<%= Settings.instance.timezone %> time zone)</span>.

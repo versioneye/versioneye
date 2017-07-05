@@ -4,7 +4,7 @@ content += "<%= @versioncommentreply.username %>";
 content += "' >";
 content += "<%= @versioncommentreply.fullname %>";
 content += "</a>";
-content += " at <%= @versioncommentreply.created_at.strftime('%b %d, %Y - %I:%m %p') %>";
+content += " at <%= @versioncommentreply.created_at.in_time_zone(timezone).strftime('%b %d, %Y - %H:%M') %>";
 content += " </div> ";
 content += "<div class='reply'>";
 content += "<%= @versioncommentreply.comment %>";

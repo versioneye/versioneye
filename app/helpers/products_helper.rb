@@ -175,7 +175,7 @@ module ProductsHelper
       diff = today - version_obj.created_at.to_date
       product.released_days_ago = diff.to_i
       product.released_ago_in_words = distance_of_time_in_words(Date.today, version_obj.created_at)
-      product.released_ago_text = "We don't have any information about the release date of this artifact, but we detected it #{product.released_ago_in_words} ago on #{version_obj.created_at.strftime("%b %d, %Y - %I:%m %p")}"
+      product.released_ago_text = "We don't have any information about the release date of this artifact, but we detected it #{product.released_ago_in_words} ago on #{version_obj.created_at.strftime("%b %d, %Y - %H:%M")}"
     end
   end
 

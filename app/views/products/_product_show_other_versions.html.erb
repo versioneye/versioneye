@@ -16,7 +16,7 @@
         <% else %>
           <a style="color: brown" href="<%=product_version_path( @product, version.to_param )%>"><%=version.to_s%></a>
         <% end %>
-        <span class="meta_text_small">(<%= version.released_or_detected.strftime("%b %d, %Y") %>)</span>
+        <span class="meta_text_small">(<%= version.released_or_detected.in_time_zone(timezone).strftime("%b %d, %Y") %>)</span>
 
         <% if svs && !svs.empty? %>
           <% svs.each do |sv| %>

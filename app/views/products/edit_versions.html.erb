@@ -33,7 +33,7 @@
                   <input id="version" name="version" type="hidden" value="<%= version.to_s %>" />
                   <a href="<%= version.to_s %>" target="new"><%= version.to_s %></a>
                   <% if !version.released_at.nil? %>
-                    - (<%= version.released_at.strftime("%Y-%m-%d") %>)
+                    - (<%= version.released_at.in_time_zone(timezone).strftime("%Y-%m-%d") %>)
                   <% end %>
                 </td>
               </tr>

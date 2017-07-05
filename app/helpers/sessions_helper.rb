@@ -77,6 +77,10 @@ module SessionsHelper
     clear_return_to
   end
 
+  def timezone
+    ActiveSupport::TimeZone.new( Settings.instance.timezone )
+  end
+
   def set_locale
     locale = 'en'
     I18n.locale = locale

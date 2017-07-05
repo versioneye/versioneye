@@ -1,6 +1,6 @@
 <% user = audit.user %>
 <b>
-  <%= audit.created_at.strftime("%b %d, %Y - %H:%M") %>
+  <%= audit.created_at.in_time_zone(timezone).strftime("%b %d, %Y - %H:%M") %>
   <% if user %>
     - <%= link_to user.fullname, user_path(user) %>
   <% end %>

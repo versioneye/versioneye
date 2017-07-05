@@ -8,6 +8,7 @@ class Settings::GlobalsettingsController < ApplicationController
     @globalsetting['server_url'] = Settings.instance.server_url
     @globalsetting['server_host'] = Settings.instance.server_host
     @globalsetting['server_port'] = Settings.instance.server_port
+    @globalsetting['timezone'] = Settings.instance.timezone
     @globalsetting['default_project_period'] = Settings.instance.default_project_period
     @globalsetting['default_project_public'] = Settings.instance.default_project_public
     @globalsetting['show_signup_form'] = Settings.instance.show_signup_form
@@ -27,6 +28,8 @@ class Settings::GlobalsettingsController < ApplicationController
     if GlobalSetting.set( env, 'server_port', params[:server_port] )
       Rails.application.routes.default_url_options[:port] = params[:server_port]
     end
+
+    GlobalSetting.set( env, 'timezone', params[:timezone] )
 
     GlobalSetting.set( env, 'default_project_period', params[:default_project_period] )
 
