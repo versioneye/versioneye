@@ -1,12 +1,12 @@
 source 'http://rubygems.org'
 
 gem 'rails'                , '~> 5.1.1'
-gem 'jquery-rails'         , '~> 4.2.1'
+gem 'jquery-rails'         , '~> 4.3.1'
 gem 'execjs'               , '~> 2.7.0'
 gem 'therubyracer'         , '~> 0.12.0'
 gem 'oauth'                , '~> 0.5.0'
 gem 'twitter_oauth'        , '~> 0.4.94'
-gem 'puma'                 , '~> 3.8.1'
+gem 'puma'                 , '~> 3.9.1'
 gem 'htmlentities'         , '~> 4.3.1'
 gem 'whenever'             , '~> 0.9.6'
 gem 'bourbon'              , '~> 4.3.3'
@@ -41,15 +41,16 @@ group :assets do
 end
 
 group :test do
+  gem 'launchy'           , '2.4.3'
   gem 'simplecov'         , '~> 0.14.1'
   gem 'turn'              , :require => false
   gem 'rspec'             , '~> 3.6.0'
   gem 'rspec-rails'       , '~> 3.6.0'
   gem 'rspec-mocks'       , '~> 3.6.0'
-  gem 'rspec_junit_formatter', '0.2.3'
+  gem 'rspec_junit_formatter', '0.3.0'
   gem 'capybara'          , '~> 2.14.0'
   gem 'capybara-firebug'  , '~> 2.1.0'
-  gem 'selenium-webdriver', '~> 2.53.3'
+  gem 'selenium-webdriver', '~> 2.53.4'
   gem 'vcr'               , '3.0.3',  :require => false
   gem 'webmock'           , '~> 2.3.1', :require => false
   gem "fakeweb"           , '~> 1.3'

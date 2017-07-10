@@ -10,9 +10,11 @@ require 'versioneye-core'
 
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
+require 'capybara/rspec'
+require 'capybara/rails'
+require 'selenium-webdriver'
 require 'rspec/autorun'
 require 'webmock'
-require 'selenium-webdriver'
 
 Mongoid.logger.level = Logger::ERROR
 Mongo::Logger.logger.level = Logger::ERROR

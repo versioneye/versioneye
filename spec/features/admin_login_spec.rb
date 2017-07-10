@@ -17,8 +17,9 @@ describe "Login Area for Admin" do
 
       page.driver.browser.manage.window.maximize
       page.should have_content("Settings")
-      page.should have_content("Email Server Settings")
+      page.should have_content("SMTP Settings")
 
+      visit settings_emailsettings_path
       fill_in 'sender_name',   :with => "Hasso"
       fill_in 'sender_email',  :with => "hasso@platto.de"
       fill_in 'address',   :with => "smtp.gmail.com"
