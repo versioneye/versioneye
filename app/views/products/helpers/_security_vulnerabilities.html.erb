@@ -190,6 +190,41 @@
           </div>
         </div>
 
+      <% elsif @product.language.eql?(Product::A_LANGUAGE_RUST) %>
+        <div class="flash error" style="margin-bottom: 2px;" >
+          <h2><%= sv.summary.to_s.gsub("\n", "") %></h2>
+          <div>
+            <% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true) %>
+            <%= raw( markdown.render sv.description ) %><br/>
+          </div>
+          <div>
+            <% if !sv.recommendation.to_s.empty? %>
+              <span class="label_bold">Recommendation</span>: <%= sv.recommendation %><br/>
+            <% end %>
+            <% if !sv.cve.to_s.empty? %>
+              <span class="label_bold">CVE</span>: <%= sv.cve %><br/>
+            <% end %>
+            <% if !sv.cvss_v2.to_s.empty? %>
+              <span class="label_bold">CVSSv2</span>: <%= sv.cvss_v2 %><br/>
+            <% end %>
+            <% if !sv.source.to_s.empty? %>
+              <span class="label_bold">Source</span>: <%= sv.source %><br/>
+            <% end %>
+            <% if !sv.links.empty? %>
+              <span class="label_bold">Links</span>:
+              <% sv.links.keys.each do |key| %>
+                <a href="<%= sv.links[key] %>" target="LINK"><%= sv.links[key] %></a><br/>
+              <% end %>
+            <% end %>
+            <% if !sv.publish_date.to_s.empty? %>
+              <span class="label_bold">Published</span>: <%= sv.publish_date %><br/>
+            <% end %>
+            <% if !sv.patched_versions_string.to_s.empty? %>
+              <span class="label_bold">Patched versions</span>: <%= sv.patched_versions_string.to_s.gsub("||", ", ") %><br/>
+            <% end %>
+          </div>
+        </div>
+
       <% end %>
     </div>
   <% end %>
