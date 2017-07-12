@@ -1,0 +1,84 @@
+<div class="well box_dep">
+
+
+  <% runtime_deps = @product.dependencies( Dependency::A_SCOPE_RUNTIME ) %>
+  <% if runtime_deps && runtime_deps.count > 0 %>
+    <hr/>
+    <h5 class="dep_header">
+      <%= pluralize(runtime_deps.count, "Runtime Dependencies") %>
+    </h5>
+    <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => runtime_deps }  %>
+  <% end %>
+
+
+  <% compile_deps = @product.dependencies( Dependency::A_SCOPE_COMPILE ) %>
+  <% if compile_deps && compile_deps.count > 0 %>
+    <hr/>
+    <h5 class="dep_header">
+      <%= pluralize(compile_deps.count, "Compile Dependencies") %>
+    </h5>
+    <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => compile_deps }  %>
+  <% end %>
+
+
+  <% configure_deps = @product.dependencies( 'configure' ) %>
+  <% if configure_deps && configure_deps.count > 0 %>
+    <hr/>
+    <h5 class="dep_header">
+      <%= pluralize(configure_deps.count, "Configure Dependencies") %>
+    </h5>
+    <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => configure_deps }  %>
+  <% end %>
+
+
+  <% test_deps = @product.dependencies( Dependency::A_SCOPE_TEST ) %>
+  <% if test_deps && test_deps.count > 0 %>
+    <hr/>
+    <h5 class="dep_header">
+      <%= pluralize(test_deps.count, "Test Dependencies") %>
+    </h5>
+    <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => test_deps }  %>
+  <% end %>
+
+
+  <% optional_deps = @product.dependencies( Dependency::A_SCOPE_DEVELOPMENT ) %>
+  <% if optional_deps.count > 0 %>
+    <hr/>
+    <h5 class="dep_header">
+      <%= pluralize(optional_deps.count, "Development Dependencies") %>
+    </h5>
+    <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => optional_deps }  %>
+  <% end %>
+
+
+  <% require_deps = @product.dependencies( Dependency::A_SCOPE_REQUIRE ) %>
+  <% if require_deps.count > 0 %>
+    <hr/>
+    <h5 class="dep_header">
+      <%= pluralize(require_deps.count, "Require Dependencies") %>
+    </h5>
+    <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => require_deps }  %>
+  <% end %>
+
+
+  <% x_benchmarks_deps = @product.dependencies( 'x_benchmarks' ) %>
+  <% if x_benchmarks_deps.count > 0 %>
+    <hr/>
+    <h5 class="dep_header">
+      <%= pluralize(x_benchmarks_deps.count, "Benchmark Dependencies") %>
+    </h5>
+    <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => x_benchmarks_deps }  %>
+  <% end %>
+
+
+  <% x_examples_deps = @product.dependencies( 'x_examples' ) %>
+  <% if x_examples_deps.count > 0 %>
+    <hr/>
+    <h5 class="dep_header">
+      <%= pluralize(x_examples_deps.count, "Example Dependencies") %>
+    </h5>
+    <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => x_examples_deps }  %>
+  <% end %>
+
+
+</div>

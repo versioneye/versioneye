@@ -11,6 +11,7 @@ $chef_url: "/assets/language/chef.png";
 $rust_url: "/assets/language/rust.png";
 $go_url: "/assets/language/go.png";
 $elixir_url: "/assets/language/elixir.png";
+$perl_url: "/assets/language/perl.png";
 
 @mixin sprite($x, $y, $width, $height){
   background: url($sprite_url) $x $y no-repeat;
@@ -53,6 +54,14 @@ $elixir_url: "/assets/language/elixir.png";
 
 @mixin go_icon($x, $y, $width, $height){
   background: url($go_url) no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+  width: $width;
+  height: $height;
+}
+
+@mixin perl_icon($x, $y, $width, $height){
+  background: url($perl_url) no-repeat;
   display: inline-block;
   vertical-align: middle;
   width: $width;
@@ -136,6 +145,12 @@ $elixir_url: "/assets/language/elixir.png";
   &.on { @include elixir_icon($x2, $y2, $width, $height);}
   &:hover { @include elixir_icon($x2, $y2, $width, $height);}
   &:active { @include elixir_icon($x2, $y2, $width, $height);}
+}
+@mixin perl_toggle($x1, $y1, $x2, $y2, $width, $height){
+  @include perl_icon($x1, $y1, $width, $height);
+  &.on { @include perl_icon($x2, $y2, $width, $height);}
+  &:hover { @include perl_icon($x2, $y2, $width, $height);}
+  &:active { @include perl_icon($x2, $y2, $width, $height);}
 }
 @mixin html_toggle($x1, $y1, $x2, $y2, $width, $height){
   @include html_icon($x1, $y1, $width, $height);
@@ -297,6 +312,13 @@ $elixir_url: "/assets/language/elixir.png";
 }
 
 .icon_elixir_small_container{
+  margin: 0;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+}
+
+.icon_perl_small_container{
   margin: 0;
   width: 30px;
   height: 30px;
@@ -540,6 +562,23 @@ $elixir_url: "/assets/language/elixir.png";
 }
 .icon_elixir.small.on{
   background: url(/assets/language/elixir_small.png) no-repeat;
+  margin: 0;
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+}
+
+.icon_perl {
+  @include perl_toggle(0px, 0px, 0px, 0px, 56px, 56px);
+}
+.icon_perl_big_container{
+  padding: 0;
+  width: 56px;
+  height: 56px;
+  display: inline-block;
+}
+.icon_perl.small.on{
+  background: url(/assets/language/perl_small.png) no-repeat;
   margin: 0;
   width: 25px;
   height: 25px;
