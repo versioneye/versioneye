@@ -177,6 +177,12 @@ h3.side_header{
   border-right: 0px;
 }
 
+.dep_row td:first-of-type {
+    overflow-wrap: break-word;
+    word-break: break-all;
+    width: 370px;
+}
+
 .security_alert{
   margin-bottom: 20px;
 }
