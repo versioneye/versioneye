@@ -20,9 +20,10 @@
       "#{Project::A_TYPE_CHEF}"      => 'products/product_show_chef',
       "#{Project::A_TYPE_NUGET}"     => 'products/product_show_nuget',
       "#{Project::A_TYPE_CARGO}"     => 'products/product_show_crates',
+      "crates"                       => 'products/product_show_crates',
       "#{Project::A_TYPE_GODEP}"     => 'products/product_show_godep',
       "#{Project::A_TYPE_HEX}"       => 'products/product_show_hex',
-      "crates"                       => 'products/product_show_crates'
+      "#{Project::A_TYPE_CPAN}"      => 'products/product_show_cpan',
     } %>
 
     <% if ["Java", "Clojure"].member? @product.language %>

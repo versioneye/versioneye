@@ -30,7 +30,10 @@ class ProductsController < ApplicationController
 
   def show
     lang     = Product.decode_language( params[:lang] )
-    prod_key = Product.decode_prod_key( params[:key]  )
+    prod_key = params[:key]
+    if !lang.to_s.eql?(Product::A_LANGUAGE_PERL)
+      prod_key = Product.decode_prod_key( params[:key]  )
+    end
     version  = Version.decode_version ( params[:version] )
     build    = Version.decode_version ( params[:build] )
 
