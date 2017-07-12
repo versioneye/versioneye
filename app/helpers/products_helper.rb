@@ -257,7 +257,9 @@ module ProductsHelper
     if dependency.group_id && dependency.artifact_id
       return "#{dependency.group_id}:#{dependency.artifact_id}"
     end
-    dependency.name
+    dep_name = dependency.name
+    dep_name = dependency.dep_prod_key if dep_name.to_s.empty?
+    dep_name
   end
 
   def maintainer?( product = nil )
