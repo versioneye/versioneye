@@ -27,7 +27,7 @@ class UnsubscribeController < ApplicationController
       uns.project_emails = false 
       uns.save 
     end
-    flash.now[:success] = "You are successfull unsubscribed from the newsletter `#{newsletter}`."
+    flash.now[:success] = "You are successfully unsubscribed from the newsletter `#{newsletter}`."
   rescue => e
     logger.error "ERROR in unsubscribe: #{e.message}"
     logger.error e.stacktrace.join "\n"
