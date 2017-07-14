@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: d7c7592a7b5428a9ae375f3b518b8c6ebfbd13d5
-  tag: v12.6.42
+  revision: fed835211cbaf9eed58053a638333fe66b3d15a2
+  tag: v12.6.43
   specs:
-    versioneye-core (12.6.42)
+    versioneye-core (12.6.43)
       actionmailer (~> 5.1.0)
       aws-sdk (~> 2.10.7)
       bunny (~> 2.7.0)
@@ -20,7 +20,7 @@ GIT
       gemnasium-parser (~> 0.1.9)
       httparty (~> 0.15.4)
       mongoid (~> 6.2.0)
-      naturalsorter (~> 3.0.17)
+      naturalsorter (~> 3.0.18)
       net-ldap (~> 0.16.0)
       nokogiri (~> 1.8.0)
       oauth (~> 0.5.0)
@@ -184,7 +184,7 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.0.0)
     nap (1.1.0)
-    naturalsorter (3.0.17)
+    naturalsorter (3.0.18)
     net-ldap (0.16.0)
     netrc (0.11.0)
     nio4r (2.1.0)
