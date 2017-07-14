@@ -9,6 +9,7 @@
         <td>Plan</td>
         <td>Price</td>
         <td>Private</br>Projects</td>
+        <td>Public</br>Projects</td>
         <td>
           API Calls / Hour
         </td>
@@ -22,6 +23,7 @@
       <td><%= plan.name %></td>
       <td>€ <%= plan.price %></td>
       <td><%= plan.private_projects %></td>
+      <td><%= plan.os_projects %></td>
       <td><%= plan.api_rate_limit %></td>
       <td>
         <% if plan.price.to_i >= 22 %>
@@ -56,6 +58,7 @@
         <td>Plan</td>
         <td>Price</td>
         <td>Private</br>Projects</td>
+        <td>Public</br>Projects</td>
         <td>
           API Calls / Hour
         </td>
@@ -69,6 +72,7 @@
       <td><%= plan.name %></td>
       <td>€ <%= plan.price %></td>
       <td><%= plan.private_projects %></td>
+      <td><%= plan.os_projects %></td>
       <td><%= plan.api_rate_limit %></td>
       <td>
         <% if plan.price.to_i >= 22 %>
