@@ -1,0 +1,31 @@
+<% modules = @product[:modules].to_a %>
+<% unless modules.empty? %>
+  <a name="modules"></a>
+  <h2 class="section_header">
+    Modules: <%= modules.size %>
+    <a class="octicon-link" href="#modules">
+      <i class="fa fa-link"></i>
+    </a>
+  </h2>
+
+  <div id="modules" class="boxContainer" style="margin-bottom: 10px;">
+
+    <div class="well box_dep">
+      <ul class="list-inline">
+        <% modules.sort.each do |the_module| %>
+          <li>
+
+            <% if @product[:prod_key] == the_module %>
+              <b> <%= the_module %> </b>
+            <% else %>
+              <span> <%= the_module %> </span>
+            <% end %>
+
+          </li>
+        <% end %>
+      </ul>
+    </div>
+
+  </div>
+
+<% end %>
