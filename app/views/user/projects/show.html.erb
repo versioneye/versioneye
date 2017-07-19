@@ -284,19 +284,23 @@
       }).fail(function(data) {
         // console.info(" error " + data );
       }).always(function(data) {
-        if (data.status === "done" ){
-          console.info(" dep status is done" );
-          clearInterval( checkIntervalDep );
-          console.info(" dep clear interval");
-          document.getElementById('dependencies_status').style.display = "none";
-          if (showedProgressBarDep === true){
-            location.reload();
+        if (typeof data.status != 'undefined') {
+          if (data.status === "done" ){
+            console.info(" dep status is done" );
+            clearInterval( checkIntervalDep );
+            console.info(" dep clear interval");
+            document.getElementById('dependencies_status').style.display = "none";
+            if (showedProgressBarDep === true){
+              location.reload();
+            }
+          } else {
+            console.info(" dep sync status is NOT done" );
+            if (typeof data.info != 'undefined') {
+              document.getElementById('dependencies_status').style.display = "block";
+              document.getElementById('sync_dep_info').innerHTML = "Currently fetching meta data for " + data.info + ".";
+            }
+            showedProgressBarDep = true;
           }
-        } else {
-          console.info(" dep sync status is NOT done" );
-          document.getElementById('dependencies_status').style.display = "block";
-          document.getElementById('sync_dep_info').innerHTML = "Currently fetching meta data for " + data.info + ".";
-          showedProgressBarDep = true;
         }
       });
     }

@@ -370,7 +370,8 @@ class OrganisationsController < ApplicationController
 
     def set_team_filter_param
       if params[:team].to_s.empty?
-        params[:team] = @organisation.teams_by(current_user).last.ids
+        team = @organisation.teams_by(current_user).last
+        params[:team] = team.ids if team
       end
     rescue => e
       logger.error e.message
