@@ -14,7 +14,7 @@
       <%= form_for @organisation do |f| %>
 
         <div class="form-group">
-          <%= f.label :name, "Namespace", :class => "control-label", :for => "name" %>
+          <%= f.label :name, "Name (mandatroy)", :class => "control-label", :for => "name" %>
           <div class="controls">
             <%= f.text_field :name, :id => "name", :class => 'form-control', :disabled => disabled_flag %>
           </div>
