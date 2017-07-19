@@ -26,8 +26,10 @@
       <% end %>
       <script type="text/javascript">
         $( "#name" ).keyup(function(e) {
-          if( !/^[a-zA-Z0-9_-]*$/g.test(this.value) ){
+          if( /\s/g.test(this.value) ){
             this.value = this.value.replace(' ', '-')
+          } else if( !/^[a-zA-Z0-9_-]*$/g.test(this.value) ){
+            this.value = ''
             alert("Special characters are not allowed as input. Please use letters and numbers only.")
           }
         });
