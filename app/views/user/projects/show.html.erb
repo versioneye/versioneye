@@ -182,12 +182,7 @@
           <li class="active">
             <a data-target="#dependencies" data-toggle="tab" onclick="page_view('ga_project_dependencies')"><i class = "fa fa-puzzle-piece">&nbsp;</i>Dependencies</a>
           </li>
-          <% if @project.language.eql?(Product::A_LANGUAGE_PHP) ||
-                @project.language.eql?(Product::A_LANGUAGE_NODEJS) ||
-                @project.language.eql?(Product::A_LANGUAGE_JAVA) ||
-                @project.language.eql?(Product::A_LANGUAGE_PYTHON) ||
-                @project.language.eql?(Product::A_LANGUAGE_CSHARP) ||
-                @project.language.eql?(Product::A_LANGUAGE_RUBY) %>
+          <% if security_available?( @project ) %>
             <li>
               <a data-target="#security" data-toggle="tab" onclick="page_view('ga_project_security')"><i class = "fa fa-tasks">&nbsp;</i>Security</a>
             </li>

@@ -33,6 +33,7 @@ module ProjectsHelper
     project.language.eql?(Product::A_LANGUAGE_NODEJS) ||
     project.language.eql?(Product::A_LANGUAGE_JAVA) ||
     project.language.eql?(Product::A_LANGUAGE_PYTHON) ||
+    project.language.eql?(Product::A_LANGUAGE_CSHARP) ||
     project.language.eql?(Product::A_LANGUAGE_RUBY)
   end
 
