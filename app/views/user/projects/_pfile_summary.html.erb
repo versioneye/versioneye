@@ -13,6 +13,7 @@
 <% if @summary.nil? && !@child.dependencies.empty? &&
     ( subproject_name( @child ).match(/\.lock$/).nil? ) &&
     ( subproject_name( @child ).match(/\AGemfile\z/i).nil? ) &&
+    ( subproject_name( @child ).match(/\Apom.xml\z/i).nil? ) &&
     ( subproject_name( @child ).match(/\Acomposer.json\z/i).nil? ) %>
   <div id="trans_deps" style="margin-top: 15px;">
     <h3>Licenses of transitive dependencies</h3>
