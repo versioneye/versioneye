@@ -16,6 +16,7 @@ development:
     raise_not_found_error: false
     scope_overwrite_exception: true
 
+
 test:
   clients:
     default:
@@ -27,6 +28,7 @@ test:
   options:
     raise_not_found_error: false
     scope_overwrite_exception: true
+
 
 production:
   clients:
@@ -41,6 +43,7 @@ production:
   options:
     raise_not_found_error: false
     scope_overwrite_exception: true
+
 
 enterprise:
   # Configure available database clients. (required)
