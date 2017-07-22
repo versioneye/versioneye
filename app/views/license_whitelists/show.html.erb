@@ -36,6 +36,12 @@
           Pessimistic mode. If a project dependency has multiple licenses and one of them is violating this license whitelist then count the dependency as violated.
         </label>
       </div>
+      <div class="checkbox">
+        <label for="ignore_unknowns_on_pr" style="font-size: 12px;" >
+          <%= check_box_tag "ignore_unknowns_on_pr", true, @license_whitelist.ignore_unknowns_on_pr, :id => "pessimistic" %>
+          Ignore UNKNOWN licenses on pullrequests
+        </label>
+      </div>
       <button class="btn btn-primary" type="submit" >
         Update
       </button>
