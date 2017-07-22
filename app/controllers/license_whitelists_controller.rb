@@ -44,11 +44,9 @@ class LicenseWhitelistsController < ApplicationController
   def update_pessimistic
     license_whitelist = LicenseWhitelistService.fetch_by @organisation, params[:id]
     ps = params[:pessimistic]
-    if ps.to_s.eql?('true')
-      license_whitelist.pessimistic_mode = true
-    else
-      license_whitelist.pessimistic_mode = false
-    end
+    ignore_unknowns = params[:ignore_unknowns_on_pr]
+    license_whitelist.pessimistic_mode = ps.to_s.eql?('true')
+    license_whitelist.ignore_unknowns_on_pr = ignore_unknowns.to_s.eql?('true')
     if license_whitelist.save
       Auditlog.add current_user, 'LicenseWhitelist', license_whitelist.ids, "Update pessimistic_mode to \"#{license_whitelist.pessimistic_mode}\" "
       flash[:success] = "Pessimistic mode updated successfully."
