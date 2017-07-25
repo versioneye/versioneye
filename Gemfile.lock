@@ -7,15 +7,16 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 38812c87aebeb1d4a2ad4929c83bc3fe4df50920
-  tag: v12.7.11
+  revision: d46cd326d5eeab115f56bad5df5632228a87b5d3
+  tag: v12.8.0
   specs:
-    versioneye-core (12.7.11)
+    versioneye-core (12.8.0)
       actionmailer (~> 5.1.0)
       aws-sdk (~> 2.10.7)
       bunny (~> 2.7.0)
       cocoapods-core (~> 0.39.0)
       dalli (~> 2.7.6)
+      erlang_config (~> 0)
       etcd (~> 0.3.0)
       gemnasium-parser (~> 0.1.9)
       httparty (~> 0.15.4)
@@ -80,13 +81,13 @@ GEM
     amq-protocol (2.2.0)
     ansi (1.5.0)
     arel (8.0.0)
-    aws-sdk (2.10.15)
-      aws-sdk-resources (= 2.10.15)
-    aws-sdk-core (2.10.15)
+    aws-sdk (2.10.16)
+      aws-sdk-resources (= 2.10.16)
+    aws-sdk-core (2.10.16)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.10.15)
-      aws-sdk-core (= 2.10.15)
+    aws-sdk-resources (2.10.16)
+      aws-sdk-core (= 2.10.16)
     aws-sigv4 (1.0.1)
     bourbon (4.3.4)
       sass (~> 3.4)
@@ -128,6 +129,7 @@ GEM
     docile (1.1.5)
     domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
+    erlang_config (0.0.1)
     erubi (1.6.1)
     etcd (0.3.0)
       mixlib-log
@@ -175,7 +177,7 @@ GEM
     mini_portile2 (2.2.0)
     minitest (5.10.3)
     mixlib-log (1.7.1)
-    mongo (2.4.2)
+    mongo (2.4.3)
       bson (>= 4.2.1, < 5.0.0)
     mongoid (6.2.0)
       activemodel (~> 5.1)
@@ -312,7 +314,7 @@ GEM
       ref
     thor (0.19.4)
     thread_safe (0.3.6)
-    tilt (2.0.7)
+    tilt (2.0.8)
     tire (0.6.2)
       activemodel (>= 3.0)
       activesupport
