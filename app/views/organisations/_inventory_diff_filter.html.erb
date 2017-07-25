@@ -1,31 +1,44 @@
 
+<% disabled_tag = "" %>
+<% if disabled.to_s.eql?('true') %>
+  <% disabled_tag = "disabled" %>
+  <% params[:team1] = @diff.inventory1.team_name %>
+  <% params[:language1] = @diff.inventory1.language %>
+  <% params[:version1] = @diff.inventory1.project_version %>
+  <% params[:duplicates1] = @diff.inventory1.post_filter %>
+  <% params[:team2] = @diff.inventory2.team_name %>
+  <% params[:language2] = @diff.inventory2.language %>
+  <% params[:version2] = @diff.inventory2.project_version %>
+  <% params[:duplicates2] = @diff.inventory2.post_filter %>
+<% end %>
+
 <div id='projects_filter' >
   <form id="form" action="<%= inventory_diff_create_organisation_path(@organisation) %>" method="POST" class='form-inline' style="padding: 0; margin:0;" >
     <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
     <div class="form-group" style="padding-bottom: 25px;">
       <label>Filter 1:</label>
-      <select name="team1"  id="team1" class="form-control" >
+      <select name="team1"  id="team1" class="form-control" <%= disabled_tag %> >
         <option value="ALL">All teams</option>
         <% @organisation.teams.each do |team| %>
           <option value="<%= team.ids %>" <%= "selected" if params[:team1].to_s.eql?(team.ids) %> >Team: <%= team.name %></option>
         <% end %>
       </select>
 
-      <select name="language1"  id="language1" class="form-control" >
+      <select name="language1"  id="language1" class="form-control" <%= disabled_tag %> >
         <option value="ALL">All languages</option>
         <% @organisation.unique_languages.each do |language| %>
           <option value="<%= language %>" <%= "selected" if params[:language1].to_s.eql?(language.to_s) %> >Language: <%= language %></option>
         <% end %>
       </select>
 
-      <select name="version1"  id="version1" class="form-control" >
+      <select name="version1"  id="version1" class="form-control" <%= disabled_tag %> >
         <option value="ALL">All versions</option>
         <% @organisation.unique_versions.each do |version| %>
           <option value="<%= version %>" <%= "selected" if params[:version1].to_s.eql?(version.to_s) %> >Version: <%= version %></option>
         <% end %>
       </select>
 
-      <select name="duplicates1"  id="duplicates1" class="form-control" >
+      <select name="duplicates1"  id="duplicates1" class="form-control" <%= disabled_tag %> >
         <option value="ALL"             <%= "selected" if params[:duplicates1].to_s.eql?('ALL')             %> >All components</option>
         <option value="duplicates_only" <%= "selected" if params[:duplicates1].to_s.eql?('duplicates_only') %> >Only duplicates</option>
         <option value="show_duplicates" <%= "selected" if params[:duplicates1].to_s.eql?('show_duplicates') %> >Used in other teams</option>
@@ -35,35 +48,37 @@
 
       <label>Filter 2:</label>
 
-      <select name="team2"  id="team2" class="form-control" >
+      <select name="team2"  id="team2" class="form-control" <%= disabled_tag %> >
         <option value="ALL">All teams</option>
         <% @organisation.teams.each do |team| %>
           <option value="<%= team.ids %>" <%= "selected" if params[:team2].to_s.eql?(team.ids) %> >Team: <%= team.name %></option>
         <% end %>
       </select>
 
-      <select name="language2"  id="language2" class="form-control" >
+      <select name="language2"  id="language2" class="form-control" <%= disabled_tag %> >
         <option value="ALL">All languages</option>
         <% @organisation.unique_languages.each do |language| %>
           <option value="<%= language %>" <%= "selected" if params[:language2].to_s.eql?(language.to_s) %> >Language: <%= language %></option>
         <% end %>
       </select>
 
-      <select name="version2"  id="version2" class="form-control" >
+      <select name="version2"  id="version2" class="form-control" <%= disabled_tag %> >
         <option value="ALL">All versions</option>
         <% @organisation.unique_versions.each do |version| %>
           <option value="<%= version %>" <%= "selected" if params[:version2].to_s.eql?(version.to_s) %> >Version: <%= version %></option>
         <% end %>
       </select>
 
-      <select name="duplicates2"  id="duplicates2" class="form-control" >
+      <select name="duplicates2"  id="duplicates2" class="form-control" <%= disabled_tag %> >
         <option value="ALL"             <%= "selected" if params[:duplicates2].to_s.eql?('ALL')             %> >All components</option>
         <option value="duplicates_only" <%= "selected" if params[:duplicates2].to_s.eql?('duplicates_only') %> >Only duplicates</option>
         <option value="show_duplicates" <%= "selected" if params[:duplicates2].to_s.eql?('show_duplicates') %> >Used in other teams</option>
       </select>
     </div>
+    <% if disabled.to_s.eql?('false') %>
     <div>
       <button type="submit" class="btn btn-primary" >Show difference between inventory lists</button>
     </div>
+    <% end %>
   </form>
 </div>

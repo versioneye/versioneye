@@ -18,21 +18,44 @@
     </p>
 
     <% if @diff %>
+
+      <%= render :partial => "inventory_diff_filter", :locals => { :disabled => 'true' } %>
+
       <div>
-
         <p>
-          Added:
-          <% @diff.items_added.each do |added| %>
-            <div> - <%= added %></div>
-          <% end %>
+          <label>Created at:</label> <%= @diff.created_at.in_time_zone(timezone).strftime("%b %d, %Y - %H:%M") %><br/>
         </p>
 
+        <h3>Added</h3>
         <p>
-          Removed:
-          <% @diff.items_removed.each do |removed| %>
-            <div> - <%= removed %></div>
-          <% end %>
+          In the inventory 2 list this new artefacts have beend added, compared to the inventory 1 list.
         </p>
+        <ul>
+        <% @diff.items_added.each do |item| %>
+          <% sps = item.split("::") %>
+          <% language = sps[0].to_s.downcase %>
+          <% prod_key = sps[1].to_s.gsub('/', ':') %>
+          <% version = sps[2].to_s.gsub('/', ':') %>
+          <% license = sps[3] %>
+          <li><%= link_to "#{prod_key}:#{version}", "/#{language}/#{prod_key}/#{version}" %> (<%= license %>)</li>
+        <% end %>
+        </ul>
+
+        <h3>Removed</h3>
+        <p>
+          In the inventory 2 list this new artefacts have beend removed, compared to the inventory 1 list.
+        </p>
+        <ul>
+        <% @diff.items_removed.each do |item| %>
+          <% sps = item.split("::") %>
+          <% language = sps[0].to_s.downcase %>
+          <% prod_key = sps[1].to_s.gsub('/', ':') %>
+          <% version = sps[2].to_s.gsub('/', ':') %>
+          <% license = sps[3] %>
+          <li><%= link_to "#{prod_key}:#{version}", "/#{language}/#{prod_key}/#{version}" %> (<%= license %>)</li>
+        <% end %>
+        </ul>
+
       </div>
     <% else %>
       Diff object was not found!
