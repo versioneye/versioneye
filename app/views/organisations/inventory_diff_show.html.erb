@@ -1,0 +1,43 @@
+
+<div class="col-md-3 navbar_container" >
+  <%= render "organisations/navi" %>
+</div>
+<div class="col-md-9">
+
+  <div class="content_header_def" >
+    Inventory diff
+  </div>
+
+  <div class="content" >
+
+    <p>
+      Here you can see the difference between 2 inventory lists.
+      That's especially useful if you want to see which artefacts have been added and removed
+      between 2 inventory lists.
+      <br/><br/>
+    </p>
+
+    <% if @diff %>
+      <div>
+
+        <p>
+          Added:
+          <% @diff.items_added.each do |added| %>
+            <div> - <%= added %></div>
+          <% end %>
+        </p>
+
+        <p>
+          Removed:
+          <% @diff.items_removed.each do |removed| %>
+            <div> - <%= removed %></div>
+          <% end %>
+        </p>
+      </div>
+    <% else %>
+      Diff object was not found!
+    <% end %>
+
+  </div>
+
+</div>

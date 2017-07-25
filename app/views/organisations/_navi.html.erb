@@ -37,6 +37,7 @@
               <li><%= link_to 'Pullrequests', pullrequests_organisation_path(@organisation), :rel => "nofollow" %></li>
             <% end %>
             <li><%= link_to 'Inventory', components_organisation_path(@organisation) %></li>
+            <li><%= link_to 'Inventory Diff', inventory_diff_organisation_path(@organisation) %></li>
             <% if is_orga_owner?(@organisation, current_user) %>
               <li><hr/></li>
               <li><%= link_to 'API Key', apikey_organisation_path(@organisation) %></li>

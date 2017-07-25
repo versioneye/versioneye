@@ -1,0 +1,61 @@
+
+<div class="col-md-3 navbar_container" >
+  <%= render "organisations/navi" %>
+</div>
+<div class="col-md-9">
+
+  <div class="content_header_def" >
+    Inventory diff
+  </div>
+
+  <div class="content" >
+
+    <p>
+      Here you can see the difference between 2 inventory lists.
+      That's especially useful if you want to see which artefacts have been added and removed
+      between 2 inventory lists.
+      <br/><br/>
+    </p>
+
+    <%= render "inventory_diff_filter" %>
+
+    <% if @diff_id %>
+
+      <div id="inventory_diff_status" class="flash success" style="margin-top: 30px; padding-bottom: 10px; margin-bottom: 10px; display: block;" >
+        <%= image_tag "progress.gif" %> Inventory diff is processed by a background job. This page will reload if the job is done.
+      </div>
+
+      <script type="text/javascript">
+
+        checkInterval = 0
+        showedProgressBar = false;
+
+        function checkStatus(){
+          uri = "/organisations/<%= @organisation.name %>/inventory_diff_status/<%= @diff_id %>.json"
+          jQuery.getJSON( uri, function (data){
+            console.info(" first success " + data);
+          }).done(function( data ) {
+            console.info(" done " + data)
+          }).fail(function(data) {
+            console.info(" error " + data );
+          }).always(function(data) {
+            if (data["finished"] === "true" ){
+              console.info(" status is done" );
+              clearInterval( checkInterval );
+              console.info("clear interval");
+              document.getElementById('inventory_diff_status').style.display = "none";
+              window.location.href = "/organisations/<%= @organisation.name %>/inventory_diff/<%= @diff_id %>";
+            } else {
+              console.info(" status is NOT done" );
+              document.getElementById('inventory_diff_status').style.display = "block";
+            }
+          });
+        }
+        checkInterval = setInterval(this.checkStatus, 2000);
+      </script>
+
+    <% end %>
+
+  </div>
+
+</div>

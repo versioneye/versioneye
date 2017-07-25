@@ -122,6 +122,57 @@ class OrganisationsController < ApplicationController
   def components # Inventory
   end
 
+  def inventory_diff
+  end
+
+  def inventory_diff_show
+    id = params[:id]
+    @diff = InventoryDiff.where(:organisation_id => @organisation.ids, :id => id).first
+  end
+
+  def inventory_diff_create
+    team      = params[:team1]
+    team      = 'ALL' if team.to_s.empty?
+
+    language  = params[:language1]
+    language  = 'ALL' if language.to_s.empty?
+
+    pversion  = params[:version1]
+    pversion  = 'ALL' if pversion.to_s.empty?
+
+    post_filter  = params[:duplicates1]
+    post_filter  = 'ALL' if post_filter.to_s.empty?
+
+    filter1 = {:team => team, :language => language, :version => pversion, :after_filter => post_filter}
+    p "filter1: #{filter1}"
+
+    team      = params[:team2]
+    team      = 'ALL' if team.to_s.empty?
+
+    language  = params[:language2]
+    language  = 'ALL' if language.to_s.empty?
+
+    pversion  = params[:version2]
+    pversion  = 'ALL' if pversion.to_s.empty?
+
+    post_filter  = params[:duplicates2]
+    post_filter  = 'ALL' if post_filter.to_s.empty?
+
+    filter2 = {:team => team, :language => language, :version => pversion, :after_filter => post_filter}
+    p "filter2: #{filter2}"
+
+    @diff_id = OrganisationService.inventory_diff_async @organisation.name, filter1, filter2
+  end
+
+  def inventory_diff_status
+    id = params[:id]
+    @diff = InventoryDiff.where(:organisation_id => @organisation.ids, :id => id).first
+    respond_to do |format|
+      format.json
+      format.text
+    end
+  end
+
 
   def inventory_csv
     pteam = params['team']
