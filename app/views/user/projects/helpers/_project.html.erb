@@ -20,7 +20,7 @@
     <% if project.public == false %>
       <span class="fa fa-eye-slash" title="Only visible for collaborators"></span>
     <% end %>
-    <% if project.private_project == true %>
+    <% if project.private_project == true && Rails.env.enterprise? == false %>
       <span class="fa fa-lock" title="Private VersionEye Project"></span>
     <% end %>
     <% if project.sv_count_sum > 0 %>
