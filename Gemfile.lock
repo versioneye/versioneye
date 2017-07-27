@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 590f58af53de207b93e183ff627edc19bd9c3df6
-  tag: v12.8.5
+  revision: 670317741631ed1920c7e01cd2b261a5c8c7bfaa
+  tag: v12.10.0
   specs:
-    versioneye-core (12.8.5)
+    versioneye-core (12.10.0)
       actionmailer (~> 5.1.0)
       aws-sdk (~> 2.10.7)
       bunny (~> 2.7.0)
