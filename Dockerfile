@@ -10,4 +10,4 @@ RUN cd /app/ && bundle install;
 
 EXPOSE 8080
 
-CMD bundle exec puma -C config/puma.rb
+CMD /app/start.sh
