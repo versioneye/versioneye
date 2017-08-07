@@ -27,10 +27,19 @@ module ProjectsHelper
     false
   end
 
+
   def security_available?( project )
     return false if project.nil?
+
     project.language.eql?(Product::A_LANGUAGE_PHP) ||
     project.language.eql?(Product::A_LANGUAGE_NODEJS) ||
+    project.language.eql?(Product::A_LANGUAGE_JAVASCRIPT) ||
+    project.language.eql?(Product::A_LANGUAGE_ACTIONSCRIPT) ||
+    project.language.eql?(Product::A_LANGUAGE_TYPESCRIPT) ||
+    project.language.eql?(Product::A_LANGUAGE_LIVESCRIPT) ||
+    project.language.eql?(Product::A_LANGUAGE_PURESCRIPT) ||
+    project.language.eql?(Product::A_LANGUAGE_HTML) ||
+    project.language.eql?(Product::A_LANGUAGE_CSS) ||
     project.language.eql?(Product::A_LANGUAGE_JAVA) ||
     project.language.eql?(Product::A_LANGUAGE_PYTHON) ||
     project.language.eql?(Product::A_LANGUAGE_CSHARP) ||
