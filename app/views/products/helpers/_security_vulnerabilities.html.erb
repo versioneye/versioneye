@@ -26,7 +26,7 @@
           Affected versions: <%= sv.affected_versions_string %>
         </div>
 
-      <% elsif @product.language.eql?(Product::A_LANGUAGE_NODEJS) %>
+      <% elsif @product.language.eql?(Product::A_LANGUAGE_NODEJS) || @product.prod_type.eql?( Project::A_TYPE_BOWER ) %>
         <div class="flash error" style="margin-bottom: 2px;" >
           <span class="label_bold">Title</span>: <%= sv.summary %><br/>
           <% if !sv.recommendation.to_s.empty? %>
