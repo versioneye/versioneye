@@ -55,9 +55,13 @@ class UsersController < ApplicationController
     if @user.save
       orga = get_orga_for_login( @user ) # Create organisation for new user.
       @user.send_verification_email
-      if !cookies.signed[:plan_selected].to_s.empty?
+      if orga.nil? && Rails.env.enterprise? == true
         sign_in @user
-        redirect_to cc_organisation_path(orga)
+        redirect_to settings_profile_path( @user )
+      end
+      if !cookies.signed[:plan_selected].to_s.empty? && orga
+        sign_in @user
+        redirect_to cc_organisation_path( orga )
       end
     else
       flash[:error] = "#{t(:general_error)} - #{@user.errors.full_messages.to_sentence}"
