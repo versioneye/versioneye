@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 2fe9d11572ea91e0c77265990818fddb83db3d14
-  tag: v12.10.7
+  revision: edea98310de58d17a9649351f499f445c8cc85d1
+  tag: v12.10.9
   specs:
-    versioneye-core (12.10.7)
+    versioneye-core (12.10.9)
       actionmailer (~> 5.1.0)
       aws-sdk (~> 2.10.7)
       bunny (~> 2.7.0)
@@ -81,13 +81,13 @@ GEM
     amq-protocol (2.2.0)
     ansi (1.5.0)
     arel (8.0.0)
-    aws-sdk (2.10.24)
-      aws-sdk-resources (= 2.10.24)
-    aws-sdk-core (2.10.24)
+    aws-sdk (2.10.27)
+      aws-sdk-resources (= 2.10.27)
+    aws-sdk-core (2.10.27)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.10.24)
-      aws-sdk-core (= 2.10.24)
+    aws-sdk-resources (2.10.27)
+      aws-sdk-core (= 2.10.27)
     aws-sigv4 (1.0.1)
     bourbon (4.3.4)
       sass (~> 3.4)
@@ -140,7 +140,7 @@ GEM
       factory_girl (~> 4.8.0)
       railties (>= 3.0.0)
     fakeweb (1.3.0)
-    faraday (0.12.2)
+    faraday (0.13.0)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.18)
     font-awesome-sass (4.7.0)
@@ -179,7 +179,7 @@ GEM
     mixlib-log (1.7.1)
     mongo (2.4.3)
       bson (>= 4.2.1, < 5.0.0)
-    mongoid (6.2.0)
+    mongoid (6.2.1)
       activemodel (~> 5.1)
       mongo (>= 2.4.1, < 3.0.0)
     multi_json (1.12.1)
@@ -261,7 +261,7 @@ GEM
     rspec-mocks (3.6.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.6.0)
-    rspec-rails (3.6.0)
+    rspec-rails (3.6.1)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
@@ -298,7 +298,7 @@ GEM
       docile (~> 1.1.0)
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
-    simplecov-html (0.10.1)
+    simplecov-html (0.10.2)
     sprockets (3.7.1)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
