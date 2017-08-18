@@ -53,7 +53,11 @@ class SessionsController < ApplicationController
         return notifications_path
       else
         orga  = get_orga_for_login( user )
-        rpath = projects_organisation_path( orga )
+        if orga
+          rpath = projects_organisation_path( orga )
+        else
+          rpath = settings_profile_path( user )
+        end
         return rpath
       end
     end
