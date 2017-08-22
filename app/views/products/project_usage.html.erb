@@ -20,7 +20,7 @@
       <% @project_ids.each do |project_id| %>
         <%  project = ProjectService.find project_id %>
         <%  next if project.nil? %>
-        <%  next if project.user.nil? %>
+
         <% dep = fetch_projectdependency(@product, project_id) %>
         <%  color = '' %>
         <% if !dep.version_requested.eql?(@product.version) %>
@@ -32,7 +32,7 @@
             <span class = "icon_<%= prog_lang %> on" ></span>
           </div>
           <div class = "span6">
-            <%= link_to project.name, user_project_path(project) %> by <%= link_to project.user.fullname, user_path(project.user) %><br/>
+            <%= link_to project.name, user_project_path(project) %><br/>
             Using <%= link_to @product.name, product_version_path(@product) %> <%= dep.version_requested %>. Current is <%= @product.version %>
           </div>
         </div>
