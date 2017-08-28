@@ -9,10 +9,11 @@
 
     <title>VersionEye - Notification System for Software Packages</title>
 
-    <link href="https://s3.amazonaws.com/veye_assets/versioneye-search.xml"
-          title="VersionEye"
-          rel="search"
-          type="application/opensearchdescription+xml">
+    <!-- open search plugin for FF, Chrome and new IE -->
+    <link rel="search"
+        type="application/opensearchdescription+xml"
+        title="Versioneye Search"
+        href="<%= Settings.instance.server_url %>/versioneye-search.xml" />
 
     <meta HTTP-EQUIV="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="author"      content="VersionEye GmbH" />
