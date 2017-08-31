@@ -1,0 +1,70 @@
+<div class="col-md-3 navbar_container" >
+  
+</div>
+
+<div class="col-md-9" >
+
+  <div class="content_header_def" >
+    Job Posting
+  </div>
+
+  <div class="content" >
+
+    <p >
+      <a href="https://stripe.com" target="stripe">Stripe.com</a> is our Payment Provider.
+      <b>VersionEye doesn't store any Credit Card data!</b>
+    </p>
+    <div>
+      <%= image_tag "ccs.png" %>
+    </div>
+
+    <hr />
+
+    <p>
+      You will be charged 476 EUR for a job posting, including tax. Your credit card information will NOT be stored.
+    </p>
+
+    <hr />
+
+    <%= form_tag(jobs_path( @organisation ), :method => "post", :class => "form-horizontal", :id => "payment-form") do %>
+
+      <span class='payment-errors'></span>
+
+      <%= render "/organisations/billing_fields" %>
+
+      <hr />
+
+      <div class="form-group">
+        <%= label_tag :card_number, "Card Number", :class => "control-label", :for => "cardnumber" %>
+        <div class="controls" >
+          <input data-stripe="number" id="cardnumber" type="text" size="20" autocomplete="off" class="card-number round form-control" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= label_tag :cvc, "CVC", :class => "control-label", :for => "cvc" %>
+        <div class="controls" >
+          <input data-stripe="cvc" id="cvc" type="text" size="4" autocomplete="off" class="card-cvc round form-control" style="width: 60px;" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= label_tag :Expiration, "Expiration (MM/YYYY)", :class => "control-label", :for => "Expiration" %>
+        <div class="controls" >
+          <input data-stripe="exp-month" id="month" type="text" size="2" class="card-expiry-month round form-control" style="width: 50px; display: inline-block;" />
+          <span> / </span>
+          <input data-stripe="exp-year" id="year" type="text" size="4" class="card-expiry-year round form-control" style="width: 65px; display: inline-block;" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="control-label"></div>
+        <div class="controls" >
+          <button type="submit" id="cc_submit" class="btn btn-large btn-primary" >Submit</button>
+        </div>
+      </div>
+
+    <% end %>
+
+  </div>
+</div>

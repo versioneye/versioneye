@@ -26,6 +26,8 @@ Versioneye::Application.routes.draw do
   get    '/signin',                :to => 'sessions#new'
   get    '/signout',               :to => 'sessions#destroy'
 
+  resources :jobs, :only => [:index, :show, :create]
+
   get '/users/autocomplete', :to => 'users#autocomplete'
   resources :users, :key => :username do
     member do
