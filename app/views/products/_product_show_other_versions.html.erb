@@ -5,18 +5,37 @@
       <%= pluralize(@product.versions.count, 'Versions') %>
     </h3>
   </div>
+
+  <!-- version list -->
   <div class="box content scrollable-box" style = "min-height: 1em; max-height: 14em;" >
     <% versions = @product.sorted_versions %>
-    <% versions = [] if versions.nil? %>
-    <% versions[0..100].each do |version|  %>
+    <% versions.to_a.take(100).each do |version|  %>
 
       <div>
         <% if VersionTagRecognizer.release?(version.to_s) %>
-          <a href="<%=product_version_path( @product, version.to_param )%>"><%=version.to_s%></a>
+          <a href="<%=product_version_path( @product, version.to_param )%>">
+            <%=version.to_s%>
+          </a>
         <% else %>
-          <a style="color: brown" href="<%=product_version_path( @product, version.to_param )%>"><%=version.to_s%></a>
+          <a style="color: brown" href="<%=product_version_path( @product, version.to_param )%>">
+            <%=version.to_s%>
+          </a>
         <% end %>
-        <span class="meta_text_small">(<%= version.released_or_detected.in_time_zone(timezone).strftime("%b %d, %Y") %>)</span>
+
+        <!-- Distribution tags aka version aliases for NPM packages -->
+        <% if version.tags.to_a.size %>
+          <span class="meta_text_small">
+            &ndash; <%= version.tags.to_a.take(3).join(',') %>
+            <% if version.tags.to_a.size > 3 %>
+              &hellip;
+            <% end %>
+          </span>
+        <% end %>
+
+        <!-- Release date -->
+        <span class="meta_text_small">
+          (<%= version.released_or_detected.in_time_zone(timezone).strftime("%b %d, %Y") %>)
+        </span>
 
         <% if svs && !svs.empty? %>
           <% svs.each do |sv| %>
