@@ -4,7 +4,9 @@
   <div class="kpibox flash info l_margin_bottom_5" >
     <b>Current:</b>
     <% if @product.version_newest && !@product.version_newest.to_s.eql?(@product.version.to_s) %>
-      <a href="/<%= @product.language_esc %>/<%= @product.to_param %>/<%= @product.version_newest.to_s %>" ><%= @product.version_newest.to_s %></a>
+      <a href="/<%= @product.language_esc %>/<%= @product.to_param %>/<%= @product.version_newest.to_s %>" >
+        <%= @product.version_newest.to_s %>
+      </a>
     <% else %>
       <%= @product.version_newest.to_s %>
     <% end %>
