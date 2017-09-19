@@ -47,7 +47,7 @@
 
           <select name="version"  id="version" class="form-control" >
             <option value="ALL">All versions</option>
-            <% @organisation.unique_versions.each do |version| %>
+            <% @organisation.unique_versions.sort.each do |version| %>
               <option value="<%= version %>" <%= "selected" if params[:version].to_s.eql?(version.to_s) %> >Version: <%= version %></option>
             <% end %>
           </select>
