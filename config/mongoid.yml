@@ -36,8 +36,8 @@ production:
       database: veye_prod
       hosts:
         - <%= ENV['DB_PORT_27017_TCP_ADDR'] ||= 'localhost' %>:<%= ENV['DB_PORT_27017_TCP_PORT'] ||= '27017' %>
-        - <%= ENV['MONGO_RS_2_ADDR'] ||= 'localhost' %>:<%= ENV['MONGO_RS_2_PORT'] ||= '27017' %>
-        - <%= ENV['MONGO_RS_3_ADDR'] ||= 'localhost' %>:<%= ENV['MONGO_RS_3_PORT'] ||= '27017' %>
+        # - <%= ENV['MONGO_RS_2_ADDR'] ||= 'localhost' %>:<%= ENV['MONGO_RS_2_PORT'] ||= '27017' %>
+        # - <%= ENV['MONGO_RS_3_ADDR'] ||= 'localhost' %>:<%= ENV['MONGO_RS_3_PORT'] ||= '27017' %>
       options:
         max_pool_size: 100
   options:
