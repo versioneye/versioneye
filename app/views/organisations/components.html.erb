@@ -33,14 +33,14 @@
 
           <select name="team"  id="team" class="form-control" >
             <option value="ALL">All teams</option>
-            <% @organisation.teams.each do |team| %>
+            <% @organisation.teams.desc(:name).each do |team| %>
               <option value="<%= team.ids %>" <%= "selected" if params[:team].to_s.eql?(team.ids) %> >Team: <%= team.name %></option>
             <% end %>
           </select>
 
           <select name="language"  id="language" class="form-control" >
             <option value="ALL">All languages</option>
-            <% @organisation.unique_languages.each do |language| %>
+            <% @organisation.unique_languages.sort.each do |language| %>
               <option value="<%= language %>" <%= "selected" if params[:language].to_s.eql?(language.to_s) %> >Language: <%= language %></option>
             <% end %>
           </select>
