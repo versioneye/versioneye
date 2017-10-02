@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: afc113c0d2576d7b59a3326bd1d75a8c394dbaa6
-  tag: v12.10.30
+  revision: 128fc84a78989d4fd2883b1dc3ecbec1f1b283d4
+  tag: v12.10.31
   specs:
-    versioneye-core (12.10.30)
+    versioneye-core (12.10.31)
       actionmailer (~> 5.1.0)
       aws-sdk (~> 2.10.7)
       bunny (~> 2.7.0)
@@ -23,7 +23,7 @@ GIT
       mongoid (~> 6.2.0)
       naturalsorter (~> 3.0.18)
       net-ldap (~> 0.16.0)
-      nokogiri (~> 1.8.0)
+      nokogiri (~> 1.8.1)
       oauth (~> 0.5.0)
       octokit (~> 4.7.0)
       pdfkit (~> 0.8.2)
@@ -81,20 +81,20 @@ GEM
     amq-protocol (2.2.0)
     ansi (1.5.0)
     arel (8.0.0)
-    aws-sdk (2.10.50)
-      aws-sdk-resources (= 2.10.50)
-    aws-sdk-core (2.10.50)
+    aws-sdk (2.10.55)
+      aws-sdk-resources (= 2.10.55)
+    aws-sdk-core (2.10.55)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.10.50)
-      aws-sdk-core (= 2.10.50)
+    aws-sdk-resources (2.10.55)
+      aws-sdk-core (= 2.10.55)
     aws-sigv4 (1.0.2)
     bourbon (4.3.4)
       sass (~> 3.4)
       thor (~> 0.19)
     bson (4.2.2)
     builder (3.2.3)
-    bunny (2.7.0)
+    bunny (2.7.1)
       amq-protocol (>= 2.2.0)
     capybara (2.14.4)
       addressable
@@ -106,7 +106,7 @@ GEM
     capybara-firebug (2.1.0)
       capybara (>= 1.0, < 3.0)
       selenium-webdriver
-    childprocess (0.7.1)
+    childprocess (0.8.0)
       ffi (~> 1.0, >= 1.0.11)
     chronic (0.10.2)
     cocoapods-core (0.39.0)
@@ -123,6 +123,7 @@ GEM
     concurrent-ruby (1.0.5)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
+    crass (1.0.2)
     dalli (2.7.6)
     database_cleaner (1.6.1)
     diff-lcs (1.3)
@@ -134,7 +135,7 @@ GEM
     etcd (0.3.0)
       mixlib-log
     execjs (2.7.0)
-    factory_girl (4.8.0)
+    factory_girl (4.8.1)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.8.0)
       factory_girl (~> 4.8.0)
@@ -168,11 +169,12 @@ GEM
     launchy (2.4.3)
       addressable (~> 2.3)
     libv8 (3.16.14.19)
-    loofah (2.0.3)
+    loofah (2.1.1)
+      crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.6.6)
       mime-types (>= 1.16, < 4)
-    method_source (0.8.2)
+    method_source (0.9.0)
     mime-types (2.99.3)
     mini_portile2 (2.3.0)
     minitest (5.10.3)
@@ -323,7 +325,7 @@ GEM
       multi_json (~> 1.3)
       rake
       rest-client (~> 1.6)
-    tomlrb (1.2.4)
+    tomlrb (1.2.5)
     turn (0.9.6)
       ansi
     twitter_oauth (0.4.94)
