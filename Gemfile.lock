@@ -415,4 +415,4 @@ DEPENDENCIES
   will_paginate_mongoid (= 2.0.1)
 
 BUNDLED WITH
-   1.15.4
+   1.16.0
