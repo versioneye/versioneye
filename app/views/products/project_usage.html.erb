@@ -13,13 +13,15 @@
 
   <div class="col-md-9" >
     <div class="content_header_def" >
-      <%= link_to @product.name, product_version_path(@product) %> is used in <%= pluralize(@product.project_usage , "project")  %>
+      <%= link_to @product.name, product_version_path(@product) %> is used in <%= pluralize(@product.project_usage , "project")  %>.
+      It might be that you don't have permission to see ALL projects.
     </div>
     <div class="content">
 
       <% @project_ids.each do |project_id| %>
-        <%  project = ProjectService.find project_id %>
-        <%  next if project.nil? %>
+        <% project = ProjectService.find project_id %>
+        <% next if project.nil? %>
+        <% next if project.visible_for_user?( current_user ) == false %>
 
         <% dep = fetch_projectdependency(@product, project_id) %>
         <%  color = '' %>
