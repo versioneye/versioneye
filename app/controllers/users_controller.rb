@@ -32,6 +32,11 @@ class UsersController < ApplicationController
 
 
   def create
+    if Rails.env.production? == true
+      flash[:error] = "VersionEye will shut down soon. Signups are disabled."
+      redirect_to signup_path and return
+    end
+
     @user = create_user_form params
     if Set['1', 'on', 'true'].include? params[:user][:terms]
       @user[:terms] = true
