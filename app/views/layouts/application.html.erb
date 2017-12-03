@@ -46,10 +46,6 @@
 
   <%= render 'layouts/header' %>
 
-  <% if !signed_in? && (@product || @products)  %>
-    <%= render 'shared/dialog_follow' %>
-  <% end %>
-
   <section class="container" >
     <%= render 'layouts/searchbar' %>
     <%= render 'shared/messages' %>
