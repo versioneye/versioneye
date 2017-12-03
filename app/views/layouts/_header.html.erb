@@ -40,7 +40,7 @@
           <% end %>
 
           <!-- menu for guest user, not logged in -->
-          <% if Settings.instance.show_signup_form == true && if Rails.env.enterprise? %>
+          <% if Settings.instance.show_signup_form == true && Rails.env.enterprise? == true %>
             <li>
             <%= form_tag(signup_path, :method => "GET", :style=>"margin: 0; padding: 0 0 0 10px;", :class=>"navbar-form navbar-right") do  %>
               <div class="form-group">
