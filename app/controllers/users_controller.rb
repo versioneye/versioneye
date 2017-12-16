@@ -134,6 +134,16 @@ class UsersController < ApplicationController
   end
 
 
+  def promo
+    @user = User.find_by_username(params[:id])
+    return nil if @user.nil?
+    
+    @user.promo_code = 'gemnasium'
+    @user.save
+    redirect_to 'https://gemnasium.com/'
+  end
+
+
   def activate
     verification = params[:verification]
     source       = params[:source]

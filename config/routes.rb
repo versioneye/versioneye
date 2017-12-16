@@ -34,6 +34,7 @@ Versioneye::Application.routes.draw do
       get 'favoritepackages'
       get 'comments'
       get 'users_location'
+      get 'promo'
       post 'update_permissions'
     end
   end
