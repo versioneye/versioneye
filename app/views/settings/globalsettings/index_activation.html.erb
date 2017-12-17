@@ -25,6 +25,13 @@
       </div>
 
       <div class="form-group">
+        <%= label_tag :api_url, "API URL", :class => "control-label", :for => "api_url" %>
+        <div class="controls">
+          <%= text_field_tag :api_url, @globalsetting['api_url'], :id => "api_url", :class => 'form-control' %>
+        </div>
+      </div>
+
+      <div class="form-group">
         <%= label_tag :rate_limit, "API Rate Limit", :class => "control-label", :for => "rate_limit" %>
         <div class="controls">
           <%= text_field_tag :rate_limit, @globalsetting['rate_limit'], :id => "rate_limit", :readonly => true, :class => 'form-control' %>
