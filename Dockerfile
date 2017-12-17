@@ -1,4 +1,4 @@
-FROM        versioneye/ruby-base:2.3.3-8
+FROM        versioneye/ruby-base:2.3.3-9
 MAINTAINER  Robert Reiz <reiz@versioneye.com>
 
 RUN rm -Rf /app; \
