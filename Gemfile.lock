@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: daeb720e1b3b615cdaa57f3ff02257abb25714d1
-  tag: v12.10.44
+  revision: 4a944f1d505a2cb4bb269a2bdfeff8062475ec0a
+  tag: v12.10.45
   specs:
-    versioneye-core (12.10.44)
+    versioneye-core (12.10.45)
       actionmailer (~> 5.1.0)
       aws-sdk (~> 2.10.7)
       bunny (~> 2.7.0)
@@ -81,20 +81,20 @@ GEM
     amq-protocol (2.2.0)
     ansi (1.5.0)
     arel (8.0.0)
-    aws-sdk (2.10.104)
-      aws-sdk-resources (= 2.10.104)
-    aws-sdk-core (2.10.104)
+    aws-sdk (2.10.110)
+      aws-sdk-resources (= 2.10.110)
+    aws-sdk-core (2.10.110)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.10.104)
-      aws-sdk-core (= 2.10.104)
+    aws-sdk-resources (2.10.110)
+      aws-sdk-core (= 2.10.110)
     aws-sigv4 (1.0.2)
     bourbon (4.3.4)
       sass (~> 3.4)
       thor (~> 0.19)
     bson (4.2.2)
     builder (3.2.3)
-    bunny (2.7.2)
+    bunny (2.7.3)
       amq-protocol (>= 2.2.0)
     capybara (2.14.4)
       addressable
@@ -193,7 +193,7 @@ GEM
     naturalsorter (3.0.19)
     net-ldap (0.16.0)
     netrc (0.11.0)
-    nio4r (2.1.0)
+    nio4r (2.2.0)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
     oauth (0.5.4)
