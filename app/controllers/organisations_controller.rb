@@ -308,8 +308,9 @@ class OrganisationsController < ApplicationController
   end
 
 
-   def update_plan
+  def update_plan
     @plan_name_id = params[:plan]
+    @plan_name_id = '04_free' # Only free plan is allowed now because of sunset process! 
     stripe_token  = @organisation.stripe_token
     customer_id   = @organisation.stripe_customer_id
     customer      = nil
