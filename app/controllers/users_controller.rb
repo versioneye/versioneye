@@ -135,12 +135,13 @@ class UsersController < ApplicationController
 
 
   def promo
-    @user = User.find_by_username(params[:id])
+    username = params[:id]
+    @user = User.find_by_username( username )
     return nil if @user.nil?
     
     @user.promo_code = 'gemnasium'
     @user.save
-    redirect_to 'https://gemnasium.com/'
+    redirect_to "https://beta.gemnasium.com/welcome/versioneye?uid=#{@user.ids}"
   end
 
 
