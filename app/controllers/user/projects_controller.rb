@@ -100,7 +100,22 @@ class User::ProjectsController < ApplicationController
   def show
     id       = params[:id]
     child_id = params[:child]
+
+    p "Find project by id #{id}"
+
     @project = ProjectService.find( id )
+
+    @project.dependencies.each do |dep|
+      dep.version_label = dep.version_label.to_s.gsub(/-redhat-.*/i, "")
+      dep.version_requested = dep.version_requested.to_s.gsub(/-redhat-.*/i, "")
+      p dep.save
+      p " -- #{dep.name} - #{dep.version_label}"
+    end
+
+    @project.dependencies.each do |dep|
+      p "#{dep.name} - #{dep.version_label}"
+    end
+
     if @project.public == false && @project.visible_for_user?(current_user) == false
       flash[:error] = "You have no access to this project!"
       return if !authenticate
