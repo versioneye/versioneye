@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: fdbd41c573e36e0657848433064238157897061d
-  tag: v12.11.8
+  revision: 4b2f764e06c32e497e9e3d77876a6521d45fe85a
+  tag: v12.11.9
   specs:
-    versioneye-core (12.11.8)
+    versioneye-core (12.11.9)
       actionmailer (~> 5.1.0)
       aws-sdk (~> 2.10.7)
       bunny (~> 2.7.0)
@@ -81,13 +81,13 @@ GEM
     amq-protocol (2.2.0)
     ansi (1.5.0)
     arel (8.0.0)
-    aws-sdk (2.10.124)
-      aws-sdk-resources (= 2.10.124)
-    aws-sdk-core (2.10.124)
+    aws-sdk (2.10.125)
+      aws-sdk-resources (= 2.10.125)
+    aws-sdk-core (2.10.125)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.10.124)
-      aws-sdk-core (= 2.10.124)
+    aws-sdk-resources (2.10.125)
+      aws-sdk-core (= 2.10.125)
     aws-sigv4 (1.0.2)
     bourbon (4.3.4)
       sass (~> 3.4)
@@ -179,7 +179,7 @@ GEM
     mime-types (2.99.3)
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
-    minitest (5.11.2)
+    minitest (5.11.3)
     mixlib-log (1.7.1)
     mongo (2.5.0)
       bson (>= 4.3.0, < 5.0.0)
@@ -194,7 +194,7 @@ GEM
     net-ldap (0.16.0)
     netrc (0.11.0)
     nio4r (2.2.0)
-    nokogiri (1.8.1)
+    nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
     oauth (0.5.4)
     octokit (4.7.0)
