@@ -4,13 +4,6 @@
     <% next if product.nil? %>
     <% i += 1 %>
 
-      <% if i % 10 == 0 && !Settings.instance.environment.to_s.eql?('enterprise') %>
-        <div class="row search-item" >
-          <div class="col-md-2 pull-left" >
-            <%= render partial: "/shared/ad_hor" %>
-          </div>
-        </div>
-      <% end %>
       <div class="row search-item" >
         <div class="col-md-1 pull-left" >
           <% prog_lang = product.language.to_s.downcase.gsub(/\./, '') %>
