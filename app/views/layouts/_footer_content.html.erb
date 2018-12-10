@@ -1,5 +1,5 @@
 <footer class="footer" >
-
+<% if 1 == 2 %>
   <div class="footer_link_row_1" >
     <%= link_to t(:page_footer_about), about_path %> |
     <a href="/pricing">Pricing</a> |
@@ -11,7 +11,7 @@
     <a href="http://blog.versioneye.com/" target="versioneye_blog">Blog</a> |
     <a href="/api" >API</a>
   </div>
-
+<% end %>
   <div class="footer_link_row_3" >
     <%= link_to "Imprint", imprint_path %> |
     <%= link_to "Conditions of Use", terms_path %> |
@@ -36,7 +36,7 @@
 
     <a href="http://pinterest.com/versioneye/pins/" class="footer_link_margin" target="new_Pinterest" title="Pinterest" ><i class="fa fa-pinterest footer_social_icon" ></i></a>
   </div>
-
+<% if 1 == 2 %>
   <div class="footer_language_row" >
     <a href="/java" >Java</a> |
     <a href="/csharp" >C#</a> |
@@ -56,7 +56,7 @@
     <a href="/perl" >Perl</a> |
     <a href="/chef" >Chef</a>
   </div>
-
+<% end %>
   <div class="footer_language_row" style="color: gray; padding-bottom: 15px;">
     Made with <i class="fa fa-heart" style="color: black;" aria-hidden="true"></i> in <a href="https://www.mannheim.de/" target="MA">Mannheim</a>
   </div>
