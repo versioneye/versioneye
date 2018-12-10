@@ -17,6 +17,10 @@ jQuery(document).ready(function(){
     jQuery( "#tabs" ).tabs();
   }
 
+  if(jQuery("#inventory_diff_status").length > 0){
+    // TODO
+  }
+
   if(jQuery('.github_switch').length > 0){
     jQuery('.github_switch').on('switch-change', function(e, data){
       toggleGitHubProject(data.el, data.value);
