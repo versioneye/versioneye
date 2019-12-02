@@ -48,4 +48,3 @@ end
 require 'cocoapods-core'
 podspec = Pod::Spec.from_file('/Users/anjaresmer/Code/cocoapods-specs/twitter-text-objc/1.6.1/twitter-text-objc.podspec')
 ```
-
