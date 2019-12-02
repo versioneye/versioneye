@@ -1,7 +1,10 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-5 col-sm-6">
+        <div class="col-lg-5 col-sm-6" style="padding-top: 50px; text-align: center;" >
+            <%= link_to image_tag("marketing/01-veye-licenses.png", :style => "width: 100%;"), asset_path("marketing/01-veye-licenses.png") %>
+        </div>
+        <div class="col-lg-5 col-sm-6 col-lg-offset-2">
             <hr class="section-heading-spacer">
             <div class="clearfix"></div>
             <h2 class="section-heading">License Notifications</h2>
@@ -19,9 +22,6 @@ and notify you about violations! This checks can happen in real time and your so
 can react immediately! Depending on your software development process we can even
 break your build on the CI server if there is a license violation.
             </p>
-        </div>
-        <div class="col-lg-5 col-lg-offset-2 col-sm-6" style="padding-top: 50px; text-align: center;" >
-            <%= link_to image_tag("marketing/01-veye-licenses.png", :style => "width: 100%;"), asset_path("marketing/01-veye-licenses.png") %>
         </div>
     </div>
 </div>

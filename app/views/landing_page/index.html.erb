@@ -82,12 +82,8 @@
                         <span style="font-size: 100%; font-weight: bold;">security vulnerabilities</span>,
                         <span style="font-size: 100%; font-weight: bold;">license violations</span> and
                         <span style="font-size: 100%; font-weight: bold;">out-dated dependencies</span>
-                        in your Git repositories
+                        in your source code repositories
                        </h3>
-                    </div>
-                    <div class="alert alert-danger" role="alert">
-                      After 6 years I switched off VersionEye. 
-                      Read the full story <a href="https://blog.versioneye.com/2017/10/19/versioneye-sunset-process/">here</a>. 
                     </div>
                 </div>
             </div>
@@ -99,22 +95,22 @@
     <!-- /.intro-header -->
 
 
-    <div class="content-section-b">
+    <div class="content-section-a">
         <%= render "shared/feature_package_managers" %>
     </div>
 
-    <div class="content-section-a">
+    <div class="content-section-b">
         <%= render "shared/feature_security" %>
     </div>
 
-    <div class="content-section-b">
+    <div class="content-section-a">
         <%= render "shared/feature_license" %>
     </div>
 
-    <div class="content-section-a">
+    <div class="content-section-b">
         <%= render "shared/feature_version" %>
     </div>
-
+<% if 1 == 2 %>
     <div class="content-section-b">
         <%= render "shared/feature_pullrequests" %>
     </div>
@@ -157,6 +153,7 @@
         <% end %>
       </div>
     </div>
+<% end %>
 
     <div class="content-section-a">
       <div class="container">
@@ -169,6 +166,14 @@
               </div>
             <% end %>
             <% end %>
+            Get notified about the relaunch via email. <br/><br/>
+            <%= form_for(:landing_page, :html => {:class => 'form-horizontal'} ) do |f|  %>
+              <div class="form-group">
+                <%= f.text_field :email, :class => "round form-control", :style => "width: 300px; display: inline; " %>
+                <button id="sign_in_button" type="submit" class="btn btn-large btn-primary" >Notify me</button>
+              </div>
+            <% end %>
+
           </div>
         </div>
       </div>

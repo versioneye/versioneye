@@ -1,6 +1,7 @@
 Versioneye::Application.routes.draw do
 
   root :to => "landing_page#index"
+  post '/', :to => 'landing_page#create'
 
   get  'docker/update_image' , :to => 'docker#update_image'
   get  'docker/remote_images', :to => 'docker#remote_images'

@@ -26,8 +26,24 @@
 
   <body >
 
-    <%= render 'shared/messages' %>
-
+    
+    <% if flash && !flash.empty? %>
+        <div class="container" style="padding-top: 70px;">
+            <div class="row">
+                <div class="col-lg-12">
+                
+                  <% flash.each do |key, value| %>
+                    <div class="alert flash <%= key %>">
+                      <button type="button" class="close" data-dismiss="alert">×</button>
+                      <%= value %>
+                    </div>
+                  <% end %>
+         
+                </div>
+            </div>
+        </div>
+    <% end %>
+    
     <%= yield %>
 
     <%= render 'layouts/footer' %>
