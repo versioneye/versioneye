@@ -20,6 +20,9 @@ class SessionsController < ApplicationController
       flash[:error] = 'Invalid email/password combination.'
       @title = 'Sign in'
       redirect_back
+    elsif !user.admin 
+      flash[:error] = 'The login process is disabled for right now.'
+      redirect_back
     elsif !user.activated?
       flash[:error] = 'Your Account is not active. Please validate your email address by clicking the verification link in the verification E-Mail.'
       redirect_back
