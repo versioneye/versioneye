@@ -41,7 +41,7 @@
             <% if is_orga_owner?(@organisation, current_user) %>
               <li><hr/></li>
               <li><%= link_to 'API Key', apikey_organisation_path(@organisation) %></li>
-              <% if !Rails.env.enterprise? %>
+              <% if !Rails.env.enterprise? && 1 == 2 %>
                 <li><%= link_to 'Plan', plan_organisation_path(@organisation) %></li>
                 <li><%= link_to 'Billing address', billing_address_organisation_path(@organisation) %></li>
                 <li><%= link_to 'Payment history', payment_history_organisation_path(@organisation) %></li>

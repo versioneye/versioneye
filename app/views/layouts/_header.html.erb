@@ -33,11 +33,6 @@
           <li>
               <a href="/faq">FAQs</a>
           </li>
-          <% if !Rails.env.enterprise? %>
-            <li>
-              <%= link_to "Pricing", "/pricing" %>
-            </li>
-          <% end %>
 
           <!-- menu for guest user, not logged in -->
           <% if Settings.instance.show_signup_form == true && Rails.env.enterprise? == true %>

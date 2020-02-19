@@ -1,8 +1,9 @@
-FROM        versioneye/ruby-base:2.3.3-16
+FROM        versioneye/ruby-base:2.6.3-1
 MAINTAINER  Robert Reiz <reiz@versioneye.com>
 
 RUN rm -Rf /app; \
-    mkdir /app
+    mkdir /app; \
+    gem install bundler
 
 ADD . /app
 

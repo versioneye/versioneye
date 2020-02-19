@@ -274,7 +274,7 @@ Versioneye::Application.routes.draw do
     resource :testimonials
   end
 
-  get   '/pricing',            :to => 'pricing#index'
+  # get   '/pricing',            :to => 'pricing#index'
   get   '/news',               :to => 'news#news'
   get   '/mynews',             :to => 'news#news'
   get   '/hotnews',            :to => 'news#news'
