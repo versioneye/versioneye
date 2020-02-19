@@ -13,7 +13,7 @@ setup(name='giki',
 	install_requires=[
 		'dulwich==0.8.5',
 		'jinja2==2.6',
-		'Werkzeug==0.8.3',
+		'Werkzeug==0.15.3',
 		# formatters
 		'markdown2==2.0.1',
 		'docutils==0.9.1',
