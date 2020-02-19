@@ -2,8 +2,7 @@ FROM        versioneye/ruby-base:2.6.3-1
 MAINTAINER  Robert Reiz <reiz@versioneye.com>
 
 RUN rm -Rf /app; \
-    mkdir /app; \
-    gem install bundler
+    mkdir /app;
 
 ADD . /app
 
